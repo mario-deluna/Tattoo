@@ -32,7 +32,7 @@ HTML:
 
 HTML:
 
-```
+```html
 <form id="login-form" action="/login/">
 	<span class="info">Please provide you login information.</span>
 </form>
@@ -51,7 +51,7 @@ HTML:
 
 HTML:
 
-```
+```html
 <a class="ajax-trigger" href="/notes/save/" data-noteId="123" data-userId="42" data-revision="1">Save your Note</a>
 ```
 
@@ -70,7 +70,7 @@ HTML:
 
 HTML:
 
-```
+```html
 <head>
 	<title>Welcome | Tattoo Application</title>
 </head>
