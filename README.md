@@ -26,7 +26,7 @@ HTML:
 ```
 [form #login-form, action="/login/"]
 {
-	span .info => "Please provide you login information."
+	span .info => "Please provide your login information."
 }
 ```
 
@@ -43,7 +43,7 @@ HTML:
 ```
 [a .ajax-trigger, href="/notes/save/"]
 {
-	this.data = { noteId: 123, userId: 42, revision: 1 }
+	this.data: { noteId: 123, userId: 42, revision: 1 }
 	
 	print "Save your Note"
 }
@@ -55,3 +55,28 @@ HTML:
 <a class="ajax-trigger" href="/notes/save/" data-noteId="123" data-userId="42" data-revision="1">Save your Note</a>
 ```
 
+### The are vars
+
+```
+@applicationName = "Tattoo Application"
+
+[head] {
+	title => 'Welcome | ' + @applicationName
+}
+[body][footer] {
+	span .small => 'Powerd by ' + @applicationName
+}
+```
+
+HTML:
+
+```
+<head>
+	<title>Welcome | Tattoo Application</title>
+</head>
+<body>
+	<footer>
+		<span class="small">Powerd by Tattoo Application</span>
+	</footer>
+</body>
+```
