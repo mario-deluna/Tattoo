@@ -1,11 +1,11 @@
 Tattoo Template
 ===
 
-Tattoo is a simple hyper text programming language that compiles into HTML.
+Tattoo is a simple hyper text programming language that renders into HTML.
 
 ---
 
-**The language isn't done yet. It's just a concept yet.**
+**The language isn't done yet. It's just a concept. But I will do my best to create first prototype in the next few months.**
 
 ## Syntax
 
@@ -49,7 +49,7 @@ HTML:
 		revision: 1 
 	};
 	
-	print "Save your Note"
+	@this.text = "Save your Note"
 }
 ```
 
@@ -131,4 +131,88 @@ HTML:
 		</a>
 	</li>
 </ul>
+```
+
+### Extending tags
+
+```
+// the '*' tells tattoo to not automatically print the tag
+extend input*: @input
+{
+	[div .form-group]
+	{
+		@input.id = 'input-' + @input.name
+		
+		label .form-label, for: @input.id  => @input.placeholder
+		
+		@input.class.add( 'form-control' )
+		
+		if !@this.type {
+			@this.type = 'text'
+		}
+		
+		render @input
+	}
+}
+
+[form action: '/login', method: 'post']
+{
+	[input name: 'username', placeholder: 'your username']
+	[input name: 'password', placeholder: 'your password', type: 'password']
+}
+```
+
+HTML: 
+
+```html
+<form action="/login" method="post">
+	<div class="form-group">
+		<label for="input-username">your username</label>
+		<input id="input-username" class="form-control" type="text" name="username" placeholder="your username" />
+	</div>
+	<div class="form-group">
+		<label for="input-password">your password</label>
+		<input id="input-password"class="form-control" type="password" name="password" placeholder="your password" />
+	</div>
+</form>
+```
+
+### Views 
+
+```
+view page-header
+{
+	default @title = 'Unknown'
+	default @subtitle = ''
+	default @underline = true
+	
+	[div .page-title]
+	{
+		[h1]
+		{
+			print @title + ' '
+			
+			if @subtitle
+			{
+				small .subtitle => @subtitle
+			}
+			
+			if @underline
+			{
+				[hr .page-title-underline]{}
+			}
+		}
+	}
+}
+
+[page-header title: 'Welcome', subtitle: 'to tattoo']
+```
+
+HTML: 
+
+```html
+<div class="page-title">
+	<h1>Welcome <small>to tattoo</small></h1>
+	<hr class="page-title-underline" />
+</div>
 ```
