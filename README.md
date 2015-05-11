@@ -5,7 +5,7 @@ Tattoo is a simple hyper text programming language that compiles into HTML.
 
 ---
 
-**The language isn't done yet. It's just a concept yet.***
+**The language isn't done yet. It's just a concept yet.**
 
 ## Syntax
 
@@ -41,9 +41,13 @@ HTML:
 ### modifying scope data
 
 ```
-[a .ajax-trigger, href="/notes/save/"]
+[a .ajax-trigger, href: "/notes/save/"]
 {
-	this.data: { noteId: 123, userId: 42, revision: 1 }
+	@this.data: { 
+		noteId: 123, 
+		userId: 42, 
+		revision: 1 
+	};
 	
 	print "Save your Note"
 }
@@ -79,4 +83,52 @@ HTML:
 		<span class="small">Powerd by Tattoo Application</span>
 	</footer>
 </body>
+```
+
+### Loops and tree modifications
+
+```
+@pages = {
+	{ title: 'Home', link: '/home/', isActive: false },
+	{ title: 'About', link: '/about/', isActive: true },
+	{ title: 'Terms', link: '/terms/', isActive: false }
+}
+
+[ul .navigation]
+{
+	each @page in @pages
+	{
+		[li][a .navigation-item, href: @page.link]
+		{
+			span.navigation-item-title => @page.title
+		
+			if @page.isActive
+			{
+				@this.parent.class.add('active')
+			}
+		}
+	}
+}
+```
+
+HTML:
+
+```html
+<ul class="navigation">
+	<li>
+		<a class="navigation-item" href="/home/">
+			<span class="navigation-item-title">Home</span>
+		</a>
+	</li>
+	<li class="active">
+		<a class="navigation-item" href="/about/">
+			<span class="navigation-item-title">About</span>
+		</a>
+	</li>
+	<li>
+		<a class="navigation-item" href="/terms/">
+			<span class="navigation-item-title">Terms</span>
+		</a>
+	</li>
+</ul>
 ```
