@@ -1,0 +1,23 @@
+{
+	"name": "mario-deluna/tattoo",
+	"type": "library",
+	"description": "A simple hyper text programming language",
+	"version": "1.0.0",
+	"keywords": [ "language", "template", "theme", "engine" ],
+	"homepage": "https://github.com/mario-deluna/Tattoo",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Mario Döring",
+			"homepage": "http://clancats.ch",
+			"role": "Developer"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"Tattoo\\": "src/"
+		}
+	},
+	"require": {
+	}
+}
