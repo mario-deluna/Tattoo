@@ -183,6 +183,14 @@ class Lexer_Test extends \PHPUnit_Framework_TestCase
 	/**
 	 * tests Lexer
 	 */
+	public function testTokenConcat()
+	{	
+		$this->assertTokenTypes( '@foo % " - foo"', array( 'variable', 'concat', 'string' ) );
+	}
+	
+	/**
+	 * tests Lexer
+	 */
 	public function testTokenExtend()
 	{	
 		$this->assertTokenTypes( 
