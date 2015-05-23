@@ -51,7 +51,7 @@ class Lexer
 		"/^'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'/" => 'string',
 
 		// numbers
-		"/^(([1-9]+\.[0-9]*)|([1-9]*\.[0-9]+)|([1-9]+))([eE][-+]?[0-9]+)?/" => 'number',
+		"/^(([1-9][0-9]*\.?[0-9]*)|(\.[0-9]+))([Ee][+-]?[0-9]+)?/" => 'number',
 
 		// bool
 		"/^(yes)/" => "boolTrue",
@@ -75,9 +75,13 @@ class Lexer
 		"/^(=)/" => "equal",
 		
 		"/^(if)/" => "if",
+		"/^(elseif)/" => "elseif",
+		"/^(else)/" => "else",
+		
 		"/^(each)/" => "foreach",
+		"/^(in )/" => "in",
 		"/^(loop)/" => "loop",
-		"/^(for)/" => "for",
+		
 		"/^(extend)/" => "extend",
 		"/^(view)/" => "view",
 		
@@ -86,7 +90,11 @@ class Lexer
 		"/^(})/" => "scopeClose",
 		"/^(\[)/" => "tagOpen",
 		"/^(\])/" => "tagClose",
+		"/^(\()/" => "braceOpen",
+		"/^(\))/" => "braceClose",
 		
+		
+		"/^(\.)/" => "accessor",
 		"/^(:)/" => "assign",
 		"/^(,)/" => "comma",
 		"/^([\w-]+)/" => "identifier",
@@ -102,7 +110,7 @@ class Lexer
 	public function __construct( $code )
 	{
 		// we have to convert all tabs to whitespaces to
-		$code = trim( str_replace( array( "  ", "\t" ), " ", $code ) );
+		$code = trim( str_replace( array( "    ", "\t" ), " ", $code ) );
 
 		$this->code = $code;
 		$this->length = strlen( $code );
