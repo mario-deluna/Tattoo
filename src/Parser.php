@@ -7,7 +7,8 @@
  * @copyright 		2015 Mario Döring
  */
 
-use Tattoo\Parser\Exception;
+use Tattoo\Node;
+//use Tattoo\Parser\Exception;
  
 abstract class Parser
 {	
@@ -117,20 +118,33 @@ abstract class Parser
 	}
 	
 	/**
+	 * Get all tokens until the next token with given type
+	 * 
+	 * @param string 			$type
+	 * @return array
+	 */
+	protected function getTokensUntil( $type )
+	{
+		$tokens = array();
+		
+		while( !$this->parserIsDone() && $this->currentToken()->type !== $type )
+		{
+			$tokens[] = $this->currentToken(); $this->skipToken();
+		}
+		
+		$this->skipToken();
+		
+		return $tokens;
+	}
+	
+	/**
 	 * Get all tokens until the next linebreak
 	 *
 	 * @return array
 	 */
 	protected function getTokensUntilLinebreak()
 	{
-		$tokens = array();
-		
-		while( !$this->parserIsDone() && $this->currentToken()->type !== 'linebreak' )
-		{
-			$tokens[] = $this->currentToken(); $this->skipToken();
-		}
-		
-		return $tokens;
+		return $this->getTokensUntil( 'linebreak' );
 	}
 
 	/**
@@ -141,6 +155,27 @@ abstract class Parser
 	protected function isEndOfExpression()
 	{
 		return $this->parserIsDone() || $this->currentToken()->type === 'linebreak';
+	}
+	
+	/**
+	 * Check if the current parser contains a token of given type
+	 *
+	 * @param string 				$type
+	 * @return bool
+	 */
+	protected function containsTokenOfType( $type )
+	{
+		$found = false;
+		
+		foreach ( $this->tokens as $token )
+		{
+			if ( !$found && $token->type === $type )
+			{
+				$found = true;
+			}
+		}
+		
+		return $found;
 	}
 
 	/**
@@ -167,7 +202,12 @@ abstract class Parser
 		// start parsing trought the tokens
 		while( !$this->parserIsDone() )
 		{
-			$this->next();
+			$specialNode = $this->next();
+			
+			if ( $specialNode instanceof Node )
+			{
+				return $specialNode;
+			}
 		}
 		
 		// return the result after the loop is done

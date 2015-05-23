@@ -9,6 +9,7 @@
 
 use Tattoo\Parser;
 use Tattoo\Node\Tag as TagNode;
+use Tattoo\Node\Text as TextNode;
 
 class ShortTag extends Parser
 {
@@ -55,7 +56,19 @@ class ShortTag extends Parser
 		}
 		
 		$this->tag->name = $token->getValue();
-
-		var_dump( $this->tag );die;
+		
+		// now lets parse the attributes
+		$this->skipToken();
+		$attributeTokens = $this->getTokensUntil( 'assignText' );
+		
+		// and the value for the text 
+		$value = new Expression( $this->getTokensUntilLinebreak() );
+		
+		// create new text node containing the value
+		$text = new TextNode;
+		$text->value = $value->parse();
+		
+		// append that node to the current tag
+		$this->tag->addChild( $text );
 	}
 }
