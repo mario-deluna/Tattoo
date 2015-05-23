@@ -205,6 +205,26 @@ class Lexer_Test extends \PHPUnit_Framework_TestCase
 			'scopeClose',
 		));
 	}
+	
+	/**
+	 * tests Lexer
+	 */
+	public function testArray()
+	{	
+		$this->assertTokenTypes( '@myArray = { foo: "bar", @nope: @jop }', array( 
+			'variable', 
+			'equal',
+			'scopeOpen',
+			'identifier',
+			'assign',
+			'string',
+			'comma',
+			'variable',
+			'assign',
+			'variable',
+			'scopeClose'
+		));
+	}
 
 	/**
 	 * tests Lexer error
