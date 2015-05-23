@@ -93,7 +93,7 @@ class Lexer
 		"/^(\()/" => "braceOpen",
 		"/^(\))/" => "braceClose",
 		
-		
+		"/^(\#)/" => "anchor",
 		"/^(\.)/" => "accessor",
 		"/^(:)/" => "assign",
 		"/^(,)/" => "comma",

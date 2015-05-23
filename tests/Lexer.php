@@ -225,6 +225,27 @@ class Lexer_Test extends \PHPUnit_Framework_TestCase
 			'scopeClose'
 		));
 	}
+	
+	/**
+	 * tests Lexer
+	 */
+	public function testTag()
+	{	
+		$this->assertTokenTypes( '[a .foo, #bar, href: "/notes/save/"]', array( 
+			'tagOpen',
+			'identifier',
+			'accessor',
+			'identifier',
+			'comma',
+			'anchor',
+			'identifier',
+			'comma',
+			'identifier',
+			'assign',
+			'string',
+			'tagClose',
+		));
+	}
 
 	/**
 	 * tests Lexer error
