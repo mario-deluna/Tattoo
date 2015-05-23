@@ -205,19 +205,6 @@ class Lexer_Test extends \PHPUnit_Framework_TestCase
 			'scopeClose',
 		));
 	}
-	
-	/**
-	 * tests Lexer
-	 */
-	public function test_tokenEqual()
-	{	
-		// simple
-		// $lexer = new Lexer( 'foo:"bar"' );
-		// $this->assertEquals( 
-		// 	array( 'identifier', 'equal', 'string' ), 
-		// 	$this->pickTokenTypes( $lexer->tokens() )
-		// );
-	}
 
 	/**
 	 * tests Lexer error
