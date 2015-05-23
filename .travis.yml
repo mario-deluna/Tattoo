@@ -17,6 +17,6 @@ script:
 
 matrix:
  allow_failures:
-	- php:
-    - hhvm
-    - nightly
+	php:
+   - hhvm
+   - nightly
