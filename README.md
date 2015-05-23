@@ -3,6 +3,8 @@ Tattoo Template
 
 Tattoo is a simple hyper text programming language that renders into HTML.
 
+[![Build Status](https://travis-ci.org/mario-deluna/Tattoo.svg)](https://travis-ci.org/mario-deluna/Tattoo)
+
 ---
 
 **The language isn't done yet. It's just a concept. But I will do my best to create first prototype in the next few months.**
