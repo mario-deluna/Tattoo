@@ -7,15 +7,11 @@ new Tattoo\Engine\Tag( 'a', array(
 $__tattoo_tag->content .= '<span />';
 });
 
-@--- tag.attributes.2
+@--- scope.basic
 
-new Tattoo\Engine\Tag( 'button', array(
-  'class' => 
-  array(
-    0 => 'btn',
-    1 => 'btn-lg',
-  ),
-), function( $__tattoo_tag ) use( $__tattoo_vars )
-{
+if ( !isset( $__tattoo_vars ) ) {
+	$__tattoo_vars = array(
+);
+}
 
-});
+echo '<button />';

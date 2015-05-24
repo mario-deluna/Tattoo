@@ -21,6 +21,6 @@ class Parser_Scope_Test extends Parser_Test
 	 */
 	public function testConsturct()
 	{	
-		var_dump( $this->parse( 'span => "Hello World"' ) );
+		//var_dump( $this->parse( 'span => "Hello World"' ) );
 	}
 }

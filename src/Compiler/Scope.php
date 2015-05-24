@@ -34,20 +34,6 @@ class Scope extends Compiler
 	}
 	
 	/**
-	 * Append to scope contents or output?
-	 *
-	 * @return string
-	 */
-	protected function getScopeAssignPrefix()
-	{
-		if ( is_null( $this->node->parent ) )
-		{
-			return "\necho ";
-		} 
-		
-		return "\n" . $this->variableTagHolder() . "->content .= ";	
-	}
-	/**
 	 * Wrap the plain scope contents
 	 *
 	 * @param string 			$content

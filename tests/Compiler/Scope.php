@@ -19,7 +19,7 @@ class Compiler_Scope_Test extends Compiler_Test
 	/**
 	 * tests Parser
 	 */
-	public function testConsturct()
+	public function testBasic()
 	{	
 		$node = new Scope;
 		
@@ -28,6 +28,6 @@ class Compiler_Scope_Test extends Compiler_Test
 		
 		$node->addChild( $tag );
 		
-		var_dump( $this->compile( $node  ) );
+		$this->assertWithSampleFile( "scope.basic", $this->compile( $node ) );
 	}
 }

@@ -8,6 +8,8 @@
  */
 
 use Tattoo\Engine\Tag as EngineTag;
+use Tattoo\Node\Scope as ScopeNode;
+use Tattoo\Node\Tag as TagNode;
 
 class Tag extends Scope
 {	
@@ -26,6 +28,21 @@ class Tag extends Scope
 		}
 		
 		return parent::compile();
+	}
+	
+	/**
+	 * Append to scope contents or output?
+	 *
+	 * @return string
+	 */
+	protected function getScopeAssignPrefix()
+	{
+		if ( is_null( $this->node->parent ) || ( $this->node->parent instanceof ScopeNode && !$this->node->parent instanceof TagNode ) )
+		{
+			return "\necho ";
+		} 
+		
+		return "\n" . $this->variableTagHolder() . "->content .= ";	
 	}
 	
 	/**
