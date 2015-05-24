@@ -20,11 +20,25 @@ class Compiler_Tag_Test extends Compiler_Test
 	/**
 	 * tests Parser
 	 */
-	public function testConsturct()
+	public function testTag()
 	{	
 		$tag = new Tag;
 		$tag->name = 'button';
-
-		var_dump( $this->compile( $tag ) );
+		
+		$this->assertWithSampleFile( 'tag.simple', $this->compile( $tag ) );
+	}
+	
+	/**
+	 * tests Parser
+	 */
+	public function testTagWithAttributes()
+	{	
+		$tag = new Tag;
+		$tag->name = 'button';
+		$tag->attributes = array(
+			'class' => array( 'btn', 'btn-lg' ),
+		);
+		
+		$this->assertWithSampleFile( 'tag.attributes', $this->compile( $tag ) );
 	}
 }

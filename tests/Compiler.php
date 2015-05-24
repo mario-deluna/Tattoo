@@ -24,7 +24,39 @@ class Compiler_Test extends \PHPUnit_Framework_TestCase
 		$class = "Tattoo\\".str_replace('_', "\\", $class);
 		
 		$compiler = new $class( $node );
-		return $compiler->compile();
+		return trim( $compiler->compile() );
+	}
+	
+	/**
+	 * The holder of the string samples
+	 *
+	 * @var array[string]
+	 */
+	protected $_samples = null;
+	
+	/**
+	 * Assert a compiled string with a sample by key
+	 *
+	 * @param string 			$sampleKey
+	 * @param string 			$compiledString
+	 * @return void 
+	 */
+	protected function assertWithSampleFile( $sampleKey, $compiledString )
+	{
+		if ( is_null( $this->_samples ) )
+		{
+			$samples = explode( '@--- ', file_get_contents( __DIR__ . '/samples/compiler.tt' ) );
+			
+			foreach( $samples as $string )
+			{
+				$key = trim( substr($string, 0, strpos($string, "\n")) );
+				$this->_samples[$key] = trim( substr( $string, strpos($string, "\n") ) );
+			}
+			
+			$this->_samples = array_filter( $this->_samples );
+		}
+		
+		$this->assertEquals( $this->_samples[$sampleKey], $compiledString );
 	}
 
 	/**

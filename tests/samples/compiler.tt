@@ -1,0 +1,20 @@
+@--- tag.simple
+
+new Tattoo\Engine\Tag( 'button', array(
+), function( $__tattoo_tag ) use( $__tattoo_vars )
+{
+
+});
+
+@--- tag.attributes
+
+new Tattoo\Engine\Tag( 'button', array(
+  'class' => 
+  array(
+    0 => 'btn',
+    1 => 'btn-lg',
+  ),
+), function( $__tattoo_tag ) use( $__tattoo_vars )
+{
+
+});
