@@ -46,7 +46,7 @@ class Tag extends Scope
 		$buffer .= "function( ".$this->variableTagHolder()." ) use( ".$this->variableVarHolder()." )\n";
 		
 		// add the content;
-		$buffer .= "{\n".$content."\n});\n";
+		$buffer .= "{".$content."\n});\n";
 		
 		return $buffer;
 	}
