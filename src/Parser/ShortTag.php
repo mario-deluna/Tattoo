@@ -66,7 +66,7 @@ class ShortTag extends Parser
 		
 		// create new text node containing the value
 		$text = new TextNode;
-		$text->value = $value->parse();
+		$text->content = $value->parse();
 		
 		// append that node to the current tag
 		$this->tag->addChild( $text );

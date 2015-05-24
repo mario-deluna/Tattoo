@@ -17,4 +17,11 @@ class Tag extends Scope
 	 * @var string
 	 */
 	public $name;
+	
+	/**
+	 * The tags attributes
+	 *
+	 * @var array
+	 */
+	public $attributes = array();
 }
