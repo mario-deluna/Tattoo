@@ -17,4 +17,11 @@ class Text extends Node
 	 * @var Node
 	 */
 	public $content = null;
+	
+	/**
+	 * A text does have a parent but no children
+	 *
+	 * @var Node
+	 */
+	public $parent = null;
 }

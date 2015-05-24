@@ -6,6 +6,9 @@
  * @package 		Tattoo
  * @copyright 		2015 Mario Döring
  */
+ 
+use Tattoo\Node\Scope as ScopeNode;
+use Tattoo\Node\Tag as TagNode;
 
 abstract class Compiler
 {
@@ -33,6 +36,37 @@ abstract class Compiler
 	 * @return string
 	 */
 	abstract public function compile();
+	
+	/**
+	 * Compiles a child node based on it's class
+	 *
+	 * @param Node 				$node
+	 * @return string 
+	 */
+	protected function compileChild( Node $child )
+	{
+		// the compiler class equals the node just with a diffrent namespace
+		$compilerClass = str_replace( "\\Node\\", "\\Compiler\\", get_class( $child ) );
+		
+		$compiler = new $compilerClass( $child );
+		
+		return $compiler->compile();
+	}
+	
+	/**
+	 * Append to scope contents or output?
+	 *
+	 * @return string
+	 */
+	protected function getScopeAssignPrefix( $node )
+	{
+		if ( is_null( $node->parent ) || ( $node->parent instanceof ScopeNode && ( !$node->parent instanceof TagNode ) ) )
+		{
+			return "\necho ";
+		} 
+		
+		return "\n" . $this->variableTagHolder() . "->content .= ";	
+	}
 	
 	/**
 	 * Variablfy a name

@@ -18,6 +18,7 @@
 			"Tattoo\\": "src/"
 		}
 	},
+	"bin": ["bin/tattoo"],
 	"require": {
 	}
 }

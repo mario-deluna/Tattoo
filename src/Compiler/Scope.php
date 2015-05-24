@@ -8,6 +8,7 @@
  */
 
 use Tattoo\Compiler;
+use Tattoo\Node;
 
 class Scope extends Compiler
 {	
@@ -22,12 +23,7 @@ class Scope extends Compiler
 		
 		foreach( $this->node->children as $child )
 		{			
-			// the compiler class equals the node just with a diffrent namespace
-			$compilerClass = str_replace( "\\Node\\", "\\Compiler\\", get_class( $child ) );
-			
-			$compiler = new $compilerClass( $child );
-			
-			$buffer .= $compiler->compile();
+			$buffer .= $this->compileChild( $child ); 
 		}
 		
 		return $this->wrapScopeContents( $buffer );

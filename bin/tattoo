@@ -1,0 +1,51 @@
+#!/usr/bin/env php
+<?php 
+/*
+ *---------------------------------------------------------------
+ * Tattoo runner
+ *---------------------------------------------------------------
+ *
+ * This is the tattoo command line interface
+ */
+
+use Tattoo\Tattoo; 
+
+// we dont need the first argument
+array_shift( $argv );
+
+// if no more arguments are left print out the help
+if ( empty( $argv ) ) 
+{
+	echo 
+"
++---------------------------------------------+
+| Tattoo, the hyper text programming language |
++---------------------------------------------+
+
+ - [compile] compiles some tattoo code into php
+   php bin/tattoo compile <file> <target>
+
+"; die;
+}
+
+require 'vendor/autoload.php';
+
+$command = array_shift( $argv );
+
+if ( $command == 'compile' ) 
+{
+	$phpCode = Tattoo::compile( file_get_contents( array_shift( $argv ) ) );
+	
+	if ( $target = @array_shift( $argv ) )
+	{
+		file_put_contents( $target, "<?php require __DIR__ . '/../vendor/autoload.php';\n\n".$phpCode );
+	}
+	else
+	{
+		echo $phpCode;
+	}
+}
+else
+{
+	echo "Unknown command '".$command."'\n";
+}

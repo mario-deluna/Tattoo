@@ -8,8 +8,7 @@
  */
 
 use Tattoo\Engine\Tag as EngineTag;
-use Tattoo\Node\Scope as ScopeNode;
-use Tattoo\Node\Tag as TagNode;
+
 
 class Tag extends Scope
 {	
@@ -24,25 +23,10 @@ class Tag extends Scope
 		if ( empty( $this->node->children ) )
 		{
 			$tag = new EngineTag( $this->node->name, $this->node->attributes );
-			return $this->getScopeAssignPrefix() . $this->export( $tag->render() ).';';
+			return $this->getScopeAssignPrefix( $this->node ) . $this->export( $tag->render() ).';';
 		}
 		
 		return parent::compile();
-	}
-	
-	/**
-	 * Append to scope contents or output?
-	 *
-	 * @return string
-	 */
-	protected function getScopeAssignPrefix()
-	{
-		if ( is_null( $this->node->parent ) || ( $this->node->parent instanceof ScopeNode && !$this->node->parent instanceof TagNode ) )
-		{
-			return "\necho ";
-		} 
-		
-		return "\n" . $this->variableTagHolder() . "->content .= ";	
 	}
 	
 	/**
@@ -53,7 +37,7 @@ class Tag extends Scope
 	 */
 	protected function wrapScopeContents( $content )
 	{	
-		$buffer = "new Tattoo\Engine\Tag( '".$this->node->name."', ";
+		$buffer = $this->getScopeAssignPrefix( $this->node ) . "new Tattoo\Engine\Tag( '".$this->node->name."', ";
 		
 		// add the attributes
 		$buffer .= $this->exportArray( $this->node->attributes ) . ", ";

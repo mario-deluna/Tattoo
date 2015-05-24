@@ -170,6 +170,12 @@ class Lexer
 
 		while( $token = $this->next() )
 		{
+			// check for doublicated linebreaks
+			if ( $token->type === 'linebreak' && isset( $tokens[count($tokens)-1] ) && $tokens[count($tokens)-1]->type === 'linebreak' )
+			{
+				continue;
+			}
+			
 			$tokens[] = $token;
 		}
 
