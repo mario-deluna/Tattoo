@@ -1,12 +1,13 @@
-@--- tag.simple
+@--- tag.inside.tag
 
-new Tattoo\Engine\Tag( 'button', array(
+new Tattoo\Engine\Tag( 'a', array(
 ), function( $__tattoo_tag ) use( $__tattoo_vars )
 {
 
+$__tattoo_tag->content .= '<span />';
 });
 
-@--- tag.attributes
+@--- tag.attributes.2
 
 new Tattoo\Engine\Tag( 'button', array(
   'class' => 

@@ -21,27 +21,32 @@ class Scope extends Compiler
 		$buffer = '';
 		
 		foreach( $this->node->children as $child )
-		{	
-			if ( is_null( $this->node->parent ) )
-			{
-				$assigner = "\necho ";
-			} 
-			else 
-			{
-				$assigner = "\n" . $this->variableTagHolder() . "->content .= ";
-			}
-			
+		{			
 			// the compiler class equals the node just with a diffrent namespace
 			$compilerClass = str_replace( "\\Node\\", "\\Compiler\\", get_class( $child ) );
 			
 			$compiler = new $compilerClass( $child );
 			
-			$buffer .= $assigner . $compiler->compile();
+			$buffer .= $compiler->compile();
 		}
 		
 		return $this->wrapScopeContents( $buffer );
 	}
 	
+	/**
+	 * Append to scope contents or output?
+	 *
+	 * @return string
+	 */
+	protected function getScopeAssignPrefix()
+	{
+		if ( is_null( $this->node->parent ) )
+		{
+			return "\necho ";
+		} 
+		
+		return "\n" . $this->variableTagHolder() . "->content .= ";	
+	}
 	/**
 	 * Wrap the plain scope contents
 	 *
@@ -52,7 +57,7 @@ class Scope extends Compiler
 	{	
 		$buffer = "if ( !isset( ".$this->variableVarHolder()." ) ) {\n\t";
 		
-		$buffer .= $this->variableVarHolder() .' = ' .$this->createArray(array()). ";\n}\n";
+		$buffer .= $this->variableVarHolder() .' = ' .$this->exportArray(array()). ";\n}\n";
 		
 		return $buffer . $content;
 	}

@@ -68,12 +68,23 @@ abstract class Compiler
 	}
 	
 	/**
+	 * Exports an expression to php code
+	 *
+	 * @param mixed 			$var
+	 * @return string
+	 */
+	protected function export( $var )
+	{
+		return var_export( $var, true );
+	}
+	
+	/**
 	 * Build php array string
 	 *
 	 * @return string
 	 */
-	protected function createArray( $array )
+	protected function exportArray( $array )
 	{
-		return str_replace( 'array (', 'array(', var_export( $array, true ) );
+		return str_replace( 'array (', 'array(', $this->export( $array ) );
 	}
 }
