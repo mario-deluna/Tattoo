@@ -60,7 +60,7 @@ class Token
 			break;
 
 			case 'string':
-				$value = str_replace( "\\\\", "\\", substr( $value, 1, -1 ) );
+				$value = str_replace( "\\", "", substr( $value, 1, -1 ) );
 			break;
 
 			case 'number':
