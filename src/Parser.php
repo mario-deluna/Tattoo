@@ -6,9 +6,6 @@
  * @package 		Tattoo
  * @copyright 		2015 Mario Döring
  */
-
-use Tattoo\Node;
-//use Tattoo\Parser\Exception;
  
 abstract class Parser
 {	
