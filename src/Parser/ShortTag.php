@@ -59,7 +59,7 @@ class ShortTag extends Parser
 		
 		// now lets parse the attributes
 		$this->skipToken();
-		$attributeTokens = $this->getTokensUntil( 'assignText' );
+		$this->tag->attributes = $this->parseAttributeTokens( $this->getTokensUntil( 'assignText' ) );
 		
 		// and the value for the text 
 		$value = new Expression( $this->getTokensUntilLinebreak() );

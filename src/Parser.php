@@ -174,6 +174,17 @@ abstract class Parser
 		
 		return $found;
 	}
+	
+	/**
+	 * Parse attribute tokens
+	 *
+	 * @param array 			$tokens
+	 * @return array
+	 */
+	protected function parseAttributeTokens( array $tokens )
+	{
+		var_dump( $tokens ); die;
+	}
 
 	/**
 	 * Create new unexpected token exception
