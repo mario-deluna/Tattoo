@@ -12,6 +12,40 @@
 
 use Tattoo\Lexer;
 use Tattoo\Parser\Scope;
+use Tattoo\Parser;
+
+/**
+ * Dummy Parser
+ */
+class Parser_Dummy extends Parser
+{
+	/**
+	 * Prepare the scope node
+	 *
+	 * @return void
+	 */
+	protected function prepare() {}
+
+	/**
+	 * Return the node that got parsed
+	 *
+	 * @return void
+	 */
+	protected function node()
+	{
+		throw new Exception( 'Cannot build node from empty expression.' );
+	}
+
+	/**
+	 * Parse the next token
+	 *
+	 * @return void
+	 */
+	protected function next()
+	{
+		return;
+	} 
+}
 
 class Parser_Test extends \PHPUnit_Framework_TestCase
 {

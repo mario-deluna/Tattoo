@@ -9,6 +9,23 @@ Tattoo is a simple hyper text programming language that renders into HTML.
 
 **The language isn't done yet. It's just a concept. But I will do my best to create first prototype in the next few months.**
 
+## Notes
+
+_Notes to myself and everyone who's bored._
+
+A node ( `[div]`, `span => 'foo'` ) always directly represents an element. All given data of such a node object is interpreted as element attribute.
+Extending (`extend`) a node allows to a callback like thingy after a the given node has been created also from the context of the node.
+Preparing (`prepare`) does the same thing as extend but the callback acts before any custom data is passed.
+A view does not stand in any context of a node so all given data / arguments have to be handeled by the view itself.
+
+You should be able to store nodes in variables and modify them before printing. ( see `concept/objectvars.tto`, `concept/bootstrapmodal.tto` )
+
+Only nodes can be printed. When you print a string or a number to parser basically creates a text node.
+
+A view can be loaded using the dobule point `:` initiator.
+
+
+
 ## Syntax
 
 ### simple tag

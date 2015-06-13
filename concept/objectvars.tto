@@ -1,0 +1,49 @@
+@navItem = [a]
+{
+	@this.class.add('navigation-item');
+}
+
+[ul]
+ {
+ 	[li]
+ 	{
+ 		print @navItem 
+ 		{
+ 			[img src: '/path/to/my/logo.png']
+
+ 			@this.href = '/'
+ 		}
+ 	}
+
+	each @item in { 'Home', 'Portfolio', 'About', 'Contact' }
+	{
+		[li] 
+		{
+			print @navItem => @item 
+			{
+				@this.href = '/' + @item.lower + '/'
+			}
+		}
+	}
+}
+
+
+Should print something as
+
+<ul>
+	<li>
+		<a href="/" class="navigation-item"><img src="/path/to/my/logo.png" /></a>
+	</li>
+	<li>
+		<a href="/home/" class="navigation-item">Home</a>
+	</li>
+	<li>
+		<a href="/portfolio/" class="navigation-item">Portfolio</a>
+	</li>
+	<li>
+		<a href="/about/" class="navigation-item">About</a>
+	</li>
+	<li>
+		<a href="/contact/" class="navigation-item">Contact</a>
+	</li>
+</ul>
