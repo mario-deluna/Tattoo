@@ -5,23 +5,20 @@ if ( !isset( $__tattoo_vars ) ) {
 );
 }
 
-echo new Tattoo\Engine\Tag( 'span', array(
+echo new Tattoo\Engine\Tag( 'div', array(
+  'id' => 'main-container',
+  'class' => 
+  array(
+    0 => 'container',
+    1 => 'container-white',
+  ),
 ), function( $__tattoo_tag ) use( $__tattoo_vars )
 {
-
 $__tattoo_tag->content .= 'Hello World';
-});
-
-echo new Tattoo\Engine\Tag( 'button', array(
-), function( $__tattoo_tag ) use( $__tattoo_vars )
-{
-
-$__tattoo_tag->content .= 'Click Me';
 });
 
 echo new Tattoo\Engine\Tag( 'p', array(
 ), function( $__tattoo_tag ) use( $__tattoo_vars )
 {
-
-$__tattoo_tag->content .= 'Im so useless';
+$__tattoo_tag->content .= true;
 });

@@ -69,7 +69,7 @@ abstract class Parser
 	/**
 	 * Retrives the current token based on the index
 	 *
-	 * @return Tattoo\Node
+	 * @return Tattoo\Token
 	 */
 	protected function currentToken()
 	{
@@ -81,7 +81,7 @@ abstract class Parser
 	 * If the token does not exist because its off index "false" is returend.
 	 *
 	 * @param int 			$i
-	 * @return Tattoo\Node|false
+	 * @return Tattoo\Token|false
 	 */
 	protected function nextToken( $i = 1 )
 	{
@@ -118,7 +118,7 @@ abstract class Parser
 	 * Get all tokens until the next token with given type
 	 * 
 	 * @param string 			$type
-	 * @return array
+	 * @return array[Tattoo\Token]
 	 */
 	protected function getTokensUntil( $type )
 	{
@@ -137,7 +137,7 @@ abstract class Parser
 	/**
 	 * Get all tokens until the next linebreak
 	 *
-	 * @return array
+	 * @return array[Tattoo\Token]
 	 */
 	protected function getTokensUntilLinebreak()
 	{
@@ -178,18 +178,78 @@ abstract class Parser
 	/**
 	 * Parse attribute tokens
 	 *
-	 * @param array 			$tokens
+	 * @param array[Tattoo\Token] 			$tokens
 	 * @return array
 	 */
 	protected function parseAttributeTokens( array $tokens )
 	{
-		var_dump( $tokens ); die;
+		if ( empty( $tokens ) )
+		{
+			return array();
+		}
+
+		$firstToken = reset( $tokens );
+		$classAndIdAttrTokens = array();
+
+		// check if the first token is an anchor or accessor
+		if ( $firstToken->type === 'accessor' || $firstToken->type === 'anchor' )
+		{
+			foreach( $tokens as $key => $token )
+			{
+				if ( $token->type === 'comma' )
+				{
+					break;
+				}
+
+				$classAndIdAttrTokens[] = $token; unset( $tokens[$key] );
+			}
+		}
+
+		return $attributes = $this->parseIdAndClassTokens( $classAndIdAttrTokens );
+		return array_merge_recursive( $attributes, $this->fixAttributesArray( $this->parseArray( $tokens ) ) );
+	}
+
+	/**
+	 * Parses id and class tokens and build an attribute array
+	 *
+	 * @param array[Tattoo\Token]			$tokens
+	 * @return array
+	 */
+	protected function parseIdAndClassTokens( array $tokens )
+	{
+		$attributes = array();
+
+		foreach( array_chunk( $tokens, 2 ) as $chunk )
+		{
+			if ( count( $chunk ) !== 2 )
+			{
+				throw new Exception( 'Invalid number of attributes given at line '.$token->line );
+			}
+
+			list( $describer, $identifier ) = $chunk;
+
+			if ( $describer->type === 'accessor' )
+			{
+				$attributes['class'][] = $identifier->getValue();
+			} 
+			elseif ( $describer->type === 'anchor' )
+			{
+				if ( isset( $attributes['id'] ) )
+				{
+					throw new Exception( 'Id has already been set, cannot set twice at line '.$token->line );
+				}
+
+				$attributes['id'] = $identifier->getValue();
+			}
+		} 
+
+		return $attributes;
 	}
 
 	/**
 	 * Create new unexpected token exception
 	 *
-	 * @param Tattoo\Node 				$token
+	 * @param Tattoo\Token 				$token
 	 * @return Tattoo\Parser\Exception;
 	 */
 	protected function errorUnexpectedToken( $token )
