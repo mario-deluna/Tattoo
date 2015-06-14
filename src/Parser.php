@@ -7,6 +7,8 @@
  * @copyright       	2015 Mario Döring
  */
 
+use Tattoo\Parser\Arr as ArrayParser;
+
 abstract class Parser
 {
     /**
@@ -187,6 +189,17 @@ abstract class Parser
     }
 
     /**
+     * Parse an array node out of the given tokens
+     * 
+     * @param array[Tattoo\Token]             $tokens
+     * @return Tattoo\Node\Arr
+     */
+    protected function parseArrayTokens(array $tokens)
+    {
+        $parser = new ArrayParser($tokens); return $parser->parse();
+    }
+
+    /**
      * Parse attribute tokens
      *
      * @param array[Tattoo\Token]             $tokens
@@ -217,7 +230,7 @@ abstract class Parser
         }
 
         return $attributes = $this->parseIdAndClassTokens($classAndIdAttrTokens);
-        return array_merge_recursive($attributes, $this->fixAttributesArray($this->parseArray($tokens)));
+        return array_merge_recursive($attributes, $this->fixAttributesArray($this->parseArrayTokens($tokens)));
     }
 
     /**
@@ -234,7 +247,7 @@ abstract class Parser
         {
 			if (count($chunk) !== 2) 
             {
-                throw new Exception('Invalid number of attributes given at line ' . $token->line);
+                throw new Exception('Invalid number of attributes given at line ' . reset($chunk)->line);
             }
 
             list($describer, $identifier) = $chunk;
@@ -247,7 +260,7 @@ abstract class Parser
             {
                 if (isset($attributes['id'])) 
                 {
-                    throw new Exception('Id has already been set, cannot set twice at line ' . $token->line);
+                    throw new Exception('Id has already been set, cannot set twice at line ' . $describer->line);
                 }
 
                 $attributes['id'] = $identifier->getValue();
@@ -280,7 +293,6 @@ abstract class Parser
         $this->result = array();
 
         // start parsing trought the tokens
-
         while (!$this->parserIsDone()) 
         {
             $specialNode = $this->next();

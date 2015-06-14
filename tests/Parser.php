@@ -64,6 +64,41 @@ class Parser_Test extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Text array parsing
+     */ 
+    protected function assertParseArray(array $expected, $code)
+    {
+        foreach($this->parseArray($code) as $key => $values)
+        {
+        	$this->assertEquals($expected[$key], $values);
+        }
+    }
+
+    /**
+     * Returns an parsed array node
+     * 
+     * @param string 					$code
+     * @return Tattoo\Node\Arr
+     */
+    protected function parseArray($code)
+    {
+    	$lexer = new Lexer($code);
+        $parser = new Parser_Dummy($lexer->tokens());
+
+        return $parser->parseArrayTokens($parser->getTokens());
+    }
+
+    /**
+     * tests Parser
+     */
+    public function testArrayParsing()
+    {
+    	$node = $this->parseArray('foo: "bar", bar: "foo", "gab", { a: "b" }');
+
+    	//var_dump( $node ); die;
+    }
+
+    /**
      * parse attributes string and assert the results
      */
     protected function assertAttributesArray(array $expected, $code)
@@ -114,6 +149,26 @@ class Parser_Test extends \PHPUnit_Framework_TestCase
     		'id' => 'maninthemiddle',
     		'class' => array('main', 'foo', 'bar')
     	), '.main.foo#maninthemiddle.bar');
+    }
+
+    /**
+     * tests Parser
+	 * 
+	 * @expectedException Exception
+     */
+    public function testAttributeTokensDoubleId()
+    {
+    	$this->assertAttributesArray(array(), '#phpunit.main.foo.bar#fooid');
+    }
+
+    /**
+     * tests Parser
+	 * 
+	 * @expectedException Exception
+     */
+    public function testAttributeTokensInvalid()
+    {
+    	$this->assertAttributesArray(array(), '#phpunit.main.foo..ba');
     }
 
 }
