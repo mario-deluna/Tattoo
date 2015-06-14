@@ -27,5 +27,8 @@ class Parser_ShortTag_Test extends Parser_Test
         $child = reset($node->children);
 
         $this->assertInstanceOf('Tattoo\\Node\\Text', $child);
+        $this->assertInstanceOf('Tattoo\\Node\\Value', $child->content);
+        $this->assertEquals('Hello World', $child->content->value);
+        $this->assertEquals('string', $child->content->type);
     }
 }

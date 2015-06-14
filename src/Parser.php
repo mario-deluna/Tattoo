@@ -67,6 +67,16 @@ abstract class Parser
     abstract protected function prepare();
 
     /**
+     * Returns all curent tokens 
+     * 
+     * @return array[Tattoo\Token]
+     */
+    public function getTokens()
+    {
+        return $this->tokens;
+    }
+
+    /**
      * Retrives the current token based on the index
      *
      * @return Tattoo\Token
@@ -204,7 +214,6 @@ abstract class Parser
 
                 $classAndIdAttrTokens[] = $token;unset($tokens[$key]);
             }
-
         }
 
         return $attributes = $this->parseIdAndClassTokens($classAndIdAttrTokens);
