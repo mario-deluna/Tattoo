@@ -14,39 +14,6 @@ use Tattoo\Lexer;
 use Tattoo\Parser\Scope;
 use Tattoo\Parser;
 
-/**
- * Dummy Parser
- */
-class Parser_Dummy extends Parser
-{
-	/**
-	 * Prepare the scope node
-	 *
-	 * @return void
-	 */
-	protected function prepare() {}
-
-	/**
-	 * Return the node that got parsed
-	 *
-	 * @return void
-	 */
-	protected function node()
-	{
-		throw new Exception( 'Cannot build node from empty expression.' );
-	}
-
-	/**
-	 * Parse the next token
-	 *
-	 * @return void
-	 */
-	protected function next()
-	{
-		return;
-	} 
-}
-
 class Parser_Test extends \PHPUnit_Framework_TestCase
 {
 	/**
@@ -54,9 +21,12 @@ class Parser_Test extends \PHPUnit_Framework_TestCase
 	 */
 	protected function parse( $code )
 	{
-		$lexer = new Lexer( $code );
-		$parser = new Scope( $lexer->tokens() );
+		$class = substr( get_called_class(), strrpos( get_called_class(), "\\" )+1, -5 );
+		$class = "Tattoo\\".str_replace('_', "\\", $class);
 		
+		$lexer = new Lexer( $code );
+		$parser = new $class( $lexer->tokens() );
+
 		return $parser->parse();
 	}
 	
