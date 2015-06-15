@@ -8,6 +8,7 @@
  */
 
 use Tattoo\Node;
+use Tattoo\Node\Value;
 
 class ArrKey extends Node
 {
@@ -16,5 +17,15 @@ class ArrKey extends Node
      *
      * @var Node
      */
-    public $value = null;
+    protected $value = null;
+
+    /**
+     * Set the value to only accept instance of type value
+     * 
+     * @param Tattoo\Node\Value 			$value
+     */
+    protected function setValue(Value $value)
+    {
+    	return $value;
+    }
 }

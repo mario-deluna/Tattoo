@@ -51,7 +51,7 @@ class Parser_Arr_Test extends Parser_Test
                 $value = $value->value;
             }
 
-            if (is_null($key->value))
+            if (is_null($key->getValue()))
             {
                 $convertedArray[] = $value;
             } else {

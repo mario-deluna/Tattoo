@@ -65,10 +65,7 @@ class Arr extends Parser
             // handle assoc keys
             if ($token->type === 'identifier')
             {
-                $currentKey = new AssocKey;
-                $currentKey->value = new ValueNode;
-                $currentKey->value->value = $token->getValue();
-                $currentKey->value->type = 'string';
+                $currentKey = new AssocKey(new ValueNode($token->getValue(), 'string'));
             }
 
             $this->skipToken(2);
