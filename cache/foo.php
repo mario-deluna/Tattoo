@@ -6,19 +6,14 @@ if ( !isset( $__tattoo_vars ) ) {
 }
 
 echo new Tattoo\Engine\Tag( 'div', array(
-  'id' => 'main-container',
+  'id' => 'main',
   'class' => 
   array(
     0 => 'container',
-    1 => 'container-white',
+    1 => 'strong',
+    2 => 'uppercase',
   ),
 ), function( $__tattoo_tag ) use( $__tattoo_vars )
 {
 $__tattoo_tag->content .= 'Hello World';
-});
-
-echo new Tattoo\Engine\Tag( 'p', array(
-), function( $__tattoo_tag ) use( $__tattoo_vars )
-{
-$__tattoo_tag->content .= true;
 });

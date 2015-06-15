@@ -70,10 +70,11 @@ class Arr extends Parser
 
             $this->skipToken(2);
         }
-
+        
         // handle recursion
-        if ($token->type === 'scopeOpen')
+        if ($this->currentToken()->type === 'scopeOpen')
         {
+
             $this->skipToken();
 
             $currentLevel = 0;
@@ -81,6 +82,7 @@ class Arr extends Parser
 
             while($this->currentToken() && !($this->currentToken()->type === 'scopeClose' && $currentLevel === 0))
             {
+
                 if ($this->currentToken()->type === 'scopeOpen')
                 {
                     $currentLevel++;
@@ -94,7 +96,7 @@ class Arr extends Parser
                 $subTokens[] = $this->currentToken();
                 $this->skipToken();
             }
-
+            
             // skip the closing scope
             $this->skipToken(2);
             $currentValue = $this->parseArrayTokens($subTokens);

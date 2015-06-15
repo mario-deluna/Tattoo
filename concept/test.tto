@@ -1,3 +1,2 @@
-div#main-container .container.container-white => 'Hello World'
 
-p => 'Im Still Here!'
+div #main.container, class: {"strong", "uppercase"} => 'Hello World'

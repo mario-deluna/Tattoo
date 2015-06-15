@@ -18,9 +18,9 @@ class Text extends Compiler
      */
     public function compile()
     {
-		if ($this->node->content) 
+		if ($this->node->getContent()) 
         {
-            return $this->getScopeAssignPrefix($this->node) . $this->compileChild($this->node->content) . ';';
+            return $this->getScopeAssignPrefix($this->node) . $this->compileChild($this->node->getContent()) . ';';
         }
     }
 }

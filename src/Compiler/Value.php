@@ -18,6 +18,6 @@ class Value extends Compiler
      */
     public function compile()
     {
-        return $this->export($this->node->value);
+        return $this->export($this->node->getValue());
     }
 }

@@ -222,15 +222,32 @@ abstract class Parser
             {
                 if ($token->type === 'comma') 
                 {
-                    break;
+                    unset($tokens[$key]); break;
                 }
 
                 $classAndIdAttrTokens[] = $token;unset($tokens[$key]);
             }
         }
+        
+        $attributes = $this->parseIdAndClassTokens($classAndIdAttrTokens);
+        return array_merge_recursive($attributes, $this->fixAttributesArray($this->parseArrayTokens($tokens)->convertToNative()));
+    }
 
-        return $attributes = $this->parseIdAndClassTokens($classAndIdAttrTokens);
-        return array_merge_recursive($attributes, $this->fixAttributesArray($this->parseArrayTokens($tokens)));
+    /**
+     * Fixes an array of attributes with attribute speical cases
+     * 
+     * @param array             $array
+     * @return array
+     */
+    protected function fixAttributesArray(array $array)
+    {
+        // fix classes given as string
+        if (isset($array['class']) && is_string($array['class']))
+        {
+            $array['class'] = explode(' ', $array['class']);
+        }
+
+        return $array;
     }
 
     /**

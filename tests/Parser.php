@@ -42,41 +42,6 @@ class Parser_Test extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Text array parsing
-     */ 
-    protected function assertParseArray(array $expected, $code)
-    {
-        foreach($this->parseArray($code) as $key => $values)
-        {
-        	$this->assertEquals($expected[$key], $values);
-        }
-    }
-
-    /**
-     * Returns an parsed array node
-     * 
-     * @param string 					$code
-     * @return Tattoo\Node\Arr
-     */
-    protected function parseArray($code)
-    {
-    	$lexer = new Lexer($code);
-        $parser = new Parser_Dummy($lexer->tokens());
-
-        return $parser->parseArrayTokens($parser->getTokens());
-    }
-
-    /**
-     * tests Parser
-     */
-    public function testArrayParsing()
-    {
-    	$node = $this->parseArray('foo: "bar", bar: "foo", "gab", { a: "b" }');
-
-    	//var_dump( $node ); die;
-    }
-
-    /**
      * parse attributes string and assert the results
      */
     protected function assertAttributesArray(array $expected, $code)
@@ -93,7 +58,7 @@ class Parser_Test extends \PHPUnit_Framework_TestCase
     /**
      * tests Parser
      */
-    public function testAttributeTokens()
+    public function testClassAndIDAttributeTokens()
     {
     	// simple
     	$this->assertAttributesArray(array(
@@ -127,6 +92,49 @@ class Parser_Test extends \PHPUnit_Framework_TestCase
     		'id' => 'maninthemiddle',
     		'class' => array('main', 'foo', 'bar')
     	), '.main.foo#maninthemiddle.bar');
+    }
+
+    /**
+     * tests Parser
+     */
+    public function testOtherAttribtes()
+    {
+        // simple
+        $this->assertAttributesArray(array('src' => 'img/logo.png'), 'src: "img/logo.png"');
+
+        // multiple
+        $this->assertAttributesArray(array('src' => 'img/logo.png', 'title' => 'Foo'), 'src: "img/logo.png", title: "Foo"');
+
+        // with id
+        $this->assertAttributesArray(array(
+            'id' => 'main',
+            'src' => 'img/logo.png', 
+            'title' => 'Bar'
+        ), '#main, src: "img/logo.png", title: "Bar"');
+
+        // with id and class 
+        $this->assertAttributesArray(array(
+            'id' => 'main',
+            'class' => array('image'),
+            'src' => 'img/logo.png', 
+            'title' => 'Bar'
+        ), '.image #main, src: "img/logo.png", title: "Bar"');
+    }
+
+    /**
+     * tests Parser
+     */
+    public function testClassSpecialCase()
+    {
+        $this->assertAttributesArray(array(
+            'id' => 'main',
+            'class' => array('container', 'white-box', 'bordered'),
+        ), '#main.container, class: "white-box bordered"');
+
+        $this->assertAttributesArray(array(
+            'id' => 'main',
+            'class' => array('container', 'strong', 'uppercase'),
+        ), '#main.container, class: {"strong", "uppercase"}');
     }
 
     /**
