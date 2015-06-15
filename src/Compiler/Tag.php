@@ -22,7 +22,7 @@ class Tag extends Scope
 
         if (empty($this->node->children)) 
         {
-            $tag = new EngineTag($this->node->name, $this->node->attributes);
+            $tag = new EngineTag($this->node->getName(), $this->node->getAttributes());
             return $this->getScopeAssignPrefix($this->node) . $this->export($tag->render()) . ';';
         }
 
@@ -37,7 +37,7 @@ class Tag extends Scope
      */
     protected function wrapScopeContents($content)
     {
-        $buffer = $this->getScopeAssignPrefix($this->node) . "new Tattoo\Engine\Tag( '" . $this->node->name . "', ";
+        $buffer = $this->getScopeAssignPrefix($this->node) . "new Tattoo\Engine\Tag( '" . $this->node->getName() . "', ";
 
         // add the attributes
         $buffer .= $this->exportArray($this->node->attributes) . ", ";

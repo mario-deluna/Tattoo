@@ -24,7 +24,7 @@ class Compiler_Scope_Test extends Compiler_Test
 		$node = new Scope;
 		
 		$tag = new Tag;
-		$tag->name = 'button';
+		$tag->setName('button');
 		
 		$node->addChild( $tag );
 		

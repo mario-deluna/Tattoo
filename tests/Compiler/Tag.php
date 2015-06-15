@@ -23,7 +23,7 @@ class Compiler_Tag_Test extends Compiler_Test
 	public function testTag()
 	{	
 		$tag = new Tag;
-		$tag->name = 'hr';
+		$tag->setName('hr');
 		
 		$this->assertEquals( "echo '<hr />';", $this->compile( $tag ) );
 	}
@@ -34,7 +34,7 @@ class Compiler_Tag_Test extends Compiler_Test
 	public function testTagWithAttributes()
 	{	
 		$tag = new Tag;
-		$tag->name = 'input';
+		$tag->setName('input');
 		$tag->attributes = array(
 			'name' => 'username',
 			'type' => 'text',
@@ -49,10 +49,10 @@ class Compiler_Tag_Test extends Compiler_Test
 	public function testTagInsideTag()
 	{	
 		$tag = new Tag;
-		$tag->name = 'a';
+		$tag->setName('a');
 		
 		$span = new Tag;
-		$span->name = 'span';
+		$span->setName('span');
 		
 		$tag->addChild( $span );
 		

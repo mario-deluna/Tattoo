@@ -56,7 +56,7 @@ class ShortTag extends Parser
             $this->errorUnexpectedToken($token);
         }
 
-        $this->tag->name = $token->getValue();
+        $this->tag->setName( $token->getValue() );
 
         // now lets parse the attributes
         $this->skipToken();

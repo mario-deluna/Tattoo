@@ -16,7 +16,7 @@ class Tag extends Scope
 	 *
 	 * @var string
 	 */
-	public $name;
+	protected $name;
 	
 	/**
 	 * The tags attributes
