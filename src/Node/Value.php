@@ -8,22 +8,30 @@
  */
 
 use Tattoo\Node;
+use Tattoo\Exception;
 
 class Value extends Node
 {
 	/**
 	 * The value type
 	 *
-	 * @var Node
+	 * @var string
 	 */
 	protected $type = null;
 	
 	/**
 	 * The value value >.>
 	 *
-	 * @var Node
+	 * @var mixed
 	 */
 	protected $value = null;
+
+	/**
+	 * An array of available and valid value types
+	 * 
+	 * @var array[string]
+	 */
+	private $availableValueTypes = array('string');
 
 	/**
      * Create a new array key with an value
@@ -35,6 +43,26 @@ class Value extends Node
     public function __construct($value = null, $type = null)
     {
     	$this->value = $value;
-    	$this->type = $type;
+
+    	if (!is_null($type))
+    	{
+    		$this->type = $this->setType($type);
+    	}
+    }
+
+    /**
+     * Validate if the given type is correct
+     * 
+     * @param string 				$type
+     * @return string
+     */
+    protected function setType($type)
+    {
+    	if (!in_array($type, $this->availableValueTypes))
+    	{
+    		throw new Exception('Invalid value type ' . $type . ' given.');
+    	}
+
+    	return $type;
     }
 }
