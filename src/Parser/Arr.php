@@ -7,7 +7,11 @@
  * @copyright         2015 Mario Döring
  */
 
+use Tattoo\Node\Value as ValueNode;
 use Tattoo\Node\Arr as ArrNode;
+use Tattoo\Node\Arr\AutoKey;
+use Tattoo\Node\Arr\NumericKey;
+use Tattoo\Node\Arr\AssocKey;
 use Tattoo\Parser;
 
 class Arr extends Parser
@@ -47,7 +51,7 @@ class Arr extends Parser
     protected function next()
     {
         $token = $this->currentToken();
-        $currentKey = null;
+        $currentKey = new AutoKey;
         $currentValue = null;
 
         // try to get the key if there is one
@@ -58,7 +62,15 @@ class Arr extends Parser
                 throw new Exception('Cannot use token of type: ' . $token->type . ' as array key at line: ' . $token->line);
             }
 
-            $currentKey = $token;
+            // handle assoc keys
+            if ($token->type === 'identifier')
+            {
+                $currentKey = new AssocKey;
+                $currentKey->value = new ValueNode;
+                $currentKey->value->value = $token->getValue();
+                $currentKey->value->type = 'string';
+            }
+
             $this->skipToken(2);
         }
 
