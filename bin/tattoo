@@ -38,7 +38,7 @@ if ( $command == 'compile' )
 	
 	if ( $target = @array_shift( $argv ) )
 	{
-		file_put_contents( __DIR__.'/../cache/'.$target, "<?php require __DIR__ . '/../vendor/autoload.php';\n\n".$phpCode );
+		file_put_contents( __DIR__.'/../cache/'.$target, "<?php require __DIR__ . '/../vendor/autoload.php';\n\n".$phpCode."\necho '\n';" );
 	}
 	else
 	{

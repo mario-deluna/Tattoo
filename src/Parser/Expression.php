@@ -43,6 +43,8 @@ class Expression extends Parser
         {
             return new ValueNode($token->getValue(), $token->type);
         }
+
+        $this->skipToken();
         // first we need to identify the what kind of expression we have
     }
 }
