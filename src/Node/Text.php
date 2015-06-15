@@ -16,7 +16,7 @@ class Text extends Node
 	 *
 	 * @var Node
 	 */
-	public $content = null;
+	protected $content = null;
 	
 	/**
 	 * A text does have a parent but no children
@@ -24,4 +24,14 @@ class Text extends Node
 	 * @var Node
 	 */
 	public $parent = null;
+
+	/**
+     * Create new text node with content node
+     * 
+     * @param Tattoo\Node 			$value
+     */
+    public function __construct(Node $content)
+    {
+    	$this->content = $content;
+    }
 }

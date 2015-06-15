@@ -63,11 +63,10 @@ class ShortTag extends Parser
         $this->tag->attributes = $this->parseAttributeTokens($this->getTokensUntil('assignText'));
 
         // and the value for the text
-        $value = new Expression($this->getTokensUntilLinebreak());
+        $expression = new Expression($this->getTokensUntilLinebreak());
 
         // create new text node containing the value
-        $text = new TextNode;
-        $text->content = $value->parse();
+        $text = new TextNode($expression->parse());
 
         // append that node to the current tag
         $this->tag->addChild($text);
