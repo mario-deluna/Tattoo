@@ -19,7 +19,6 @@ class Tag extends Scope
     public function compile()
     {
         // if the contents are empty we can directly return the rendered tag
-
         if (empty($this->node->children)) 
         {
             $tag = new EngineTag($this->node->getName(), $this->node->getAttributes());

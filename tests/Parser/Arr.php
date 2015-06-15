@@ -24,42 +24,8 @@ class Parser_Arr_Test extends Parser_Test
      * @return void
      */
     protected function assertArrayValues(array $expected, $code)
-    {
-        $tattooArray = $this->convertTattooNodeWithArray($this->parse($code));
-        $this->assertEquals($expected, $tattooArray);
-    }
-    
-    /**
-     * Compares a tattoo array node with an php array
-     * 
-     * @param array             $expected
-     * @param ArrNode           $node
-     * @return void
-     */
-    protected function convertTattooNodeWithArray(ArrNode $node)
-    {
-        $convertedArray = array();
-
-        foreach($node->getItems() as $item)
-        {
-            list($key, $value) = $item;
-
-            if ($value instanceof ArrNode)
-            {
-                $value = $this->convertTattooNodeWithArray($value);
-            } else {
-                $value = $value->getValue();
-            }
-
-            if (is_null($key = $key->getValue()))
-            {
-                $convertedArray[] = $value;
-            } else {
-                $convertedArray[$key->getValue()] = $value;
-            }
-        }
-
-        return $convertedArray;
+    {  
+        $this->assertEquals($expected, $this->parse($code)->convertToNative());
     }
 
     /**
