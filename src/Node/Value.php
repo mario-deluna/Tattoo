@@ -12,6 +12,20 @@ use Tattoo\Node;
 class Value extends Node
 {
 	/**
+	 * The value type
+	 *
+	 * @var Node
+	 */
+	protected $type = null;
+	
+	/**
+	 * The value value >.>
+	 *
+	 * @var Node
+	 */
+	protected $value = null;
+
+	/**
      * Create a new array key with an value
      * 
      * @param mixed 			$value
@@ -23,18 +37,4 @@ class Value extends Node
     	$this->value = $value;
     	$this->type = $type;
     }
-
-	/**
-	 * The value type
-	 *
-	 * @var Node
-	 */
-	public $type = null;
-	
-	/**
-	 * The value value >.>
-	 *
-	 * @var Node
-	 */
-	public $value = null;
 }

@@ -48,7 +48,7 @@ class Parser_Arr_Test extends Parser_Test
             {
                 $value = $this->convertTattooNodeWithArray($value);
             } else {
-                $value = $value->value;
+                $value = $value->getValue();
             }
 
             if (is_null($key->getValue()))
