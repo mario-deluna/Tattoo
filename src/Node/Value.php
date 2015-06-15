@@ -31,7 +31,12 @@ class Value extends Node
 	 * 
 	 * @var array[string]
 	 */
-	private $availableValueTypes = array('string');
+	private $availableValueTypes = array(
+		'string',
+		'number',
+		'boolTrue',
+		'boolFalse'
+	);
 
 	/**
      * Create a new array key with an value

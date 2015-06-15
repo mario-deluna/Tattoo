@@ -81,8 +81,42 @@ class Parser_Arr_Test extends Parser_Test
     /**
      * tests Parser
      */
+    public function testNumberArray()
+    {
+        $this->assertArrayValues(array(1,2,3), '1, 2 ,3');
+    }
+
+    /**
+     * tests Parser
+     */
     public function testNormalAssocArray()
     {
         $this->assertArrayValues(array('foo' => 'bar', 'bar' => 'foo'), 'foo: "bar", bar: "foo"');
+    }
+
+    /**
+     * tests Parser
+     */
+    public function testMixedArray()
+    {
+        $this->assertArrayValues(array('bar', true, false, 'bar' => 'foo'), '"bar", yes, no, bar: "foo"');
+    }
+
+     /**
+     * tests Parser
+     */
+    public function testMultipleDimensions()
+    {
+        $this->assertArrayValues(array(array('foo')), '{ "foo" }');
+
+        // more more more
+        $this->assertArrayValues(array(array('foo'), array('foo')), '{ "foo" }, { "foo" }');
+
+        // more complexity
+        $this->assertArrayValues(array(
+            42,
+            array('foo', 'bar', array('batz')),
+            true
+        ), '42, { "foo", "bar", { "batz" } }, yes');
     }
 }

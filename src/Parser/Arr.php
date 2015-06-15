@@ -96,8 +96,7 @@ class Arr extends Parser
             }
 
             // skip the closing scope
-            $this->skipToken();
-
+            $this->skipToken(2);
             $currentValue = $this->parseArrayTokens($subTokens);
         }
         else
