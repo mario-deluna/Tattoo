@@ -158,6 +158,20 @@ abstract class Parser
     }
 
     /**
+     * Skips all tokens of given type
+     * 
+     * @param string            $type
+     * @return void
+     */
+    protected function skipTokensOfType($type)
+    {
+        while($this->currentToken()->type === $type)
+        {
+            $this->skipToken();
+        }
+    }
+
+    /**
      * Check if the current token is the end of a expression
      *
      * @return bool

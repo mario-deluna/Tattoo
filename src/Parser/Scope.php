@@ -54,5 +54,21 @@ class Scope extends Parser
             $shortTagParser = new ShortTag($this->getTokensUntilLinebreak());
             $this->scope->addChild($shortTagParser->parse());
         }
+
+        // obviously when tag opens we parse a tag
+        elseif ($token->type === 'tagOpen')
+        {
+            $this->skipToken();
+            $tagTokens = $this->getTokensUntil('tagClose');
+            $this->skipTokensOfType('linebreak');
+
+
+
+            var_dump($this->currentToken()); die;
+            $shortTagParser = new ShortTag($this->getTokensUntilLinebreak());
+            $this->scope->addChild($shortTagParser->parse());
+        }
+
+        $this->errorUnexpectedToken($token);
     }
 }
