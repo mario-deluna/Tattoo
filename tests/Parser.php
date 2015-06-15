@@ -15,28 +15,6 @@ use Tattoo\Lexer;
 use Tattoo\Parser;
 use Tattoo\Parser\Scope;
 
-class Parser_Dummy extends Parser
-{
-    protected function prepare()  {}
-
-    protected function node() {}
-
-    protected function next()  {}
-
-    /**
-     * Forward calls
-     * This allows us to test protected methods on their own.
-     * Probably not best practice but works..
-     */
-    public function __call($method, $arguments)
-    {
-        if (method_exists($this, $method)) 
-        {
-            return call_user_func_array(array($this, $method), $arguments);
-        }
-    }
-}
-
 class Parser_Test extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -170,5 +148,26 @@ class Parser_Test extends \PHPUnit_Framework_TestCase
     {
     	$this->assertAttributesArray(array(), '#phpunit.main.foo..ba');
     }
+}
 
+class Parser_Dummy extends Parser
+{
+    protected function prepare()  {}
+
+    protected function node() {}
+
+    protected function next()  {}
+
+    /**
+     * Forward calls
+     * This allows us to test protected methods on their own.
+     * Probably not best practice but works..
+     */
+    public function __call($method, $arguments)
+    {
+        if (method_exists($this, $method)) 
+        {
+            return call_user_func_array(array($this, $method), $arguments);
+        }
+    }
 }
