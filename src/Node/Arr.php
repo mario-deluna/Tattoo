@@ -16,7 +16,7 @@ class Arr extends Node
      *
      * @var array[Node]
      */
-    public $items = array();
+    protected $items = array();
 
     /**
      * Add a new child node to the scope

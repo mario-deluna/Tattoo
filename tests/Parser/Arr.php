@@ -40,7 +40,7 @@ class Parser_Arr_Test extends Parser_Test
     {
         $convertedArray = array();
 
-        foreach($node->items as $item)
+        foreach($node->getItems() as $item)
         {
             list($key, $value) = $item;
 
