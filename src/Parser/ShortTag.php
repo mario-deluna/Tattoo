@@ -50,7 +50,6 @@ class ShortTag extends Parser
         $token = $this->currentToken();
 
         // current token has to be an identifier
-
         if ($token->type !== 'identifier') 
         {
             $this->errorUnexpectedToken($token);

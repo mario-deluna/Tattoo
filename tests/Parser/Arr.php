@@ -51,11 +51,11 @@ class Parser_Arr_Test extends Parser_Test
                 $value = $value->getValue();
             }
 
-            if (is_null($key->getValue()))
+            if (is_null($key = $key->getValue()))
             {
                 $convertedArray[] = $value;
             } else {
-                $convertedArray[$key->value] = $value;
+                $convertedArray[$key->getValue()] = $value;
             }
         }
 
@@ -78,11 +78,11 @@ class Parser_Arr_Test extends Parser_Test
         $this->assertArrayValues(array('a', 'b'), '"a", "b"');
     }
 
-     /**
+    /**
      * tests Parser
      */
     public function testNormalAssocArray()
     {
-        //$this->assertArrayValues(array('foo' => 'bar', 'bar' => 'foo'), 'foo: "bar", bar: "foo"');
+        $this->assertArrayValues(array('foo' => 'bar', 'bar' => 'foo'), 'foo: "bar", bar: "foo"');
     }
 }
