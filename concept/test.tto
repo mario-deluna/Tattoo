@@ -1,24 +1,41 @@
-
-[div] => 'Hello '
+[div #main-container .container]
 {
-	[ul] => 'Foo'
+	h1 => 'Tattoo Demo'
+
+	[ul #main-navigation .navigation]
 	{
-		[li] => 'f'
+		[li]
 		{
 			[a.navigation-item]
 			{
 				span => 'Home'
 			}
+		}
 
+		[li]
+		{
 			[a.navigation-item]
 			{
 				span => 'About'
 			}
+		}
 
+		[li]
+		{
 			[a.navigation-item]
 			{
 				span => 'Contact'
 			}
 		}
+	}
+
+	[form.sign-in-form, method: 'post', action: '/login/']
+	{
+		[input type: 'text', name: 'username']
+	}
+
+	[footer #layout-footer]
+	{
+		small data: {year: 2015, by: 'ClanCats GmbH'} => 'Copyright 2015'
 	}
 }

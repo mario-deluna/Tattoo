@@ -76,12 +76,12 @@ class Scope extends Parser
 
             // if the next token is an open scope we get all 
             // tokens until the scope closes again
-            if ($this->currentToken()->type === 'scopeOpen')   
+            if ($this->currentToken() && $this->currentToken()->type === 'scopeOpen')   
             {
                 $tagTokens = array_merge($tagTokens, $this->getTokensUntilClosingScope(true));
                 $this->skipToken();
-            }
-            
+             }
+
             $tagParser = new Tag($tagTokens);
             $this->scope->addChild($tagParser->parse());
         }

@@ -64,7 +64,7 @@ class Tag extends Parser
 
         $this->skipTokensOfType('linebreak');
 
-        if ($this->currentToken()->type === 'scopeOpen')
+        if ($this->currentToken() && $this->currentToken()->type === 'scopeOpen')
         {
             // now parse the rest of the scope
             if ($scopeTokens = $this->getTokensUntilClosingScope())
