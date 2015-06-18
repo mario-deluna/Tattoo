@@ -48,10 +48,17 @@ class Scope extends Parser
     {
         $token = $this->currentToken();
 
+        // we can skip linebreaks
+        if ($token->type === 'linebreak')
+        {
+            $this->skipToken();
+        }
+
         // only short tags start with an identifier
-        if ($token->type === 'identifier') 
+        elseif ($token->type === 'identifier') 
         {
             $shortTagParser = new ShortTag($this->getTokensUntilLinebreak());
+            $this->skipToken();
             $this->scope->addChild($shortTagParser->parse());
         }
 
@@ -59,16 +66,31 @@ class Scope extends Parser
         elseif ($token->type === 'tagOpen')
         {
             $this->skipToken();
+
             $tagTokens = $this->getTokensUntil('tagClose');
+            $this->skipToken();
+            $tagTokens = array_merge($tagTokens, $this->getTokensUntilLinebreak());
+
+            // skip additional linebreaks
             $this->skipTokensOfType('linebreak');
 
-
-
-            var_dump($this->currentToken()); die;
-            $shortTagParser = new ShortTag($this->getTokensUntilLinebreak());
-            $this->scope->addChild($shortTagParser->parse());
+            // if the next token is an open scope we get all 
+            // tokens until the scope closes again
+            if ($this->currentToken()->type === 'scopeOpen')   
+            {
+                $tagTokens = array_merge($tagTokens, $this->getTokensUntilClosingScope(true));
+                $this->skipToken();
+            }
+            
+            $tagParser = new Tag($tagTokens);
+            $this->scope->addChild($tagParser->parse());
         }
 
-        $this->errorUnexpectedToken($token);
+        // otherwise throw an exception
+        else
+        {
+             throw $this->errorUnexpectedToken($token);
+        }
+       
     }
 }

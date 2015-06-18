@@ -31,10 +31,15 @@ class Scope extends Node
      * @param Node             $node
      * @return void
      */
-    public function addChild(Node $node)
+    public function addChild(Node $node, $context = null)
     {
         if (property_exists($node, 'parent')) 
         {
+            if (is_null($context))
+            {
+                $context = $this;
+            }
+            
             $node->parent = $this;
         }
 

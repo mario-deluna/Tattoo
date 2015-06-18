@@ -1,2 +1,24 @@
 
-div #main.container, class: {"strong", "uppercase"} => 'Hello World'
+[div] => 'Hello '
+{
+	[ul] => 'Foo'
+	{
+		[li] => 'f'
+		{
+			[a.navigation-item]
+			{
+				span => 'Home'
+			}
+
+			[a.navigation-item]
+			{
+				span => 'About'
+			}
+
+			[a.navigation-item]
+			{
+				span => 'Contact'
+			}
+		}
+	}
+}

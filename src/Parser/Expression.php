@@ -26,7 +26,7 @@ class Expression extends Parser
      */
     protected function node()
     {
-        throw new Exception('Cannot build node from empty expression.');
+        throw new Exception('Cannot build node from empty expression on line: ' . $this->currentToken()->line);
     }
 
     /**

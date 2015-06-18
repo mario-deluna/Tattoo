@@ -74,7 +74,6 @@ class Arr extends Parser
         // handle recursion
         if ($this->currentToken()->type === 'scopeOpen')
         {
-
             $this->skipToken();
 
             $currentLevel = 0;
@@ -104,6 +103,7 @@ class Arr extends Parser
         else
         {
             $currentValue = new Expression($this->getTokensUntil('comma'));
+            $this->skipToken();
             $currentValue = $currentValue->parse();
         }
 

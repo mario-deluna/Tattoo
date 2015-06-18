@@ -85,6 +85,11 @@ abstract class Parser
      */
     protected function currentToken()
     {
+        if (!isset($this->tokens[$this->index]))
+        {
+            return null;
+        }
+
         return $this->tokens[$this->index];
     }
 
@@ -136,13 +141,16 @@ abstract class Parser
     {
         $tokens = array();
 
-        while (!$this->parserIsDone() && $this->currentToken()->type !== $type) 
+        if (!is_array($type))
+        {
+            $type = array($type);
+        }
+
+        while (!$this->parserIsDone() && !in_array($this->currentToken()->type, $type)) 
         {
             $tokens[] = $this->currentToken();
             $this->skipToken();
         }
-
-        $this->skipToken();
 
         return $tokens;
     }
@@ -165,7 +173,7 @@ abstract class Parser
      */
     protected function skipTokensOfType($type)
     {
-        while($this->currentToken()->type === $type)
+        while($this->currentToken() && $this->currentToken()->type === $type)
         {
             $this->skipToken();
         }
@@ -200,6 +208,56 @@ abstract class Parser
         }
 
         return $found;
+    }
+
+    /**
+     * Retruns all tokens until the curren scope is closed again
+     * 
+     * @return array[Tattoo\Token]
+     */
+    protected function getTokensUntilClosingScope($includeScope = false)
+    {
+        if ($this->currentToken()->type !== 'scopeOpen')
+        {
+            throw $this->errorUnexpectedToken($this->currentToken());
+        }
+
+        $tokens = array();
+
+        // include the opening scope
+        if ($includeScope)
+        {
+            $tokens[] = $this->currentToken();
+        }
+        
+        $this->skipToken();
+
+       
+        $currentLevel = 0;
+
+        while($this->currentToken() && !($this->currentToken()->type === 'scopeClose' && $currentLevel === 0))
+        {
+            if ($this->currentToken()->type === 'scopeOpen')
+            {
+                $currentLevel++;
+            }
+
+            if ($this->currentToken()->type === 'scopeClose')
+            {
+                $currentLevel--;
+            }
+
+            $tokens[] = $this->currentToken();
+            $this->skipToken();
+        }
+
+        // include the closing scope
+        if ($includeScope)
+        {
+            $tokens[] = $this->currentToken();
+        }
+
+        return $tokens;
     }
 
     /**
@@ -332,7 +390,6 @@ abstract class Parser
             {
                 return $specialNode;
             }
-
         }
 
         // return the result after the loop is done

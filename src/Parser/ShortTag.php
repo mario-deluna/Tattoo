@@ -52,22 +52,32 @@ class ShortTag extends Parser
         // current token has to be an identifier
         if ($token->type !== 'identifier') 
         {
-            $this->errorUnexpectedToken($token);
+            throw $this->errorUnexpectedToken($token);
         }
 
-        $this->tag->setName( $token->getValue() );
+        $this->tag->setName($token->getValue());
+        $this->skipToken();
 
         // now lets parse the attributes
-        $this->skipToken();
         $this->tag->attributes = $this->parseAttributeTokens($this->getTokensUntil('assignText'));
 
+        // skip if assign text
+        if ($this->currentToken() && $this->currentToken()->type === 'assignText')
+        {
+            $this->skipToken();
+        }
+
         // and the value for the text
-        $expression = new Expression($this->getTokensUntilLinebreak());
+        if ($expressionTokens = $this->getTokensUntilLinebreak())
+        {
+            $expression = new Expression($expressionTokens);
+            $this->skipToken();
 
-        // create new text node containing the value
-        $text = new TextNode($expression->parse());
+            // create new text node containing the value
+            $text = new TextNode($expression->parse());
 
-        // append that node to the current tag
-        $this->tag->addChild($text);
+            // append that node to the current tag
+            $this->tag->addChild($text);
+        }
     }
 }
