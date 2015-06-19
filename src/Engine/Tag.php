@@ -97,7 +97,7 @@ class Tag
             $attributeString .= ' ' . $key . '="' . $value . '"';
         }
 
-        if (empty($this->content)) 
+        if (is_null($this->content)) 
         {
             return '<' . $this->name . $attributeString . " />";
         }
