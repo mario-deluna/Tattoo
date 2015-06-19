@@ -1,0 +1,89 @@
+[html lang: 'en']
+{
+	[head]
+	{
+		// set the page title
+		title => 'Tattoo Demo'
+
+		[meta charset: 'utf-8']
+
+		// stylesheets
+		[link rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css']
+	}
+
+	[body]
+	{
+		[nav #top .navbar.navbar-default.navbar-static-top]
+		{
+			[div.container]
+			{
+				[div.navbar-header]
+				{
+					a.navbar-brand, href: '/foo.php' => 'Tattoo Demo'
+				}
+				[div #navbar]
+				{
+					[ul .nav.navbar-nav]
+					{
+						[li.active]
+						{
+							a.navigation-item, href: '/foo.php' => 'Home'
+						}
+
+						[li]
+						{
+							a.navigation-item, href: '/about.php' => 'About'
+						}
+
+						[li]
+						{
+							a.navigation-item, href: '/contact.php' => 'Contact'
+						}
+					}
+				}
+			}
+		}
+
+		[div #main-container .container]
+		{
+			[div.row]
+			{
+				[div.col-md-6.col-md-offset-3]
+				{
+					h1 => 'Tattoo Demo'
+
+					[hr]
+
+					// create a dummy sign in form 
+					[form.sign-in-form, method: 'post', action: '/login/']
+					{
+						// The username input group
+						[div.form-group]
+						{
+							label for: 'username-input' => 'Username'
+							[input.form-control #username-input, type: 'text']
+						}
+
+						// and the password input group
+						[div.form-group]
+						{
+							label for: 'password-input' => 'Password'
+							[input.form-control #password-input, type: 'password']
+						}
+
+						[button.btn.btn-primary, type: 'submit'] => 'Login'
+					}
+				}
+			}
+			
+			// print a stupid footer
+			[footer #layout-footer]
+			{
+				small data: {year: 2015, by: 'Mario Döring'} => 'Copyright 2015'
+			}
+		}
+
+		[script src: 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'] => ''
+		[script src: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'] => ''
+	}
+}
