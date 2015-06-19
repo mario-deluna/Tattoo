@@ -1,9 +1,49 @@
 Tattoo Template
 ===
 
-Tattoo is a simple hyper text programming language that renders into HTML.
+Tattoo is a simple hyper text programming / template language that renders into HTML.
 
 [![Build Status](https://travis-ci.org/mario-deluna/Tattoo.svg)](https://travis-ci.org/mario-deluna/Tattoo)
+
+
+## Is this some kind of a joke?
+
+A programming language written in PHP that compiles into PHP? When all you have is a hammer everything starts to look like a nail hu? 
+
+Well "Jaein", when I wrote the first concept for this language I thought about writing an interpreter in C. But then more and more ideas came together how Tattoo should work and be implemented into applications and I realised that you won't ever write stand alone applications with tattoo. So the result is a mixture between a programming language and a templating engine written in PHP for PHP.
+
+## The great goal
+
+I freaking hate repeating myself, after years of developing web applications I've got kind of sick that the only thing that always stayed a mess was the HTML markup in the templates. So there was this idea stuck in my head of a Templating engine that actually was a programming language.
+
+Examples speak for itself, imagine follwoing case:
+
+```html
+<ul id="main-navigation" class="nav">
+	<li <?php if ($currentUrl === '/') : ?>class="active"<?php endif; ?>>
+		<a class="navigation-item navigation-item-home <?php if ($currentUrl === '/') : ?>navigation-item-active<?php endif; ?>" href="/">
+			Home
+		</a>
+	</li>
+</ul> 
+```
+
+pretty horrible to read huh? Now the same thing with tattoo:
+
+```tattoo
+[ul #main-navigation .nav] 
+{
+	[li][a .navigation-item .navigation-item-home] => 'Home' 
+	{
+		if @currentUrl == '/' {
+			@this.class.add('navigation-item-active')
+			@this.parent.class.add('active')
+		}
+	}
+}
+```
+
+Much better or not? Having the entire template parsed instead of just some tags and sections gives a lot of benefits. You won't have any markup errors because the compiler will scream at you when something is wrong. You can modify parent tags. You can make statements based on current tag attributes. Do as many linebreaks as you want to, they don't end up in the html output. Get rid of the "Did I already closed that damn tag?" problem.
 
 ---
 
