@@ -24,7 +24,12 @@ Let me show you an example:
 ```html
 <ul id="main-navigation" class="nav">
 	<li <?php if ($currentUrl === '/') : ?>class="active"<?php endif; ?>>
-		<a class="navigation-item navigation-item-home <?php if ($currentUrl === '/') : ?>navigation-item-active<?php endif; ?>" href="/">
+		<a 
+			class="navigation-item 
+				   navigation-item-home 
+				   <?php if ($currentUrl === '/') : ?>navigation-item-active<?php endif; ?>" 
+			href="/"
+		>
 			Home
 		</a>
 	</li>
