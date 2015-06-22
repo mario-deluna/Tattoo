@@ -27,7 +27,9 @@ Let me show you an example:
 		<a 
 			class="navigation-item 
 				   navigation-item-home 
-				   <?php if ($currentUrl === '/') : ?>navigation-item-active<?php endif; ?>" 
+				   <?php if ($currentUrl === '/') : ?>
+				   navigation-item-active
+				   <?php endif; ?>" 
 			href="/"
 		>
 			Home
