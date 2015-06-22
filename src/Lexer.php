@@ -78,9 +78,9 @@ class Lexer
         "/^(elseif)/" => "elseif",
         "/^(else)/" => "else",
 
-        "/^(each)/" => "foreach",
+        "/^(each )/" => "foreach",
         "/^(in )/" => "in",
-        "/^(loop)/" => "loop",
+        "/^(loop )/" => "loop",
 
         "/^(extend)/" => "extend",
         "/^(view)/" => "view",

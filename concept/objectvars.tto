@@ -1,6 +1,6 @@
 @navItem = [a]
 {
-	@this.class.add('navigation-item');
+	@this.class.add("navigation-item");
 }
 
 [ul]
