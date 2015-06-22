@@ -59,45 +59,137 @@ Tattoo considers html tags as scoped objects this allows you to write your marku
 
 **The language isn't done yet. It's just a concept. But I will do my best to create first prototype in the next few months.**
 
-## Notes
-
-_Notes to myself and everyone who's bored._
-
-A node ( `[div]`, `span => 'foo'` ) always directly represents an element. All given data of such a node object is interpreted as element attribute.
-Extending (`extend`) a node allows to a callback like thingy after a the given node has been created also from the context of the node.
-Preparing (`prepare`) does the same thing as extend but the callback acts before any custom data is passed.
-A view does not stand in any context of a node so all given data / arguments have to be handeled by the view itself.
-
-You should be able to store nodes in variables and modify them before printing. ( see `concept/objectvars.tto`, `concept/bootstrapmodal.tto` )
-
-Only nodes can be printed. When you print a string or a number to parser basically creates a text node.
-
-A view can be loaded using the dobule point `:` initiator.
-
-
-
 ## Syntax
 
-### simple tag
+Let's just drive directly into the syntax.
 
-```
-h1 #main-title => "Say hello to Tattoo"
-```
+### Nodes
 
-HTML:
+Tattoo _nodes_ are basically HTML tags. So let's write the alltime classic hello world:
+
+```tattoo
+h1 => "Hello World"
+```
 
 ```html
-<h1 id="main-title">Say hello to Tattoo</h1>
+<h1>Hello World</h1>
+```
+
+You can use the first argument to add classes and set the nodes id.
+
+```tattoo
+h1 #page-title .underlined => "Hello World"
+```
+
+```html
+<h1 id="page-title" class="underlined">Hello World</h1>
+```
+
+All other arguments will be used as node attributes.
+
+```tattoo
+a.btn.btn-sm, href: '/login' => 'Sign in'
+```
+
+```html
+<a class="btn btn-sm" href="/login">Sign In</a>
+```
+
+#### Value less nodes 
+
+Sometimes you want to create a node without any contents. 
+
+
+```tattoo
+[img src: 'logo.png']
+```
+
+```html
+<img src="logo.png" />
+```
+
+#### Scoped nodes
+
+Obviously you are going to build a tree structure with tattoo. Node definitions inside `[]` allow a scope.
+
+```tattoo
+[div.image-container]
+{
+	[img src: 'wallpaper.jpg']
+}
+```
+
+```html
+<div class="image-container">
+	<img src="wallpaper.jpg">
+</div>
+```
+
+You are still able to directly assign a text value.
+
+```tattoo
+[p] => 'Hello '
+{
+	span => 'World'
+}
+```
+
+```html
+<p>
+	Hello <span>World</span>
+</p>
+```
+
+#### Node tree
+
+Often you have a tree with many levels that just contain one child. Instead of creating a scope for every level you can just forward them.
+
+
+```tattoo
+[header][nav.navbar][ul][li.active][a href: '/'] => 'Home'
+{
+	i.glyphicon.glyphicon-home => ''
+}
+```
+
+```html
+<header>
+	<nav class="navbar">
+		<ul>
+			<li class="active">
+				<a href="/">Home <i class="glyphicon glyphicon-home"></i></a>
+			</li>
+		</ul>
+	</nav>
+</header>
+```
+
+
+---
+
+## OLD STUFF KEEP UNTIL I REWROTE EVERYTHING
+
+```tattoo
+[form #login-form, action: '/login', method: 'post']
+{
+	p .info => "Please provide your login information."
+
+	[input ]
+}
+```
+
+
+```tattoo
+button.btn title: 'Amazing Tooltip', data: {toggle: 'tooltip', placement: 'left'} => 'Hello!'
+```
+
+```html
+<button class="btn" title="Amazing Tooltip" data-toggle="tooltip" data-placement="left" >Hello!</button>
 ```
 
 ### tag with scope
 
-```
-[form #login-form, action="/login/"]
-{
-	span .info => "Please provide your login information."
-}
-```
+
 
 HTML:
 
@@ -285,3 +377,18 @@ HTML:
 	<hr class="page-title-underline" />
 </div>
 ```
+
+## Notes
+
+_Notes to myself and everyone who's bored._
+
+A node ( `[div]`, `span => 'foo'` ) always directly represents an element. All given data of such a node object is interpreted as element attribute.
+Extending (`extend`) a node allows to a callback like thingy after a the given node has been created also from the context of the node.
+Preparing (`prepare`) does the same thing as extend but the callback acts before any custom data is passed.
+A view does not stand in any context of a node so all given data / arguments have to be handeled by the view itself.
+
+You should be able to store nodes in variables and modify them before printing. ( see `concept/objectvars.tto`, `concept/bootstrapmodal.tto` )
+
+Only nodes can be printed. When you print a string or a number to parser basically creates a text node.
+
+A view can be loaded using the dobule point `:` initiator.
