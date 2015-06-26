@@ -67,6 +67,25 @@ class Each extends Parser
 
         $this->loop->setValueVariable($this->parseVariable());
 
-        var_dump($this->loop); die;
+        // skip so that we can parse the upcoming array or variable
+        $this->skipToken();
+
+        // parse the upcoming expresssion
+        $expressionTokens = $this->getTokensUntilLinebreak();
+
+        // if the last token was an scope open we go that token
+        // back for the loop parser and remove it from the expression tokens
+        if ($this->nextToken(-1)->type === 'scopeOpen')
+        {
+            $this->skipToken(-1);
+            $expressionTokens = array_slice($expressionTokens, 0, -1);
+        }
+
+        // skip linebreaks
+        $this->skipTokensOfType('linebreak');
+
+        var_dump($this->currentToken());
+
+        var_dump($expressionTokens); die;
     }
 }
