@@ -8,6 +8,7 @@
  */
 
 use Tattoo\Parser\Arr as ArrayParser;
+use Tattoo\Node\Variable as VariableNode;
 
 abstract class Parser
 {
@@ -132,9 +133,32 @@ abstract class Parser
     }
 
     /**
+     * Return all remaining tokens 
+     * 
+     * @param string                    $skip
+     * @return array[Tattoo\Token]
+     */
+    protected function getRemainingTokens($skip = false)
+    {
+        $tokens = array();
+
+        while (!$this->parserIsDone()) 
+        {
+            $tokens[] = $this->currentToken(); $this->skipToken();
+        }
+
+        if (!$skip)
+        {
+            $this->index -= count($tokens);
+        }
+
+        return $tokens;
+    }
+
+    /**
      * Get all tokens until the next token with given type
      *
-     * @param string             $type
+     * @param string                     $type
      * @return array[Tattoo\Token]
      */
     protected function getTokensUntil($type)
@@ -261,7 +285,29 @@ abstract class Parser
     }
 
     /**
+     * Parse an upcoming variable node
+     * 
+     * @return Tattoo\Node\Variable
+     */
+    protected function parseVariable()
+    {
+        $token = $this->currentToken();
+
+        if ($token->type !== 'variable')
+        {
+           throw $this->errorUnexpectedToken($token);
+        }
+
+        $this->skipToken();
+
+        return new VariableNode($token->getValue());
+    }
+
+    /**
      * Parse an array node out of the given tokens
+     * 
+     * @todo: This should not accept tokens as argument
+     *        the parser should always handle from the current index
      * 
      * @param array[Tattoo\Token]             $tokens
      * @return Tattoo\Node\Arr

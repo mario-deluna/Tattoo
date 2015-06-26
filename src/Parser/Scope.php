@@ -89,10 +89,14 @@ class Scope extends Parser
         // loops
         elseif (in_array($token->type, array('foreach', 'loop')))
         {
-            $loopTokens = $this->getTokensUntil('scopeOpen');
-            $loopTokens = array_merge($loopTokens, $this->getTokensUntilClosingScope(true));
+            $loopTokens = $this->getRemainingTokens();
 
-            var_dump($loopTokens); die;
+            if ($token->type === 'foreach')
+            {
+                $loopParser = new Loop\Each($loopTokens);
+            }
+
+            var_dump($loopParser->parse()); die;
         }
 
         // otherwise throw an exception

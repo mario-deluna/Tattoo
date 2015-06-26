@@ -1,4 +1,4 @@
-<?php namespace Tattoo\Node;
+<?php namespace Tattoo\Node\Loop;
 
 /**
  * Tattoo Parser
@@ -12,16 +12,23 @@ use Tattoo\Node\Scope;
 class Each extends Scope
 {
 	/**
-	 * The tags name
+	 * The loops key variable to be assigned
 	 *
 	 * @var string
 	 */
-	protected $condition;
+	protected $keyVariable;
+
+	/**
+	 * The loops value variable to be assigned
+	 *
+	 * @var string
+	 */
+	protected $valueVariable;
 	
 	/**
-	 * The tags attributes
+	 * The collection that gets looped through
 	 *
-	 * @var array
+	 * @var string
 	 */
-	public $attributes = array();
+	protected $collection;
 }
