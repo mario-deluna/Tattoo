@@ -2,3 +2,8 @@ each @item in { 'A', 'B', 'C' }
 {
 	span => 'foo'
 }
+
+[div]
+{
+	[form type: 'text']
+}

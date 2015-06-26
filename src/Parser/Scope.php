@@ -96,7 +96,9 @@ class Scope extends Parser
                 $loopParser = new Loop\Each($loopTokens);
             }
 
-            var_dump($loopParser->parse()); die;
+            $this->scope->addChild($loopParser->parse());
+
+            $this->skipToken($loopParser->getIndex());
         }
 
         // otherwise throw an exception

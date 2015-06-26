@@ -80,6 +80,16 @@ abstract class Parser
     }
 
     /**
+     * Returns the current index
+     * 
+     * @return int
+     */
+    public function getIndex()
+    {
+        return $this->index;
+    }
+
+    /**
      * Retrives the current token based on the index
      *
      * @return Tattoo\Token
