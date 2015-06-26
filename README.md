@@ -4,10 +4,15 @@ Tattoo Language
 Tattoo is a simple hyper text programming / template language that renders into HTML.
 
 [![Build Status](https://travis-ci.org/mario-deluna/Tattoo.svg)](https://travis-ci.org/mario-deluna/Tattoo)
+[![Packagist](https://img.shields.io/packagist/dt/mario-deluna/tattoo.svg)]()
+[![Packagist](https://img.shields.io/packagist/l/mario-deluna/tattoo.svg)]()
+[![GitHub release](https://img.shields.io/github/release/mario-deluna/tattoo.svg)]()
 
 ```tattoo
 h1 => 'Welcome to Tattoo :)'
 ```
+
+_There are still PHP5.3 users and I don't want to discriminate these outlaws. Means Tattoo works from 5.3 to 7._
 
 ## Tell me more!
 
