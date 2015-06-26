@@ -44,6 +44,12 @@ class Expression extends Parser
             return new ValueNode($token->getValue(), $token->type);
         }
 
+        // scope open means an array
+        if ($token->type === 'scopeOpen')
+        {
+            return $this->parseArray();
+        }
+
         $this->skipToken();
         // first we need to identify the what kind of expression we have
     }

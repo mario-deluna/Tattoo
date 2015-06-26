@@ -10,6 +10,8 @@
 use Tattoo\Node\Variable as VariableNode;
 use Tattoo\Node\Loop\Each as EachNode;
 use Tattoo\Parser;
+use Tattoo\Parser\Expression;
+use Tattoo\Parser\Scope;
 
 class Each extends Parser
 {
@@ -84,8 +86,31 @@ class Each extends Parser
         // skip linebreaks
         $this->skipTokensOfType('linebreak');
 
-        var_dump($this->currentToken());
+        // parse the expression and assign the resutl to the loop collection
+        $expression = new Expression($expressionTokens);
 
-        var_dump($expressionTokens); die;
+        $this->loop->setCollection($expression->parse());
+
+        // the current token now has to be a scope open so lets parse that scope
+        if ($this->currentToken()->type !== 'scopeOpen')
+        {
+            throw $this->errorUnexpectedToken($this->currentToken());
+        } 
+
+        // now parse the rest of the scope
+        if ($scopeTokens = $this->getTokensUntilClosingScope())
+        {
+            $scopeParser = new Scope($scopeTokens);
+
+            // assign the parsed children to the current tag
+            foreach($scopeParser->parse()->getChildren() as $child)
+            {
+                $this->loop->addChild($child);
+            }
+
+            $this->skipToken();
+        }
+
+        return $this->loop;
     }
 }

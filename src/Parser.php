@@ -304,6 +304,21 @@ abstract class Parser
     }
 
     /**
+     * Parse an array based on the current pointer
+     * 
+     * @return Tattoo\Node\Arr
+     */
+    protected function parseArray()
+    {
+        if ($this->currentToken()->type !== 'scopeOpen')
+        {
+            throw $this->errorUnexpectedToken($this->currentToken());
+        }
+
+        return $this->parseArrayTokens($this->getTokensUntilClosingScope());
+    }
+
+    /**
      * Parse an array node out of the given tokens
      * 
      * @todo: This should not accept tokens as argument
