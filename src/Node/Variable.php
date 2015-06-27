@@ -25,6 +25,22 @@ class Variable extends Node
      */
     public function __construct($name)
     {
-    	$this->name = $name;
+    	$this->name = $this->setName($name);
+    }
+
+    /**
+     * Set the curent name and remove @ prefix
+     * 
+     * @param string            $name
+     * @return void
+     */
+    protected function setName($name)
+    {
+        if (substr($name, 0, 1) === '@')
+        {
+            $name = substr($name, 1);
+        }
+        
+        return $name;
     }
 }

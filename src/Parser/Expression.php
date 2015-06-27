@@ -41,6 +41,16 @@ class Expression extends Parser
         // if we only have one token return it as value
         if ($this->tokenCount === 1) 
         {
+            if ($token->isValue())
+            {
+                return new ValueNode($token->getValue(), $token->type);
+            }  
+            // we also might have a variable
+            elseif($token->type === 'variable')
+            {
+                return $this->parseVariable();
+            }
+
             return new ValueNode($token->getValue(), $token->type);
         }
 

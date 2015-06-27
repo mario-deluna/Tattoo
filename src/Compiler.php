@@ -102,6 +102,17 @@ abstract class Compiler
     }
 
     /**
+     * Exports a tattoo variable
+     * 
+     * @param string            $variable
+     * @return string
+     */
+    protected function exportVariable($variable)
+    {
+        return $this->variableVarHolder() . '[' . $this->export($variable) . ']';
+    }
+
+    /**
      * Exports an expression to php code
      *
      * @param mixed             $var
