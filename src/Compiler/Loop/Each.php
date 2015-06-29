@@ -28,7 +28,7 @@ class Each extends Scope
 
         // and the value variable
         $buffer .= $this->compileChild($this->node->getValueVariable()) . ") {\n";
-    
+        
         // compile child scope
         $buffer .= parent::compile();
 

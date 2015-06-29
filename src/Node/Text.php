@@ -9,7 +9,7 @@
 
 use Tattoo\Node;
 
-class Text extends Node
+class Text extends Node implements ContextInterface
 {
 	/**
 	 * The value type
@@ -33,5 +33,16 @@ class Text extends Node
     public function __construct(Node $content)
     {
     	$this->content = $content;
+    }
+
+    /**
+     * Update the context (parent)
+     * 
+     * @param Node              $context
+     * @return void
+     */
+    public function setContext(Node $context)
+    {
+        $this->parent = $context;
     }
 }

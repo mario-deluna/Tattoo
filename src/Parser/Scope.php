@@ -96,7 +96,17 @@ class Scope extends Parser
                 $loopParser = new Loop\Each($loopTokens);
             }
 
-            $this->scope->addChild($loopParser->parse());
+            $loopNode = $loopParser->parse();
+
+            $this->scope->addChild($loopNode);
+
+            $scopeNode = $this->scope;
+
+            $loopNode->onReciveContext(function($context) use($scopeNode, $loopNode) {
+                // because the loop itself has no real context
+                // we have to forward the context of the current scope
+                $loopNode->setChildContext($context);
+            });
 
             $this->skipToken($loopParser->getIndex());
         }

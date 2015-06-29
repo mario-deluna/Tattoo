@@ -45,8 +45,10 @@ class Arr extends Node
             if ($value instanceof Arr)
             {
                 $value = $value->convertToNative();
-            } else {
+            } elseif ($value instanceof Value) {
                 $value = $value->getValue();
+            } else {
+                $value = $value;
             }
 
             if (is_null($key = $key->getValue()))

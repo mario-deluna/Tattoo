@@ -1,4 +1,13 @@
-each @item in { 'A', 'B', 'C' }
+[ul #demo-list]
 {
-	span => @item
+	each @item in { 'This', 'is', 'Amazing' }
+	{
+		[li.demo-item] 
+		{
+			[a href: @item]
+			{
+				span.strong => @item
+			}
+		}
+	}
 }

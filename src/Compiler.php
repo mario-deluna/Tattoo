@@ -9,6 +9,7 @@
 
 use Tattoo\Node\Scope as ScopeNode;
 use Tattoo\Node\Tag as TagNode;
+use Tattoo\Node;
 
 abstract class Compiler
 {
@@ -120,7 +121,37 @@ abstract class Compiler
      */
     protected function export($var)
     {
-        return var_export($var, true);
+        // compile the variable if its a node
+        if (is_object($var) && $var instanceof Node)
+        {
+            return $this->compileChild($var);
+        }
+
+        // when its a primitive we can export directly
+        if (is_bool($var) || is_numeric($var) || is_string($var))
+        {
+            return var_export($var, true);
+        }
+
+        // if an array export every item on its own
+        if (is_array($var))
+        {
+            $buffer = 'array(';
+
+            if (empty($var))
+            {
+                return $buffer .= ')';
+            }
+
+            foreach($var as $key => $subVar)
+            {
+                $buffer .= $this->export($key) . ' => ' . $this->export($subVar) . ', ';
+            }
+
+            return substr($buffer, 0, -2) . ')';
+        }
+
+        throw new Exception('Cannot export value');
     }
 
     /**

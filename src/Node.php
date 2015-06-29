@@ -12,6 +12,51 @@ use Tattoo\Exception;
 class Node
 {
 	/**
+	 * A node can implement events 
+	 * 
+	 * @var array
+	 */
+	private $events = array();
+
+	/**
+	 * Registers an node event
+	 * 
+	 * @param string 			$name
+	 * @param callable 			$callback 
+	 * @return void
+	 */
+	final public function mindEvent($name, $callback)
+	{
+		if (!is_callable($callback))
+		{
+			throw new \Exception('Cannot register event, given callback is not callable.');
+		} 
+
+		$this->events[$name][] = $callback;
+	}
+
+	/** 
+	 * Fires an event
+	 * 
+	 * @param string 			$name
+	 * @param arguments...
+	 */
+	final public function fireEvent()
+	{
+		$arguments = func_get_args();
+
+		$name = array_shift($arguments);
+
+		if (isset($this->events[$name]))
+		{
+			foreach ($this->events[$name] as $event) 
+			{
+				call_user_func_array($event, $arguments);
+			}
+		}
+	}
+
+	/**
 	 * Magic call function to enable default getters and setters
 	 * 
 	 * @param string 				$method
@@ -41,7 +86,7 @@ class Node
 
 		if (!property_exists($this, $property))
 		{
-			throw new Exception('Property ' . $property . ' is not defined in class.');
+			throw new Exception('Property ' . $property . ' is not defined in: '.get_called_class());
 		}
 
 		$arguments = array_merge(array($property), $arguments);

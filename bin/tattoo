@@ -45,6 +45,23 @@ if ( $command == 'compile' )
 		echo $phpCode;
 	}
 }
+elseif ( $command === 'run' )
+{
+	$source =  __DIR__ . '/../' . array_shift($argv);
+	$cache = basename($source).'.php';
+
+	exec('/usr/bin/php ' . __DIR__ . '/tattoo compile ' . $source . ' ' . $cache);
+
+	ob_start();
+	require __DIR__.'/../cache/' . $cache;
+	$buffer = ob_get_clean();
+
+	$dom = new DOMDocument();
+    $dom->preserveWhiteSpace = false;
+    $dom->loadHTML($buffer, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    $dom->formatOutput = true;
+    echo $dom->saveHTML();
+}
 else
 {
 	echo "Unknown command '".$command."'\n";
