@@ -256,6 +256,15 @@ class Lexer_Test extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * tests Lexer
+	 */
+	public function testDoublicatedLinebreaks()
+	{
+		$lexer = new Lexer( "yes\n\n\nno" );
+		$this->assertEquals(3, count($lexer->tokens()));
+	}
+
+	/**
 	 * tests Lexer error
 	 *
 	 * @expectedException \Tattoo\Lexer\Exception

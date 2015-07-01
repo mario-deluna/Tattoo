@@ -3,8 +3,8 @@
 /**
  * Tattoo token
  **
- * @package         	Tattoo
- * @copyright       	2015 Mario Döring
+ * @package             Tattoo
+ * @copyright           2015 Mario Döring
  */
 
 class Token
@@ -38,6 +38,11 @@ class Token
      */
     public function __construct(array $token)
     {
+        if (count($token) !== 3) 
+        {
+            throw new Exception('Invalid number of arguments for token constructor array.');
+        }
+
         list($this->type, $this->value, $this->line) = $token;
     }
 

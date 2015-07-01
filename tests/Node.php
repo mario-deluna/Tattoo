@@ -74,6 +74,17 @@ class Node_Test extends \PHPUnit_Framework_TestCase
 		$node->setText('BAR');
 		$this->assertEquals('bar', $node->getText());
 	}
+
+	/**
+	 * tests Node
+	 * 
+	 * @dataProvider dummyNodeProvider
+	 * @expectedException BadMethodCallException
+	 */
+	public function testInvalidMethodCall($node)
+	{
+		$node->thisWontExisit();
+	}
 }
 
 /**
