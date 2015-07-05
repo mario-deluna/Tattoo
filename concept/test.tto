@@ -1,13 +1,1 @@
-[ul #demo-list]
-{
-	each @item in { 'This', 'is', 'Amazing' }
-	{
-		[li.demo-item] 
-		{
-			[a href: @item]
-			{
-				span.strong => @item
-			}
-		}
-	}
-}
+@items = {'foo', 'foo'}

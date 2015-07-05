@@ -137,7 +137,7 @@ abstract class Parser
      *
      * @return bool
      */
-    protected function parserIsDone()
+    public function parserIsDone()
     {
         return $this->index >= $this->tokenCount;
     }
@@ -292,6 +292,33 @@ abstract class Parser
         }
 
         return $tokens;
+    }
+
+    /**
+     * Starts a new parser with the remaining or given tokens
+     * 
+     * @param string                $parserClass
+     * @param array                 $tokens
+     * @return Tattoo\Node
+     */
+    protected function parseChild($parserClass, $tokens = null)
+    {
+        $parserClass = __NAMESPACE__ . '\\Parser\\' . $parserClass;
+
+        if (is_null($tokens))
+        {
+            $tokens = $this->getRemainingTokens();
+        }
+
+        $parser = new $parserClass($tokens);
+        $node = $parser->parse();
+
+        // always update the current index based on the child
+        // index progress
+        $this->skipToken($parser->getIndex());
+
+        // finally return the parsed node
+        return $node;
     }
 
     /**

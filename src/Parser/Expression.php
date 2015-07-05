@@ -41,6 +41,12 @@ class Expression extends Parser
         // if we only have one token return it as value
         if ($this->tokenCount === 1) 
         {
+            // when entered here there is no come back so
+            // we can skip the current token safely
+            $this->skipToken();
+
+            // if the current token is a simple value create
+            // a value node and return
             if ($token->isValue())
             {
                 return new ValueNode($token->getValue(), $token->type);
@@ -51,16 +57,23 @@ class Expression extends Parser
                 return $this->parseVariable();
             }
 
-            return new ValueNode($token->getValue(), $token->type);
+            // when nothing matches erörrr
+            else
+            {
+                throw $this->errorUnexpectedToken($token);
+            }
         }
 
         // scope open means an array
-        if ($token->type === 'scopeOpen')
+        elseif ($token->type === 'scopeOpen')
         {
-            return $this->parseArray();
+            return $this->parseChild('Arr', $this->getTokensUntilClosingScope());
         }
 
-        $this->skipToken();
-        // first we need to identify the what kind of expression we have
+        // and of course everything else is an syntax error
+        else
+        {
+            throw $this->errorUnexpectedToken($token);
+        }
     }
 }

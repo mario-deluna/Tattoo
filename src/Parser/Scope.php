@@ -111,11 +111,16 @@ class Scope extends Parser
             $this->skipToken($loopParser->getIndex());
         }
 
+        // variable declarations
+        elseif ($token->type === 'variable')
+        {
+            $this->scope->addChild($this->parseChild('VarDeclaration'));
+        }
+
         // otherwise throw an exception
         else
         {
              throw $this->errorUnexpectedToken($token);
         }
-       
     }
 }

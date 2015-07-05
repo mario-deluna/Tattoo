@@ -52,15 +52,7 @@ elseif ( $command === 'run' )
 
 	exec('/usr/bin/php ' . __DIR__ . '/tattoo compile ' . $source . ' ' . $cache);
 
-	ob_start();
 	require __DIR__.'/../cache/' . $cache;
-	$buffer = ob_get_clean();
-
-	$dom = new DOMDocument();
-    $dom->preserveWhiteSpace = false;
-    $dom->loadHTML($buffer, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-    $dom->formatOutput = true;
-    echo $dom->saveHTML();
 }
 else
 {
