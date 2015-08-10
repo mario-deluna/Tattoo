@@ -1,0 +1,38 @@
+space bootstrap
+
+filter tooltip( @title, @pos = 'top' )
+{
+	@this.data.toggle = 'tooltip'
+
+	@this.title = @title
+
+	if @pos
+	{
+		@this.data.position = @pos
+	}
+}
+
+view form-group
+{
+
+
+	[ul.form-group]
+	{
+		label for:
+	}
+	<div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+}
+
+---
+
+import bootstrap
+
+[a href: '/tips'] => 'Tipps'
+{
+	-> tooltip "Click to see tips"
+}
+
+button ""
