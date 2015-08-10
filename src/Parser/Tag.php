@@ -50,7 +50,7 @@ class Tag extends Parser
         // check that a tag is being opend
         if ($this->currentToken()->type !== 'tagOpen') 
         {
-            throw $this->errorUnexpectedToken($token);
+            throw $this->errorUnexpectedToken($this->currentToken());
         }
 
         // the normal tag is baiscally a short tag with out the 
@@ -65,7 +65,7 @@ class Tag extends Parser
         $tokens = array_merge($tokens, $this->getTokensUntil(array('linebreak', 'scopeOpen')));
 
         // parse the short tag as base
-        $this->tag = $this->parseChild('ShortTag', $tokens);
+        $this->tag = $this->parseChild('ShortTag', $tokens, false);
 
         // we might have some linebreak
         $this->skipTokensOfType('linebreak');
@@ -83,9 +83,9 @@ class Tag extends Parser
                 {
                     $this->tag->addChild($child);
                 }
-
-                $this->skipToken();
             }
         }
+
+        return $this->node();
     }
 }

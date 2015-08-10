@@ -31,4 +31,12 @@ class Parser_Tag_Test extends Parser_Test
         $this->assertEquals('Hello World', $child->getContent()->getValue());
         $this->assertEquals('string', $child->getContent()->getType());
     }
+
+    /**
+     * tests Parser
+     */
+    public function testScopeContents()
+    {
+        $node = $this->parse("[div] { span => 'Hello' }");
+    }
 }

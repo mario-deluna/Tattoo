@@ -6,6 +6,6 @@
 {
 	[div .page-title]
 	{
-		h1 => @name
+		h1 => 'Hello ' % @name 
 	}
 }

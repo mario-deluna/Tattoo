@@ -326,9 +326,10 @@ abstract class Parser
      * 
      * @param string                $parserClass
      * @param array                 $tokens
+     * @param bool                  $skip
      * @return Tattoo\Node
      */
-    protected function parseChild($parserClass, $tokens = null)
+    protected function parseChild($parserClass, $tokens = null, $skip = true)
     {
         $parserClass = __NAMESPACE__ . '\\Parser\\' . $parserClass;
         
@@ -342,7 +343,10 @@ abstract class Parser
 
         // always update the current index based on the child
         // index progress
-        $this->skipToken($parser->getParsedTokensCount());
+        if ($skip)
+        {
+            $this->skipToken($parser->getParsedTokensCount());
+        }
 
         // finally return the parsed node
         return $node;
