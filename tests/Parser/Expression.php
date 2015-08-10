@@ -46,6 +46,42 @@ class Parser_Expression_Test extends Parser_Test
     /**
      * tests Parser
      */
+    public function testStringVariableConcat()
+    {
+        $node = $this->parse("@first % @seperator % @last");
+        $this->assertInstanceOf('Tattoo\\Node\\Concat', $node);
+
+        $nodes = $node->getNodes();
+
+        $this->assertCount(3, $nodes);
+
+        foreach (array('first', 'seperator', 'last') as $key => $value)
+        {
+            $this->assertEquals($value, $nodes[$key]->getName());
+        }
+    }
+
+    /**
+     * tests Parser
+     */
+    public function testStringMixedConcat()
+    {
+        $node = $this->parse("'Hallo' % @name");
+        $this->assertInstanceOf('Tattoo\\Node\\Concat', $node);
+
+        $nodes = $node->getNodes();
+
+        $this->assertCount(2, $nodes);
+
+        foreach (array('Tattoo\\Node\\Value', 'Tattoo\\Node\\Variable') as $key => $value)
+        {
+            $this->assertEquals($value, get_class($nodes[$key]));
+        }
+    }
+
+    /**
+     * tests Parser
+     */
     public function testSingleValueNumber()
     {
         $node = $this->parse("123");
