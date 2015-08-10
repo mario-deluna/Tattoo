@@ -39,7 +39,7 @@ class Scope extends Compiler
     {
         $buffer = "if ( !isset( " . $this->variableVarHolder() . " ) ) {\n\t";
 
-        $buffer .= $this->variableVarHolder() . ' = ' . $this->exportArray(array()) . ";\n}\n";
+        $buffer .= $this->variableVarHolder() . ' = ' . $this->export(array()) . ";\n}\n";
 
         return $buffer . $content;
     }

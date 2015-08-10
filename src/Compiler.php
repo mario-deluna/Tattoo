@@ -153,14 +153,4 @@ abstract class Compiler
 
         throw new Exception('Cannot export value');
     }
-
-    /**
-     * Build php array string
-     *
-     * @return string
-     */
-    protected function exportArray($array)
-    {
-        return str_replace('array (', 'array(', $this->export($array));
-    }
 }
