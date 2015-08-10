@@ -31,7 +31,22 @@ class Arr extends Parser
     protected function prepare()
     {
         $this->arr = new ArrNode;
+
+        // we only neeed the tokens until the closing scope
+        $this->setTokens($this->getTokensUntilClosingScope());
     }
+
+    /**
+     * We always cut the opening and closing scope so we have to tell the 
+     * the parent parser that we skipped them outside the index
+     * 
+     * @return int
+     */
+    public function getParsedTokensCount()
+    {
+        return $this->getIndex() + 2;
+    }
+
 
     /**
      * Return the node that got parsed
@@ -74,37 +89,11 @@ class Arr extends Parser
         // handle recursion
         if ($this->currentToken()->type === 'scopeOpen')
         {
-            $this->skipToken();
-
-            $currentLevel = 0;
-            $subTokens = array();
-
-            while($this->currentToken() && !($this->currentToken()->type === 'scopeClose' && $currentLevel === 0))
-            {
-
-                if ($this->currentToken()->type === 'scopeOpen')
-                {
-                    $currentLevel++;
-                }
-
-                if ($this->currentToken()->type === 'scopeClose')
-                {
-                    $currentLevel--;
-                }
-
-                $subTokens[] = $this->currentToken();
-                $this->skipToken();
-            }
-            
-            // skip the closing scope
-            $this->skipToken(2);
-            $currentValue = $this->parseArrayTokens($subTokens);
+            $currentValue = $this->parseChild('Arr');
         }
         else
         {
-            $currentValue = new Expression($this->getTokensUntil('comma'));
-            $this->skipToken();
-            $currentValue = $currentValue->parse();
+            $currentValue = $this->parseChild('Expression', $this->getTokensUntil('comma'));
         }
 
         $this->arr->addItem($currentKey, $currentValue);

@@ -34,6 +34,13 @@ abstract class Parser
     protected $tokenCount = 0;
 
     /**
+     * Prepare the parser
+     *
+     * @return void
+     */
+    abstract protected function prepare();
+
+    /**
      * The constructor
      * You have to initialize the Parser with an array of lexed tokens.
      *
@@ -49,25 +56,32 @@ abstract class Parser
             {
                 unset($tokens[$key]);
             }
-
         }
 
-        // reset the keys
-        $this->tokens = array_values($tokens);
-
-        // count the real number of tokens
-        $this->tokenCount = count($this->tokens);
+        // set the initial tokens
+        $this->setTokens($tokens);
 
         // prepare the parser
         $this->prepare();
     }
 
     /**
-     * Prepare the parser
-     *
+     * Set the tokens of the current parser
+     * 
+     * @param array[Token]             $tokens
      * @return void
      */
-    abstract protected function prepare();
+    protected function setTokens(array $tokens)
+    {
+        // reset the keys
+        $this->tokens = array_values($tokens);
+
+        // count the real number of tokens
+        $this->tokenCount = count($this->tokens);
+
+        // reset the index
+        $this->index = 0;
+    }
 
     /**
      * Returns all curent tokens 
@@ -90,11 +104,21 @@ abstract class Parser
     }
 
     /**
+     * Should be in the most cases identical with the current index
+     * 
+     * @return int
+     */
+    public function getParsedTokensCount()
+    {
+        return $this->getIndex();
+    }
+
+    /**
      * Retrives the current token based on the index
      *
      * @return Tattoo\Token
      */
-    protected function currentToken()
+    public function currentToken()
     {
         if (!isset($this->tokens[$this->index]))
         {
@@ -111,7 +135,7 @@ abstract class Parser
      * @param int             $i
      * @return Tattoo\Token|false
      */
-    protected function nextToken($i = 1)
+    public function nextToken($i = 1)
     {
         if (!isset($this->tokens[$this->index + $i])) 
         {
@@ -291,6 +315,9 @@ abstract class Parser
             $tokens[] = $this->currentToken();
         }
 
+        // skip the closing scope
+        $this->skipToken();
+
         return $tokens;
     }
 
@@ -304,10 +331,10 @@ abstract class Parser
     protected function parseChild($parserClass, $tokens = null)
     {
         $parserClass = __NAMESPACE__ . '\\Parser\\' . $parserClass;
-
+        
         if (is_null($tokens))
         {
-            $tokens = $this->getRemainingTokens();
+            $tokens = $this->getRemainingTokens(); 
         }
 
         $parser = new $parserClass($tokens);
@@ -315,58 +342,10 @@ abstract class Parser
 
         // always update the current index based on the child
         // index progress
-        $this->skipToken($parser->getIndex());
+        $this->skipToken($parser->getParsedTokensCount());
 
         // finally return the parsed node
         return $node;
-    }
-
-    /**
-     * Parse an upcoming variable node
-     * 
-     * @return Tattoo\Node\Variable
-     */
-    protected function parseVariable()
-    {
-        $token = $this->currentToken();
-
-        if ($token->type !== 'variable')
-        {
-           throw $this->errorUnexpectedToken($token);
-        }
-
-        $this->skipToken();
-
-        return new VariableNode($token->getValue());
-    }
-
-    /**
-     * Parse an array based on the current pointer
-     * 
-     * @return Tattoo\Node\Arr
-     */
-    protected function parseArray()
-    {
-        if ($this->currentToken()->type !== 'scopeOpen')
-        {
-            throw $this->errorUnexpectedToken($this->currentToken());
-        }
-
-        return $this->parseArrayTokens($this->getTokensUntilClosingScope());
-    }
-
-    /**
-     * Parse an array node out of the given tokens
-     * 
-     * @todo: This should not accept tokens as argument
-     *        the parser should always handle from the current index
-     * 
-     * @param array[Tattoo\Token]             $tokens
-     * @return Tattoo\Node\Arr
-     */
-    protected function parseArrayTokens(array $tokens)
-    {
-        $parser = new ArrayParser($tokens); return $parser->parse();
     }
 
     /**
@@ -398,9 +377,23 @@ abstract class Parser
                 $classAndIdAttrTokens[] = $token;unset($tokens[$key]);
             }
         }
-        
+
+        // start with a scope open token
+        $attributeTokens = array(new Token(array('scopeOpen', null, $firstToken->line)));
+
+        // add the parsed tokens
+        if (is_array($tokens))
+        {
+            $attributeTokens = array_merge($attributeTokens, $tokens);
+        }
+
+        // add a closing attribute token
+        $attributeTokens = array_merge($attributeTokens, array(new Token(array('scopeClose', null, $firstToken->line))));
+
+        $attributesArray = $this->parseChild('Arr', $attributeTokens);
+
         $attributes = $this->parseIdAndClassTokens($classAndIdAttrTokens);
-        return array_merge_recursive($attributes, $this->fixAttributesArray($this->parseArrayTokens($tokens)->convertToNative()));
+        return array_merge_recursive($attributes, $this->fixAttributesArray($attributesArray->convertToNative()));
     }
 
     /**

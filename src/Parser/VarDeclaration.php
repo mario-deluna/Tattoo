@@ -55,7 +55,7 @@ class VarDeclaration extends Parser
             throw $this->errorUnexpectedToken($token);
         }
 
-        $this->declaration->setVariable($this->parseVariable());
+        $this->declaration->setVariable($this->parseChild('Variable'));
 
         // we currently only accept simple assigns
         if ($this->currentToken()->type !== 'equal')

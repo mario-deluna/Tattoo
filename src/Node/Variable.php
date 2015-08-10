@@ -18,16 +18,6 @@ class Variable extends Node
 	 */
 	protected $name = null;
 
-	/**
-     * Create a new variable node with given name
-     * 
-     * @param string			$name
-     */
-    public function __construct($name)
-    {
-    	$this->name = $this->setName($name);
-    }
-
     /**
      * Set the curent name and remove @ prefix
      * 

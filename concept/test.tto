@@ -1,1 +1,6 @@
-@items = {'foo', 'foo'}
+@items = {'Hello', 'World'}
+
+each @item in @items
+{
+	span => @item
+}

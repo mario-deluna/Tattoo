@@ -9,6 +9,7 @@
  *
  * @group Tattoo
  * @group Tattoo_Parser
+ * @group Tattoo_Parser_Methods
  */
 
 use Tattoo\Lexer;
@@ -36,10 +37,19 @@ class ParserMethods_Test extends \PHPUnit_Framework_TestCase
         $parser = new Parser_Dummy($lexer->tokens());
         $this->assertEquals(9, count($parser->getTokensUntilClosingScope()));
 
+        // also check of the parser is done
+        $this->assertTrue($parser->parserIsDone());
+
         // include the scope
-        $lexer = new Lexer("{ foo => 'bar' \n { next => 'level' } }");
+        $lexer = new Lexer("{ foo => 'bar' \n { next => 'level' } } '123'");
         $parser = new Parser_Dummy($lexer->tokens());
         $this->assertEquals(11, count($parser->getTokensUntilClosingScope(true)));
+
+        // parser should not be done
+        $this->assertFalse($parser->parserIsDone());
+
+        // validate the current token
+        $this->assertEquals('123', $parser->currentToken()->getValue());
     }  
 
     /**

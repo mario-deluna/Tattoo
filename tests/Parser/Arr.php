@@ -33,7 +33,7 @@ class Parser_Arr_Test extends Parser_Test
      */
     public function testConstruct()
     {
-        $this->assertInstanceOf('Tattoo\\Node\\Arr', $this->parse('"a", "b"'));
+        $this->assertInstanceOf('Tattoo\\Node\\Arr', $this->parse('{"a", "b"}'));
     }
 
     /**
@@ -41,7 +41,7 @@ class Parser_Arr_Test extends Parser_Test
      */
     public function testNormalArray()
     {
-        $this->assertArrayValues(array('a', 'b'), '"a", "b"');
+        $this->assertArrayValues(array('a', 'b'), '{"a", "b"}');
     }
 
     /**
@@ -49,7 +49,7 @@ class Parser_Arr_Test extends Parser_Test
      */
     public function testNumberArray()
     {
-        $this->assertArrayValues(array(1,2,3), '1, 2 ,3');
+        $this->assertArrayValues(array(1,2,3), '{1, 2 ,3}');
     }
 
     /**
@@ -57,7 +57,7 @@ class Parser_Arr_Test extends Parser_Test
      */
     public function testNormalAssocArray()
     {
-        $this->assertArrayValues(array('foo' => 'bar', 'bar' => 'foo'), 'foo: "bar", bar: "foo"');
+        $this->assertArrayValues(array('foo' => 'bar', 'bar' => 'foo'), '{foo: "bar", bar: "foo"}');
     }
 
     /**
@@ -65,7 +65,7 @@ class Parser_Arr_Test extends Parser_Test
      */
     public function testMixedArray()
     {
-        $this->assertArrayValues(array('bar', true, false, 'bar' => 'foo'), '"bar", yes, no, bar: "foo"');
+        $this->assertArrayValues(array('bar', true, false, 'bar' => 'foo'), '{"bar", yes, no, bar: "foo"}');
     }
 
      /**
@@ -73,16 +73,16 @@ class Parser_Arr_Test extends Parser_Test
      */
     public function testMultipleDimensions()
     {
-        $this->assertArrayValues(array(array('foo')), '{ "foo" }');
+        $this->assertArrayValues(array(array('foo')), '{{ "foo" }}');
 
         // more more more
-        $this->assertArrayValues(array(array('foo'), array('foo')), '{ "foo" }, { "foo" }');
+        $this->assertArrayValues(array(array('foo'), array('foo')), '{{ "foo" }, { "foo" }}');
 
         // more complexity
         $this->assertArrayValues(array(
             42,
             array('foo', 'bar', array('batz')),
             true
-        ), '42, { "foo", "bar", { "batz" } }, yes');
+        ), '{42, { "foo", "bar", { "batz" } }, yes}');
     }
 }

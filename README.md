@@ -48,7 +48,7 @@ This something i've seen a lot. We have got two inline statements here and hones
 ```tattoo
 [ul #main-navigation .nav] 
 {
-	[li][a .navigation-item .navigation-item-home] => 'Home' 
+	[li][a .navigation-item ~ home] => 'Home' 
 	{
 		if @currentUrl == '/' {
 			@this.class.add('navigation-item-active')
@@ -153,7 +153,7 @@ Often you have a tree with many levels that just contain one child. Instead of c
 ```tattoo
 [header][nav.navbar][ul][li.active][a href: '/'] => 'Home'
 {
-	i.glyphicon.glyphicon-home => ''
+	i.glyphicon ~ home => ''
 }
 ```
 
@@ -169,6 +169,22 @@ Often you have a tree with many levels that just contain one child. Instead of c
 </header>
 ```
 
+#### Appending classes
+
+```tattoo
+[div.row][div .col ~ md-4 ~ sm-6 ~ xs-12]
+{
+	a .btn ~ lg ~ primary ~ block => 'Click Me'
+}
+```
+
+```html
+<div class="row">
+	<div class="col col-md-4 col-sm-6 col-xs-12">
+		<a class="btn btn-lg btn-primary btn-block">Click Me</a>
+	</div> 
+</div>
+```
 
 ---
 

@@ -61,18 +61,21 @@ class Each extends Parser
         // If the next key is a comma we have to assign both key and value
         if ($this->nextToken()->type === 'comma')
         {
-            $this->loop->setKeyVariable($this->parseVariable());
+            $this->loop->setKeyVariable($this->parseChild('Variable'));
 
             // skip the comma
             $this->skipToken();
         }
 
-        $this->loop->setValueVariable($this->parseVariable());
+        $this->loop->setValueVariable($this->parseChild('Variable'));
 
         // skip so that we can parse the upcoming array or variable
         $this->skipToken();
 
         // parse the upcoming expresssion
+        $collection = $this->parseChild('Expression');
+        
+        
         $expressionTokens = $this->getTokensUntilLinebreak();
 
         // if the last token was an scope open we go that token

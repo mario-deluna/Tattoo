@@ -26,7 +26,7 @@ class Expression extends Parser
      */
     protected function node()
     {
-        throw new Exception('Cannot build node from empty expression on line: ' . $this->currentToken()->line);
+        throw new Exception('Cannot build node from empty expression.');
     }
 
     /**
@@ -54,7 +54,7 @@ class Expression extends Parser
             // we also might have a variable
             elseif($token->type === 'variable')
             {
-                return $this->parseVariable();
+                return $this->parseChild('Variable');
             }
 
             // when nothing matches erörrr
@@ -67,7 +67,7 @@ class Expression extends Parser
         // scope open means an array
         elseif ($token->type === 'scopeOpen')
         {
-            return $this->parseChild('Arr', $this->getTokensUntilClosingScope());
+            return $this->parseChild('Arr');
         }
 
         // and of course everything else is an syntax error
