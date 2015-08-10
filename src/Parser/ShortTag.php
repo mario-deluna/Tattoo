@@ -84,7 +84,7 @@ class ShortTag extends Parser
         {
             unset($tokens[0]);
 
-            $this->tag->addChild(new TextNode($this->parseChild('Expression', $tokens)));
+            $this->tag->addChild(new TextNode($this->parseChild('Expression', $tokens, false)));
         }
 
         // return the result

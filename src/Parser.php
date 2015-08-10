@@ -394,7 +394,7 @@ abstract class Parser
         // add a closing attribute token
         $attributeTokens = array_merge($attributeTokens, array(new Token(array('scopeClose', null, $firstToken->line))));
 
-        $attributesArray = $this->parseChild('Arr', $attributeTokens);
+        $attributesArray = $this->parseChild('Arr', $attributeTokens, false);
 
         $attributes = $this->parseIdAndClassTokens($classAndIdAttrTokens);
         return array_merge_recursive($attributes, $this->fixAttributesArray($attributesArray->convertToNative()));

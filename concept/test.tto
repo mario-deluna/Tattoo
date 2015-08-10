@@ -1,11 +1,15 @@
 @items = {'Hello', 'World'}
 
-@name = 'Mario' % ' ' % 'Döring'
+@name = 'Mario'
+
+@subtitle = 'This is an example page'
 
 [div #main, class: {'main', 'container'}]
 {
 	[div .page-title]
 	{
-		h1 => 'Hello ' % @name 
+		h1 => 'Hello ' % @name
+
+		p => @subtitle
 	}
 }
