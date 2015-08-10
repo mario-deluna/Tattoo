@@ -92,6 +92,11 @@ class Lexer
         "/^(\])/" => "tagClose",
         "/^(\()/" => "braceOpen",
         "/^(\))/" => "braceClose",
+        
+        "/^(\+)/" => "plus",
+        "/^(\-)/" => "minus",
+        "/^(\/)/" => "slash",
+        "/^(\*)/" => "star",
 
         "/^(\%)/" => "concat",
         "/^(\#)/" => "anchor",

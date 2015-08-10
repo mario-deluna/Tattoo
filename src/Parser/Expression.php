@@ -89,6 +89,10 @@ class Expression extends Parser
 
             return $concat;
         }
+        elseif ($this->currentToken() && $this->currentToken()->isOperator())
+        {
+            die('NOT IMPLEMENTED YET!! :(');
+        }
 
         return $initiator;
     }

@@ -96,4 +96,17 @@ class Token
         $this->type === 'boolFalse';
     }
 
+    /**
+     * Is this an Operator
+     *
+     * @return bool
+     */
+    public function isOperator()
+    {
+        return
+        $this->type === 'plus' ||
+        $this->type === 'minus' ||
+        $this->type === 'slash' ||
+        $this->type === 'star';
+    }
 }
