@@ -1,6 +1,11 @@
 @items = {'Hello', 'World'}
 
-each @item in @items
+@name = 'Mario' % ' ' % 'Döring'
+
+[div #main, class: {'main', 'container'}]
 {
-	span => @item
+	[div .page-title]
+	{
+		h1 => @name
+	}
 }

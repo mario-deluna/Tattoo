@@ -58,26 +58,36 @@ class ShortTag extends Parser
         $this->tag->setName($token->getValue());
         $this->skipToken();
 
+        // we use all tokens until a linebreak in the short tag
+        $tokens = $this->getTokensUntilLinebreak();
+
+        $attributeTokens = array();
+
+        // retrieve all attribute tokens
+        foreach ($tokens as &$token) 
+        {
+            if ($token->type === 'assignText')
+            {
+                break;
+            }
+
+            $attributeTokens[] = $token; unset($token);
+        }
+
         // now lets parse the attributes
-        $this->tag->attributes = $this->parseAttributeTokens($this->getTokensUntil('assignText'));
+        $this->tag->attributes = $this->parseAttributeTokens($attributeTokens);
 
-        // skip if assign text
-        if ($this->currentToken() && $this->currentToken()->type === 'assignText')
+        // reset the token array keys
+        $tokens = array_values($tokens);
+
+        if (!empty($tokens) && $tokens[0]->type === 'assignText')
         {
-            $this->skipToken();
+            unset($tokens[0]);
+
+            $this->tag->addChild(new TextNode($this->parseChild('Expression', $tokens)));
         }
 
-        // and the value for the text
-        if ($expressionTokens = $this->getTokensUntilLinebreak())
-        {
-            $expression = new Expression($expressionTokens);
-            $this->skipToken();
-
-            // create new text node containing the value
-            $text = new TextNode($expression->parse());
-
-            // append that node to the current tag
-            $this->tag->addChild($text);
-        }
+        // return the result
+        return $this->node();
     }
 }

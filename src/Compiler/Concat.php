@@ -9,7 +9,7 @@
 
 use Tattoo\Compiler;
 
-class Arr extends Compiler
+class Concat extends Compiler
 {
     /**
      * Compile the current node to text
@@ -18,6 +18,13 @@ class Arr extends Compiler
      */
     public function compile()
     {
-		return $this->export($this->node->convertToNative());
+    	$buffer = '';
+
+    	foreach($this->node->getNodes() as $node)
+    	{
+    		$buffer .= $this->export($node) . ' . ';
+    	}
+
+    	return substr($buffer, 0, -3);
     }
 }

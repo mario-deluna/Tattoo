@@ -18,6 +18,6 @@ class VarDeclaration extends Compiler
      */
     public function compile()
     {
-        return $this->compileChild($this->node->getVariable()) . ' = ' . $this->compileChild($this->node->getValue()) . ';';
+        return $this->compileChild($this->node->getVariable()) . ' = ' . $this->compileChild($this->node->getValue()) . ";\n";
     }
 }

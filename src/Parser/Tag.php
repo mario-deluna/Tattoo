@@ -47,23 +47,30 @@ class Tag extends Parser
      */
     protected function next()
     {
-        if ($this->currentToken()->type === 'linebreak')
+        // check that a tag is being opend
+        if ($this->currentToken()->type !== 'tagOpen') 
         {
-            return $this->skipToken();
+            throw $this->errorUnexpectedToken($token);
         }
 
-        // current token has to be an identifier
-        if ($this->currentToken()->type !== 'identifier') 
-        {
-            throw $this->errorUnexpectedToken($this->currentToken());
-        }
+        // the normal tag is baiscally a short tag with out the 
+        // tag tokens so we simply strip them
+        $this->skipToken();
 
-        // use the shortag parser as base parser 
-        $baseTagParser = new ShortTag($this->getTokensUntil(array('linebreak', 'scopeOpen')));
-        $this->tag = $baseTagParser->parse();
+        // get all tokens until tag close
+        $tokens = $this->getTokensUntil('tagClose'); 
+        $this->skipToken();
 
+        // and add the tokens until linebreak
+        $tokens = array_merge($tokens, $this->getTokensUntil(array('linebreak', 'scopeOpen')));
+
+        // parse the short tag as base
+        $this->tag = $this->parseChild('ShortTag', $tokens);
+
+        // we might have some linebreak
         $this->skipTokensOfType('linebreak');
 
+        // is there a following scope
         if ($this->currentToken() && $this->currentToken()->type === 'scopeOpen')
         {
             // now parse the rest of the scope

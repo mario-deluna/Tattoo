@@ -9,17 +9,17 @@
  *
  * @group Tattoo
  * @group Tattoo_Parser
- * @group Tattoo_Parser_ShortTag
+ * @group Tattoo_Parser_Tag
  */
 
-class Parser_ShortTag_Test extends Parser_Test
+class Parser_Tag_Test extends Parser_Test
 {
     /**
      * tests Parser
      */
     public function testSimple()
     {
-        $node = $this->parse("span => 'Hello World'");
+        $node = $this->parse("[span] => 'Hello World' {}");
         $this->assertInstanceOf('Tattoo\\Node\\Tag', $node);
 
         $this->assertEquals(1, count($node->children));

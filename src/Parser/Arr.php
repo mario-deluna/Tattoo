@@ -87,7 +87,7 @@ class Arr extends Parser
         }
         
         // handle recursion
-        if ($this->currentToken()->type === 'scopeOpen')
+        if ($this->currentToken() && $this->currentToken()->type === 'scopeOpen')
         {
             $currentValue = $this->parseChild('Arr');
         }

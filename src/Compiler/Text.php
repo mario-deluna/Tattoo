@@ -20,7 +20,7 @@ class Text extends Compiler
     {
 		if ($this->node->getContent()) 
         {
-            return $this->getScopeAssignPrefix($this->node) . $this->compileChild($this->node->getContent()) . ';';
+            return $this->getScopeAssignPrefix($this->node) . $this->compileChild($this->node->getContent()) . ";\n";
         }
     }
 }

@@ -57,35 +57,15 @@ class Scope extends Parser
         // only short tags start with an identifier
         elseif ($token->type === 'identifier') 
         {
-            $shortTagParser = new ShortTag($this->getTokensUntilLinebreak());
-            $this->skipToken();
-            $this->scope->addChild($shortTagParser->parse());
+            $this->scope->addChild($this->parseChild('ShortTag'));
         }
 
         // obviously when tag opens we parse a tag
         elseif ($token->type === 'tagOpen')
         {
-            $this->skipToken();
-
-            $tagTokens = $this->getTokensUntil('tagClose');
-            $this->skipToken();
-            $tagTokens = array_merge($tagTokens, $this->getTokensUntilLinebreak());
-
-            // skip additional linebreaks
-            $this->skipTokensOfType('linebreak');
-
-            // if the next token is an open scope we get all 
-            // tokens until the scope closes again
-            if ($this->currentToken() && $this->currentToken()->type === 'scopeOpen')   
-            {
-                $tagTokens = array_merge($tagTokens, $this->getTokensUntilClosingScope(true));
-                $this->skipToken();
-             }
-
-            $tagParser = new Tag($tagTokens);
-            $this->scope->addChild($tagParser->parse());
+            $this->scope->addChild($this->parseChild('Tag'));
         }
-
+        
         // loops
         elseif (in_array($token->type, array('foreach', 'loop')))
         {
