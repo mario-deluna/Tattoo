@@ -8,6 +8,7 @@
  */
 
 use Tattoo\Node\Value as ValueNode;
+use Tattoo\Node\Concat as ConcatNode;
 use Tattoo\Parser;
 
 class Expression extends Parser
@@ -38,42 +39,57 @@ class Expression extends Parser
     {
         $token = $this->currentToken();
 
-        // if we only have one token return it as value
-        if ($this->tokenCount === 1) 
+        $initiator = null;
+
+        // the initiator could be a primitive value
+        if ($token->isValue())
         {
-            // when entered here there is no come back so
-            // we can skip the current token safely
-            $this->skipToken();
-
-            // if the current token is a simple value create
-            // a value node and return
-            if ($token->isValue())
-            {
-                return new ValueNode($token->getValue(), $token->type);
-            }  
-            // we also might have a variable
-            elseif($token->type === 'variable')
-            {
-                return $this->parseChild('Variable');
-            }
-
-            // when nothing matches erörrr
-            else
-            {
-                throw $this->errorUnexpectedToken($token);
-            }
+            $initiator = new ValueNode($token->getValue(), $token->type); $this->skipToken();
         }
-
+        // we also might have a variable
+        elseif($token->type === 'variable')
+        {
+            $initiator = $this->parseChild('Variable');
+        }
         // scope open means an array
         elseif ($token->type === 'scopeOpen')
         {
             return $this->parseChild('Arr');
         }
-
         // and of course everything else is an syntax error
         else
         {
             throw $this->errorUnexpectedToken($token);
         }
+
+        // check for string concat or math functions 
+        if ($this->currentToken() && $this->currentToken()->type === 'concat')
+        {
+            // skip the concat
+            $this->skipToken();
+            
+            $nextExpression = $this->parseChild('Expression');
+
+            $concat = new ConcatNode();
+            $concat->addNode($initiator);
+
+            // if next expression is already a concat add the child nodes
+            if ($nextExpression instanceof ConcatNode)
+            {
+                foreach($nextExpression->getNodes() as $node)
+                {
+                    $concat->addNode($node);
+                }
+            }
+            // otherwise add the next expression itself
+            else
+            {
+               $concat->addNode($nextExpression); 
+            }
+
+            return $concat;
+        }
+
+        return $initiator;
     }
 }

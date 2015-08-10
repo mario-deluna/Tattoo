@@ -28,6 +28,24 @@ class Parser_Expression_Test extends Parser_Test
     /**
      * tests Parser
      */
+    public function testStringValueConcat()
+    {
+        $node = $this->parse("'foo' % '-' % 'bar'");
+        $this->assertInstanceOf('Tattoo\\Node\\Concat', $node);
+
+        $nodes = $node->getNodes();
+
+        $this->assertCount(3, $nodes);
+
+        foreach (array('foo', '-', 'bar') as $key => $value)
+        {
+            $this->assertEquals($value, $nodes[$key]->getValue());
+        }
+    }
+
+    /**
+     * tests Parser
+     */
     public function testSingleValueNumber()
     {
         $node = $this->parse("123");
