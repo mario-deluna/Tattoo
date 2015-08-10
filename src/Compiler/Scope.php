@@ -37,7 +37,7 @@ class Scope extends Compiler
      */
     protected function wrapScopeContents($content)
     {
-        $buffer = "if ( !isset( " . $this->variableVarHolder() . " ) ) {\n\t";
+        $buffer = "if (!isset(" . $this->variableVarHolder() . ")) {\n\t";
 
         $buffer .= $this->variableVarHolder() . ' = ' . $this->export(array()) . ";\n}\n";
 
