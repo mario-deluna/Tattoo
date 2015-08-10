@@ -73,26 +73,10 @@ class Each extends Parser
         $this->skipToken();
 
         // parse the upcoming expresssion
-        $collection = $this->parseChild('Expression');
-        
-        
-        $expressionTokens = $this->getTokensUntilLinebreak();
+        $this->loop->setCollection($this->parseChild('Expression'));
 
-        // if the last token was an scope open we go that token
-        // back for the loop parser and remove it from the expression tokens
-        if ($this->nextToken(-1)->type === 'scopeOpen')
-        {
-            $this->skipToken(-1);
-            $expressionTokens = array_slice($expressionTokens, 0, -1);
-        }
-
-        // skip linebreaks
+        // we might have some linebreak
         $this->skipTokensOfType('linebreak');
-
-        // parse the expression and assign the resutl to the loop collection
-        $expression = new Expression($expressionTokens);
-
-        $this->loop->setCollection($expression->parse());
 
         // the current token now has to be a scope open so lets parse that scope
         if ($this->currentToken()->type !== 'scopeOpen')
@@ -114,6 +98,6 @@ class Each extends Parser
             $this->skipToken();
         }
 
-        return $this->loop;
+        return $this->node();
     }
 }

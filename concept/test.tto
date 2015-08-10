@@ -1,15 +1,9 @@
-@items = {'Hello', 'World'}
+@items = { 'Home', 'About', 'Portfolio', 'Contact' }
 
-@name = 'Mario'
-
-@subtitle = 'This is an example page'
-
-[div #main, class: {'main', 'container'}]
+[ul]
 {
-	[div .page-title]
+	each @item in @items
 	{
-		h1 => 'Hello ' % @name
-
-		p => @subtitle
+		li => @item
 	}
 }
