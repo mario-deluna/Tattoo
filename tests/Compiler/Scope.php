@@ -25,9 +25,11 @@ class Compiler_Scope_Test extends Compiler_Test
 		
 		$tag = new Tag;
 		$tag->setName('button');
+		$node->addChild($tag);
+
+		$node = $this->compile($node);
 		
-		$node->addChild( $tag );
-		
-		$this->assertWithSampleFile( "scope.basic", $this->compile( $node ) );
+		$this->assertContains("if (!isset(\$__tattoo_vars)) {", $node);
+		$this->assertContains("\$__tattoo_vars = array();", $node);
 	}
 }

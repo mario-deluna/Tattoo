@@ -1,61 +1,46 @@
 <?php namespace Tattoo\Tests;
+
 /**
  * Tattoo Compiler tests
- ** 
+ **
  *
- * @package 		Tattoo
- * @copyright 		Mario Döring
+ * @package         Tattoo
+ * @copyright         Mario Döring
  *
  * @group Tattoo
  * @group Tattoo_Compiler
  * @group Tattoo_Compiler_Tag
  */
 
-use Tattoo\Node\Scope;
 use Tattoo\Node\Tag;
-use Tattoo\Node\Text;
 
 class Compiler_Tag_Test extends Compiler_Test
 {
-	/**
-	 * tests Parser
-	 */
-	public function testTag()
-	{	
-		$tag = new Tag;
-		$tag->setName('hr');
-		
-		$this->assertEquals( "echo '<hr />';", $this->compile( $tag ) );
-	}
-	
-	/**
-	 * tests Parser
-	 */
-	public function testTagWithAttributes()
-	{	
-		$tag = new Tag;
-		$tag->setName('input');
-		$tag->attributes = array(
-			'name' => 'username',
-			'type' => 'text',
-		);
-		
-		$this->assertEquals( "echo '<input name=\"username\" type=\"text\" />';", $this->compile( $tag ) );
-	}
-	
-	/**
-	 * tests Parser
-	 */
-	public function testTagInsideTag()
-	{	
-		$tag = new Tag;
-		$tag->setName('a');
-		
-		$span = new Tag;
-		$span->setName('span');
-		
-		$tag->addChild( $span );
-		
-		$this->assertWithSampleFile( "tag.inside.tag", $this->compile( $tag ) );
-	}
+    /**
+     * tests Parser
+     */
+    public function testTag()
+    {
+        $tag = new Tag;
+        $tag->setName('hr');
+        $tag = $this->compile($tag);
+
+        $this->assertContains("echo new Tattoo\\Engine\\Tag('hr', array(), function(\$__tattoo_tag) use(\$__tattoo_vars)", $tag);
+    }
+
+    /**
+     * tests Parser
+     */
+    public function testTagWithAttributes()
+    {
+        $tag = new Tag;
+        $tag->setName('input');
+        $tag->attributes = array(
+            'name' => 'username',
+            'type' => 'text',
+        );
+        $tag = $this->compile($tag);
+
+        $this->assertContains("array('name' => 'username', 'type' => 'text')", $tag);
+    }
 }

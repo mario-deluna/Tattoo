@@ -128,7 +128,7 @@ abstract class Compiler
         }
 
         // when its a primitive we can export directly
-        if (is_bool($var) || is_numeric($var) || is_string($var))
+        if (is_bool($var) || is_numeric($var) || is_string($var) || is_null($var))
         {
             return var_export($var, true);
         }
@@ -151,6 +151,6 @@ abstract class Compiler
             return substr($buffer, 0, -2) . ')';
         }
 
-        throw new Exception('Cannot export value');
+        throw new Exception('Cannot export value of type: ' . gettype($var));
     }
 }

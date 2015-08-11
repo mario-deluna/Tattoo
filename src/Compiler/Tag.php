@@ -12,23 +12,6 @@ use Tattoo\Engine\Tag as EngineTag;
 class Tag extends Scope
 {
     /**
-     * Compile the current node to text
-     *
-     * @return string
-     */
-    public function compile()
-    {
-        // if the contents are empty we can directly return the rendered tag
-        if (empty($this->node->children)) 
-        {
-            $tag = new EngineTag($this->node->getName(), $this->node->getAttributes());
-            return $this->getScopeAssignPrefix($this->node) . $this->export($tag->render()) . ';';
-        }
-
-        return parent::compile();
-    }
-
-    /**
      * Wrap the plain scope contents
      *
      * @param string             $content
