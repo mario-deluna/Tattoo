@@ -1,9 +1,32 @@
-@items = { 'Home', 'About', 'Portfolio', 'Contact' }
+@pageTitle = 'Tattoo Example'
 
-[ul]
+[html]
 {
-	each @item in @items
+	[head]
 	{
-		li => @item
+		title => @pageTitle
+	}
+
+	[body]
+	{
+		[div #header]
+		{
+			h1 .page-title => @pageTitle
+		}
+
+		[ul .navigation #main-navigation]
+		{
+			each @item in { 'Home', 'About', 'Portfolio', 'Contact', 'Imprint' }
+			{
+				[li.navigation-item]
+				{
+					[a href: '/test.tto.php?p=' % @item]
+					{
+						span => @item
+					}
+				}
+			}
+		}
 	}
 }
+

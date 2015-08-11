@@ -68,7 +68,7 @@ class Parser_Arr_Test extends Parser_Test
         $this->assertArrayValues(array('bar', true, false, 'bar' => 'foo'), '{"bar", yes, no, bar: "foo"}');
     }
 
-     /**
+    /**
      * tests Parser
      */
     public function testMultipleDimensions()
@@ -84,5 +84,16 @@ class Parser_Arr_Test extends Parser_Test
             array('foo', 'bar', array('batz')),
             true
         ), '{42, { "foo", "bar", { "batz" } }, yes}');
+    }
+
+    /**
+     * tests Parser
+     */
+    public function testArrayWithVariable()
+    {
+        $arr = $this->parse('{"bar", @foo}')->convertToNative();
+
+        $this->assertEquals('bar', array_shift($arr));
+        $this->assertInstanceOf('Tattoo\\Node\\Variable', array_shift($arr));
     }
 }

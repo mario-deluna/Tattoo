@@ -8,6 +8,7 @@
  */
 
 use Tattoo\Node;
+use Tattoo\Node\Arr\ArrKey;
 
 class Arr extends Node
 {
@@ -24,7 +25,7 @@ class Arr extends Node
      * @param Node             $node
      * @return void
      */
-    public function addItem($key, Node $node)
+    public function addItem(ArrKey $key, Node $node)
     {
         $this->items[] = array($key, $node);
     }

@@ -103,4 +103,16 @@ class Parser_ShortTag_Test extends Parser_Test
 
         $this->assertEquals('text', $text->getContent()->getName());
     }
+
+    /**
+     * tests Parser
+     */
+    public function testWithAssignTextVarWithAttributes()
+    {
+        $children = $this->parse("span.foo => @text")->getChildren();
+        
+        $text = reset($children);
+
+        $this->assertEquals('text', $text->getContent()->getName());
+    }
 }

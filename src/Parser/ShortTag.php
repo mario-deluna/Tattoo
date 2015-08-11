@@ -64,14 +64,15 @@ class ShortTag extends Parser
         $attributeTokens = array();
 
         // retrieve all attribute tokens
-        foreach ($tokens as &$token) 
+        foreach ($tokens as $key => $token) 
         {
             if ($token->type === 'assignText')
             {
                 break;
             }
 
-            $attributeTokens[] = $token; unset($token);
+            $attributeTokens[] = $token; 
+            unset($tokens[$key]);
         }
 
         // now lets parse the attributes
@@ -79,7 +80,7 @@ class ShortTag extends Parser
 
         // reset the token array keys
         $tokens = array_values($tokens);
-
+        
         if (!empty($tokens) && $tokens[0]->type === 'assignText')
         {
             unset($tokens[0]);
