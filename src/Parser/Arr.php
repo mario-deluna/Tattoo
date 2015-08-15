@@ -85,6 +85,9 @@ class Arr extends Parser
 
             $this->skipToken(2);
         }
+
+        // skip linebreaks
+        $this->skipTokensOfType('linebreak');
         
         // handle recursion
         if ($this->currentToken() && $this->currentToken()->type === 'scopeOpen')

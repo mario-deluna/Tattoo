@@ -47,6 +47,24 @@ class Parser_Arr_Test extends Parser_Test
     /**
      * tests Parser
      */
+    public function testArrayWithSpacing()
+    {
+        $this->assertArrayValues(array('a', 'b'), ' { "a" , "b" } ');
+    }
+
+    /**
+     * tests Parser
+     */
+    public function testArrayWithBreaks()
+    {
+        $this->assertArrayValues(array('a', 'b'), "{ 'a',\n'b' }");
+
+        $this->assertArrayValues(array('a', 'b'), "{ \n'a': 'b',\n'b':\n a }");
+    }
+
+    /**
+     * tests Parser
+     */
     public function testNumberArray()
     {
         $this->assertArrayValues(array(1,2,3), '{1, 2 ,3}');
