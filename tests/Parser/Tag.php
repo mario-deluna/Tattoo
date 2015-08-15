@@ -35,6 +35,34 @@ class Parser_Tag_Test extends Parser_Test
     /**
      * tests Parser
      */
+    public function testTagRecusion()
+    {
+        $node = $this->parse("[div][ul][li][a.phpunit]");
+
+        $this->assertEquals('div', $node->getName());
+
+        // go deeper to ul
+        $children = $node->getChildren();
+        $node = reset($children);
+
+        $this->assertEquals('ul', $node->getName());
+
+        // go deeper to li
+        $children = $node->getChildren();
+        $node = reset($children);
+
+        $this->assertEquals('li', $node->getName());
+
+        // go deeper to a
+        $children = $node->getChildren();
+        $node = reset($children);
+
+        $this->assertEquals('a', $node->getName());
+    }
+
+    /**
+     * tests Parser
+     */
     public function testScopeContents()
     {
         $node = $this->parse("[div] { span => 'Hello' }");

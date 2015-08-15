@@ -61,6 +61,15 @@ class Tag extends Parser
         $tokens = $this->getTokensUntil('tagClose'); 
         $this->skipToken();
 
+        // we might have tag recursion
+        if ($this->currentToken() && $this->currentToken()->type === 'tagOpen')
+        {
+            $this->tag = $this->parseChild('ShortTag', $tokens, false);
+            $this->tag->addChild($this->parseChild('Tag'));
+
+            return $this->node();
+        }
+
         // and add the tokens until linebreak
         $tokens = array_merge($tokens, $this->getTokensUntil(array('linebreak', 'scopeOpen')));
 
