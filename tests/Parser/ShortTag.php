@@ -12,6 +12,9 @@
  * @group Tattoo_Parser_ShortTag
  */
 
+use Tattoo\Lexer;
+use Tattoo\Parser\ShortTag as ShortTagParser;
+
 class Parser_ShortTag_Test extends Parser_Test
 {
     /**
@@ -114,5 +117,121 @@ class Parser_ShortTag_Test extends Parser_Test
         $text = reset($children);
 
         $this->assertEquals('text', $text->getContent()->getName());
+    }
+
+    /**
+     * parse attributes string and assert the results
+     */
+    protected function assertAttributesArray(array $expected, $code)
+    {
+        $lexer = new Lexer($code);
+        $parser = new ShortTagParser($lexer->tokens());
+
+        foreach($parser->parseAttributeTokens($parser->getTokens()) as $key => $values)
+        {
+            $this->assertEquals($expected[$key], $values);
+        }
+    }
+
+    /**
+     * tests Parser
+     */
+    public function testClassAndIDAttributeTokens()
+    {
+        // simple
+        $this->assertAttributesArray(array(
+            'id' => 'phpunit',
+            'class' => array('main', 'foo', 'bar')
+        ), '#phpunit.main.foo.bar');
+
+        // one class
+        $this->assertAttributesArray(array(
+            'class' => array('container')
+        ), '.container');
+
+        // multiple classes
+        $this->assertAttributesArray(array(
+            'class' => array('container', 'main-container')
+        ), '.container.main-container');
+
+        // just id
+        $this->assertAttributesArray(array(
+            'id' => 'phpunit',
+        ), '#phpunit');
+
+        // with spaces n shit
+        $this->assertAttributesArray(array(
+            'id' => 'phpunit',
+            'class' => array('main', 'foo', 'bar')
+        ), ' #phpunit .main . foo.bar');
+
+        // id after class
+        $this->assertAttributesArray(array(
+            'id' => 'maninthemiddle',
+            'class' => array('main', 'foo', 'bar')
+        ), '.main.foo#maninthemiddle.bar');
+    }
+
+    /**
+     * tests Parser
+     */
+    public function testOtherAttribtes()
+    {
+        // simple
+        $this->assertAttributesArray(array('src' => 'img/logo.png'), 'src: "img/logo.png"');
+
+        // multiple
+        $this->assertAttributesArray(array('src' => 'img/logo.png', 'title' => 'Foo'), 'src: "img/logo.png", title: "Foo"');
+
+        // with id
+        $this->assertAttributesArray(array(
+            'id' => 'main',
+            'src' => 'img/logo.png', 
+            'title' => 'Bar'
+        ), '#main, src: "img/logo.png", title: "Bar"');
+
+        // with id and class 
+        $this->assertAttributesArray(array(
+            'id' => 'main',
+            'class' => array('image'),
+            'src' => 'img/logo.png', 
+            'title' => 'Bar'
+        ), '.image #main, src: "img/logo.png", title: "Bar"');
+    }
+
+    /**
+     * tests Parser
+     */
+    public function testClassSpecialCase()
+    {
+        $this->assertAttributesArray(array(
+            'id' => 'main',
+            'class' => array('container', 'white-box', 'bordered'),
+        ), '#main.container, class: "white-box bordered"');
+
+        $this->assertAttributesArray(array(
+            'id' => 'main',
+            'class' => array('container', 'strong', 'uppercase'),
+        ), '#main.container, class: {"strong", "uppercase"}');
+    }
+
+    /**
+     * tests Parser
+     * 
+     * @expectedException Exception
+     */
+    public function testAttributeTokensDoubleId()
+    {
+        $this->assertAttributesArray(array(), '#phpunit.main.foo.bar#fooid');
+    }
+
+    /**
+     * tests Parser
+     * 
+     * @expectedException Exception
+     */
+    public function testAttributeTokensInvalid()
+    {
+        $this->assertAttributesArray(array(), '#phpunit.main.foo..ba');
     }
 }
