@@ -223,6 +223,18 @@ class Parser_ShortTag_Test extends Parser_Test
         $this->assertAttributesArray(array(
             'class' => array('foo', 'foo-bar', 'foo-test'),
         ), '.foo ~ bar ~ test');
+
+        $this->assertAttributesArray(array(
+            'class' => array('foo', 'foo-bar', 'foo-test'),
+            'test' => 'phpunit',
+            'id' => 'foo',
+        ), '.foo ~ bar ~ test #foo, test: "phpunit"');
+
+        $this->assertAttributesArray(array(
+            'class' => array('foo', 'foo-bar', 'foo-test', 'col', 'col-md-6', 'col-xs-12'),
+            'test' => 'phpunit',
+            'id' => 'foo',
+        ), '.foo ~ bar ~ test #foo .col ~ md-6 ~ xs-12, test: "phpunit"');
     }
 
     /**

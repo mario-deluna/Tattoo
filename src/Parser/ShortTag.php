@@ -201,6 +201,8 @@ class ShortTag extends Parser
 
                     $tokenPreperationIndex += 2;
                 }
+
+                $tokenPreperationIndex++;
             }
 
             $tokenPreperationIndex++;
