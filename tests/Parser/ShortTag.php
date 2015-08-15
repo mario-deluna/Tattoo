@@ -217,6 +217,16 @@ class Parser_ShortTag_Test extends Parser_Test
 
     /**
      * tests Parser
+     */
+    public function testClassPrefixPrepending()
+    {
+        $this->assertAttributesArray(array(
+            'class' => array('foo', 'foo-bar', 'foo-test'),
+        ), '.foo ~ bar ~ test');
+    }
+
+    /**
+     * tests Parser
      * 
      * @expectedException Exception
      */

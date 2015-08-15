@@ -101,8 +101,9 @@ class Lexer
         "/^(\%)/" => "concat",
         "/^(\#)/" => "anchor",
         "/^(\.)/" => "accessor",
-        "/^(:)/" => "assign",
-        "/^(,)/" => "comma",
+        "/^(\:)/" => "assign",
+        "/^(\,)/" => "comma",
+        "/^(\~)/" => "tilde",
         "/^([\w-]+)/" => "identifier",
 
     );

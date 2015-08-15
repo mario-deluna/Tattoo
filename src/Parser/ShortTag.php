@@ -168,7 +168,46 @@ class ShortTag extends Parser
     {
         $attributes = array();
 
-        foreach (array_chunk($tokens, 2) as $chunk) 
+        $preparedTokens = array();
+        $tokenPreperationIndex = 0;
+
+        // we have to merge tilde classes before
+        while(isset($tokens[$tokenPreperationIndex]))
+        {
+            $preparedTokens[] = $token = $tokens[$tokenPreperationIndex];
+
+            if ($token->type === 'tilde') 
+            {
+                array_pop($preparedTokens);
+
+                if ((!isset($tokens[$tokenPreperationIndex - 1])) || $tokens[$tokenPreperationIndex - 1]->type !== 'identifier')
+                {
+                    throw $this->errorUnexpectedToken($token);
+                }
+
+                $basePrefix = $tokens[$tokenPreperationIndex - 1]->getValue();
+
+                while(isset($tokens[$tokenPreperationIndex]) && $tokens[$tokenPreperationIndex]->type === 'tilde')
+                {
+                    if ((!isset($tokens[$tokenPreperationIndex + 1])) || $tokens[$tokenPreperationIndex + 1]->type !== 'identifier')
+                    {
+                        throw $this->errorUnexpectedToken($token);
+                    }
+
+                    $nextToken = $tokens[$tokenPreperationIndex + 1];
+
+                    $preparedTokens[] = new Token(array('accessor', '.', $nextToken->line));
+                    $preparedTokens[] = new Token(array('identifier', $basePrefix . '-' . $nextToken->getValue(), $nextToken->line));
+
+                    $tokenPreperationIndex += 2;
+                }
+            }
+
+            $tokenPreperationIndex++;
+        }
+
+        // finally parse the attributes
+        foreach (array_chunk($preparedTokens, 2) as $chunk) 
         {
             if (count($chunk) !== 2) 
             {
@@ -190,7 +229,6 @@ class ShortTag extends Parser
 
                 $attributes['id'] = $identifier->getValue();
             }
-
         }
 
         return $attributes;
