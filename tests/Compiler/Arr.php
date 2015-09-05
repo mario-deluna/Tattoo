@@ -40,6 +40,6 @@ class Compiler_Arr_Test extends Compiler_Test
 		$array = new Arr;
 		$array->addItem(new AutoKey, new Variable('foo'));
 
-		$this->assertEquals("array(0 => \$__tattoo_vars['foo'])", $this->compile($array));
+		$this->assertEquals("array(0 => \$__tattoo_vars['foo'])", $this->compile($array, array('autoEscapeVariables' => false)));
 	}
 }

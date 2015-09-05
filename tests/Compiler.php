@@ -18,12 +18,12 @@ class Compiler_Test extends \PHPUnit_Framework_TestCase
 	/**
 	 * Parse some tattoo code and return the nodes
 	 */
-	protected function compile(Node $node)
+	protected function compile(Node $node, array $configuration = array())
 	{
 		$class = substr( get_called_class(), strrpos( get_called_class(), "\\" )+1, -5 );
 		$class = "Tattoo\\".str_replace('_', "\\", $class);
 		
-		$compiler = new $class( $node );
+		$compiler = new $class($node, $configuration);
 		return trim($compiler->compile());
 	}
 
