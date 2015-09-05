@@ -1,32 +1,3 @@
-@pageTitle = 'Tattoo Example'
+@title = 'Hello World <b>should not be bold</b>'
 
-[html]
-{
-	[head]
-	{
-		title => @pageTitle
-	}
-
-	[body]
-	{
-		[div #header]
-		{
-			h1 .page-title => @pageTitle
-		}
-
-		[ul .navigation #main-navigation]
-		{
-			each @item in { 'Home', 'About', 'Portfolio', 'Contact', 'Imprint' }
-			{
-				[li.navigation-item]
-				{
-					[a href: '/test.tto.php?p=' % @item]
-					{
-						span => @item
-					}
-				}
-			}
-		}
-	}
-}
-
+[div title: @title] 

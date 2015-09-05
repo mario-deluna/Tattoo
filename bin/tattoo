@@ -34,7 +34,8 @@ $command = array_shift( $argv );
 
 if ( $command == 'compile' ) 
 {
-	$phpCode = Tattoo::compile( file_get_contents( array_shift( $argv ) ) );
+	$tattoo = new Tattoo;
+	$phpCode = $tattoo->compile($tattoo->parse(file_get_contents(array_shift($argv))));
 	
 	if ( $target = @array_shift( $argv ) )
 	{

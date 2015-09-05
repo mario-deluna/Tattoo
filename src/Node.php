@@ -19,6 +19,74 @@ class Node
 	private $events = array();
 
 	/**
+	 * storage for properties that get shared through the entire node tree
+	 *
+	 * @var array
+	 */
+	protected $inheritProperties = array();
+
+	/**
+	 * Gets a inherited property
+	 * 
+	 * @param string 			$key
+	 * @param mixed 			$default 
+	 * @return void
+	 */
+	final public function getInheritProperty($key, $default = null)
+	{
+		if (!isset($this->inheritProperties[$key]))
+		{
+			return $default;
+		}
+		
+		return $this->inheritProperties[$key];
+	}
+
+	/**
+	 * Sets a value for all property children in the current node tree
+	 * 
+	 * @param string 			$key
+	 * @param mixed 			$value
+	 * @return void
+	 */
+	final public function setInheritProperty($key, $value)
+	{
+		$this->inheritProperties[$key] = $value;
+
+		$excludedProperties = array('parent', 'inheritProperties', 'events');
+
+		foreach(get_object_vars($this) as $propertyKey => &$propertyValue)
+		{
+			if (in_array($propertyKey, $excludedProperties))
+			{
+				continue;
+			}
+
+			$this->tryForwardingInheritProperty($propertyValue, $key, $value);
+		}
+	}
+
+	/**
+	 * Allows recursion of this step when we have arrays as properties
+	 *
+	 * @param Node 				$var
+	 */
+	private function tryForwardingInheritProperty($var, $key, $value)
+	{
+		if (is_array($var))
+		{
+			foreach($var as $item)
+			{
+				$this->tryForwardingInheritProperty($item, $key, $value);
+			}
+		}
+		elseif($var instanceOf Node)
+		{
+			$var->setInheritProperty($key, $value);
+		}
+	}
+
+	/**
 	 * Registers an node event
 	 * 
 	 * @param string 			$name

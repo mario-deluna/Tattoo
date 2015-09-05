@@ -21,14 +21,22 @@ abstract class Compiler
     protected $node = null;
 
     /**
+     * Tattoo engine configuration holder
+     *
+     * @var array
+     */ 
+    protected $configuration = array();
+
+    /**
      * Construct a compiler with the given node
      *
      * @param array                 $nodes
      * @return void
      */
-    public function __construct(Node $node)
+    public function __construct(Node $node, array $configuration = array())
     {
         $this->node = $node;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -49,7 +57,7 @@ abstract class Compiler
         // the compiler class equals the node just with a diffrent namespace
         $compilerClass = str_replace("\\Node\\", "\\Compiler\\", get_class($child));
 
-        $compiler = new $compilerClass($child);
+        $compiler = new $compilerClass($child, $this->configuration);
 
         return $compiler->compile();
     }

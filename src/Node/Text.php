@@ -28,11 +28,27 @@ class Text extends Node implements ContextInterface
 	/**
      * Create new text node with content node
      * 
-     * @param Tattoo\Node 			$value
+     * @param Tattoo\Node 			$content
      */
     public function __construct(Node $content)
     {
-    	$this->content = $content;
+    	$this->content = $this->setContent($content);
+    }
+
+    /**
+     * Set the content hook
+     * 
+     * @param Node              $content
+     * @return Node
+     */
+    protected function setContent(Node $content)
+    {
+        if (method_exists($content, 'setContext'))
+        {            
+            $content->setContext($this);
+        }
+
+        return $content;
     }
 
     /**

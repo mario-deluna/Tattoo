@@ -137,6 +137,11 @@ class ShortTag extends Parser
 
         $attributesArray = $this->parseChild('Arr', $attributeTokens, false);
 
+        // set a inherited property to the node tree
+        // that allows us to identify that array as tag attributes
+        $attributesArray->setInheritProperty('tagAttribute', true);
+
+        // retrive the attributes an normalize them
         $attributes = $this->parseIdAndClassTokens($classAndIdAttrTokens);
         return array_merge_recursive($attributes, $this->fixAttributesArray($attributesArray->convertToNative()));
     }

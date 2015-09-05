@@ -9,40 +9,10 @@
 
 use Tattoo\Compiler\Scope as ScopeCompiler;
 use Tattoo\Parser\Scope as ScopeParser;
+use Tattoo\Node\Scope as ScopeNode;
 
 class Tattoo
 {
-    /**
-     * Parse tattoo code
-     *
-     * @throws Tattoo\Exception
-     *
-     * @param string            $code
-     * @return array
-     */
-    public static function parse($code)
-    {
-        $lexer = new Lexer($code);
-        $parser = new ScopeParser($lexer->tokens());
-
-        return $parser->parse();
-    }
-
-    /**
-     * Compile tattoo code to php
-     *
-     * @throws Tattoo\Exception
-     *
-     * @param string            $code
-     * @return array
-     */
-    public static function compile($code)
-    {
-        $compiler = new ScopeCompiler(static::parse($code));
-
-        return $compiler->compile();
-    }
-
     /**
      * Tattoo engine configuration holder
      *
@@ -65,6 +35,19 @@ class Tattoo
             // the development mode forces tattoo to always 
             // rebuild the files.
             'development' => false,
+
+            // compiler options
+            'compiler' => array(
+
+                // automatically escape all outputet variables
+                'autoEscapeVariables' => true,
+
+                // define the escaping function. This configuration
+                // should always be a string, but calm your horses
+                // the string will be directly used in the compiling
+                // proccess so use this with attention.
+                'defaultEscapeFunction' => 'htmlentities',
+            ),
         );
     }
 
@@ -77,6 +60,36 @@ class Tattoo
     public function __construct(array $configuration = array())
     {
         $this->configuration = array_merge($this->getDefaultConfiguration(), $configuration);
+    }
+
+    /**
+     * Parse tattoo code
+     *
+     * @throws Tattoo\Exception
+     *
+     * @param string            $code
+     * @return Node\Scope
+     */
+    public function parse($code)
+    {
+        $lexer = new Lexer($code);
+        $parser = new ScopeParser($lexer->tokens());
+
+        return $parser->parse();
+    }
+
+    /**
+     * Compile tattoo scope to php
+     *
+     * @throws Tattoo\Exception
+     *
+     * @param Node\Scope            $code
+     * @return array
+     */
+    public function compile(ScopeNode $scope)
+    {
+        $compiler = new ScopeCompiler($scope, $this->configuration['compiler']);
+        return $compiler->compile();
     }
 
     /**
