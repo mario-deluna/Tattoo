@@ -75,6 +75,7 @@ class Tattoo
         $lexer = new Lexer($code);
         $parser = new ScopeParser($lexer->tokens());
 
+
         return $parser->parse();
     }
 
@@ -112,7 +113,7 @@ class Tattoo
         // we have to rebuild the code
         if ($this->configuration['development'] === true || (!file_exists($cacheFile)) || filemtime($file) > filemtime($cacheFile))
         {
-            file_put_contents($cacheFile, '<?php ' . static::compile(file_get_contents($file)));
+            file_put_contents($cacheFile, '<?php ' . $this->compile($this->parse(file_get_contents($file))));
         }
 
         // move the needed vars to avoid collisions
