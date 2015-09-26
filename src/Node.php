@@ -55,7 +55,7 @@ class Node
 
 		$excludedProperties = array('parent', 'inheritProperties', 'events');
 
-		foreach(get_object_vars($this) as $propertyKey => &$propertyValue)
+		foreach(get_object_vars($this) as $propertyKey => $propertyValue)
 		{
 			if (in_array($propertyKey, $excludedProperties))
 			{
