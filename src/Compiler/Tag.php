@@ -24,11 +24,20 @@ class Tag extends Scope
         // add the attributes
         $buffer .= $this->export($this->node->attributes) . ", ";
 
-        // add the callback
-        $buffer .= "function(" . $this->variableTagHolder() . ") use(" . $this->variableVarHolder() . ")\n";
-
         // add the content;
-        $buffer .= "{" . $content . "\n});\n";
+        if (is_null($content) || empty($content))
+        {
+            $buffer .= 'null';
+        }
+        else
+        {
+            // add the callback
+            $buffer .= "function(" . $this->variableTagHolder() . ") use(" . $this->variableVarHolder() . ")\n";
+            $buffer .= "{" . $content . "\n}"; 
+        }
+
+        // close the function
+        $buffer .= ");\n";
 
         return $buffer;
     }
