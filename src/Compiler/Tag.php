@@ -22,7 +22,7 @@ class Tag extends Scope
         $buffer = $this->getScopeAssignPrefix($this->node) . "new Tattoo\Engine\Tag('" . $this->node->getName() . "', ";
 
         // add the attributes
-        $buffer .= $this->export($this->node->attributes) . ", ";
+        $buffer .= $this->export($this->node->getAttributes()) . ", ";
 
         // add the content;
         if (is_null($content) || empty($content))

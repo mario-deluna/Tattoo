@@ -8,6 +8,7 @@
  */
 
 use Tattoo\Node;
+use Tattoo\Node\Arr;
 
 class Tag extends Scope
 {
@@ -21,7 +22,23 @@ class Tag extends Scope
 	/**
 	 * The tags attributes
 	 *
-	 * @var array
+	 * @var Arr
 	 */
-	public $attributes = array();
+	protected $attributes = array();
+
+	/**
+	 * Set the tag attributes 
+	 *
+	 * @param Arr 			$attributes
+	 * @return Arr
+	 */
+	protected function setAttributes(Arr $attributesArray)
+	{
+		// set a inherited property to the node tree
+        // that allows us to identify that array as tag attributes
+        $attributesArray->setInheritProperty('tagAttribute', true);
+
+        // return the attributes
+        return $attributesArray;
+	}
 }

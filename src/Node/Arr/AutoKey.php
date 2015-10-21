@@ -19,6 +19,11 @@ class AutoKey extends ArrKey
      */
     protected function setValue(Value $value)
     {
-    	throw new Exception('Cannot set value of auto array key.');
+    	if ($value->getType() !== 'number')
+    	{
+    		throw new Exception('Cannot set value of auto array key.');
+    	}
+    	
+    	return $value;
     }
 }

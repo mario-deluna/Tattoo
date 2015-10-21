@@ -1,3 +1,4 @@
-@title = 'Hello World <b>should not be bold</b>'
-
-[div title: @title] 
+[div.was.is.dit.problem]
+{
+	span => 'FOC'
+}

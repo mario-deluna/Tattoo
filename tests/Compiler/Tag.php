@@ -13,6 +13,7 @@
  */
 
 use Tattoo\Node\Tag;
+use Tattoo\Node\Variable;
 
 class Compiler_Tag_Test extends Compiler_Test
 {
@@ -35,12 +36,33 @@ class Compiler_Tag_Test extends Compiler_Test
     {
         $tag = new Tag;
         $tag->setName('input');
-        $tag->attributes = array(
+        $tag->setAttributes = array(
             'name' => 'username',
             'type' => 'text',
         );
         $tag = $this->compile($tag);
 
         $this->assertContains("array('name' => 'username', 'type' => 'text')", $tag);
+    }
+
+    /**
+     * tests Parser
+     */
+    public function testTagWithAttributesEscaping()
+    {
+        $tag = new Tag;
+        $tag->setName('input');
+        $tag->setAttributes = array(
+            'name' => new Variable('name'),
+            'type' => 'text',
+        );
+
+        // assert with auto escaping
+        $tagCompiled = $this->compile($tag, array('autoEscapeVariables' => true));
+        $this->assertContains("array('name' => \$__tattoo_vars['name'], 'type' => 'text')", $tagCompiled);
+
+        // assert without
+        $tagCompiled = $this->compile($tag, array('autoEscapeVariables' => false));
+        $this->assertContains("array('name' => \$__tattoo_vars['name'], 'type' => 'text')", $tagCompiled);
     }
 }

@@ -9,6 +9,7 @@
 
 use Tattoo\Node\Tag as TagNode;
 use Tattoo\Node\Text as TextNode;
+use Tattoo\Node\Arr as ArrNode;
 use Tattoo\Parser;
 use Tattoo\Token;
 
@@ -77,7 +78,7 @@ class ShortTag extends Parser
         }
 
         // now lets parse the attributes
-        $this->tag->attributes = $this->parseAttributeTokens($attributeTokens);
+        $this->tag->setAttributes($this->parseAttributeTokens($attributeTokens));
 
         // reset the token array keys
         $tokens = array_values($tokens);
@@ -103,7 +104,7 @@ class ShortTag extends Parser
     {
         if (empty($tokens)) 
         {
-            return array();
+            return new ArrNode;
         }
 
         $firstToken = reset($tokens);
@@ -135,11 +136,7 @@ class ShortTag extends Parser
         // add a closing attribute token
         $attributeTokens = array_merge($attributeTokens, array(new Token(array('scopeClose', null, $firstToken->line))));
 
-        $attributesArray = $this->parseChild('Arr', $attributeTokens, false);
-
-        // set a inherited property to the node tree
-        // that allows us to identify that array as tag attributes
-        $attributesArray->setInheritProperty('tagAttribute', true);
+        return $attributesArray = $this->parseChild('Arr', $attributeTokens, false);
 
         // retrive the attributes an normalize them
         $attributes = $this->parseIdAndClassTokens($classAndIdAttrTokens);
