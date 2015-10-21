@@ -14,11 +14,35 @@ h1 => 'Welcome to Tattoo :)'
 
 _There are still PHP5.3 users and I don't want to discriminate these outlaws. Means Tattoo works from 5.3 to 7._
 
+**Tattoo is not finished but in heavy development.**
+
 ## Tell me more!
 
 A programming language written in PHP that compiles into PHP? When all you have is a hammer everything starts to look like a nail hu? 
 
-Well no, when I wrote the first concept for this language I thought about building a native interpreter. But then more and more ideas came together how Tattoo should work and how people should be able to make use of it. I realised that you won't ever write stand alone applications with tattoo. So the result is a mixture between a programming language and a templating engine written in PHP for PHP. If this thing works, I would be happy to port this someday to ruby and js.
+There is no real use case where you would build a stand alone Tattoo application. So making Tattoo work as a library seemed to be best way to go. Why PHP? Huge community, pretty fast and Im used to the syntax.
+
+## Installation
+
+Composer, whoop whoop.
+
+```
+$ composer require mario-deluna/tattoo
+```
+
+## Usage
+
+```php
+$tattoo = new Tattoo\Tattoo(array('cache' => 'path/to/my/cache/dir/'));
+
+echo $tattoo->render('/path/to/a/tattoofile.tto', array(
+	'name' => $_GET['name'],
+));
+```
+
+```tattoo
+h1.page-title => 'Hello ' % @name
+```
 
 ## The great goal
 
@@ -61,8 +85,6 @@ This something i've seen a lot. We have got two inline statements here and hones
 Tattoo considers html tags as scoped objects this allows you to write your markup in a real new dynamic way.
 
 ---
-
-**The language isn't done yet. It's just a concept. But I will do my best to create first prototype in the next few months.**
 
 ## Syntax
 
