@@ -1,4 +1,4 @@
-[div.was.is.dit.problem]
+[p] => 'Hello '
 {
-	span => 'FOC'
+    span => 'World'
 }

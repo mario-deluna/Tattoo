@@ -41,7 +41,7 @@ class Parser_ShortTag_Test extends Parser_Test
     public function testWithAttributes()
     {
         $node = $this->parse("img src: 'foo.png'");
-        $this->assertEquals(array('src' => 'foo.png'), $node->getAttributes());
+        $this->assertEquals(array('src' => 'foo.png'), $node->getAttributes()->convertToNative());
     }
 
     /**
@@ -50,7 +50,7 @@ class Parser_ShortTag_Test extends Parser_Test
     public function testWithArrayAttributes()
     {
         $node = $this->parse("img class: {'foo', 'bar'}");
-        $this->assertEquals(array('class' => array('foo', 'bar')), $node->getAttributes());
+        $this->assertEquals(array('class' => array('foo', 'bar')), $node->getAttributes()->convertToNative());
     }
 
     /**
@@ -59,7 +59,7 @@ class Parser_ShortTag_Test extends Parser_Test
     public function testWithSpecialAttributes()
     {
         $node = $this->parse("span #foo .bar => 'Hello World'");
-        $this->assertEquals(array('id' => 'foo', 'class' => array('bar')), $node->getAttributes());
+        $this->assertEquals(array('id' => 'foo', 'class' => array('bar')), $node->getAttributes()->convertToNative());
     }
 
     /**
@@ -68,7 +68,7 @@ class Parser_ShortTag_Test extends Parser_Test
     public function testWithAttributeMerging()
     {
         $node = $this->parse("img .yeah, class: {'foo', 'bar'}");
-        $this->assertEquals(array('class' => array('yeah', 'foo', 'bar')), $node->getAttributes());
+        $this->assertEquals(array('class' => array('yeah', 'foo', 'bar')), $node->getAttributes()->convertToNative());
     }
 
     /**
