@@ -1,0 +1,20 @@
+
+// yeah a simple hello world :)
+function hello(@name = 'World')
+{
+	return 'Hello ' % @name
+}
+
+// import the translator
+function trans(@key)
+{
+	reutrn phproxy('\\Lang::line', @key)
+}
+
+// prints:
+//    <h1>Hello Welt</h1>
+h1 => hello(trans('global.world'))
+
+
+// alternate syntax of function calling
+h1 => 'global.world'|trans|hello

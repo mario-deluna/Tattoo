@@ -1,38 +1,31 @@
-space bootstrap
 
-filter tooltip( @title, @pos = 'top' )
+// define a new filter, a tooltip helper.
+// when executed the filter recieves the 
+// context of the object calling object
+filter tooltip(@title, @position)
 {
+	// add the data toggle attribute 
 	@this.data.toggle = 'tooltip'
 
+	// set the given title
 	@this.title = @title
 
-	if @pos
+	// add position information if given
+	if @position
 	{
-		@this.data.position = @pos
+		@this.data.position = @position
 	}
 }
 
-view form-group
-{
-
-
-	[ul.form-group]
-	{
-		label for:
-	}
-	<div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>
-}
-
----
-
-import bootstrap
-
+// create a new link
 [a href: '/tips'] => 'Tipps'
 {
-	-> tooltip "Click to see tips"
+	// import the tooltip filter
+	-> tooltip("Click to see tips")
 }
 
-button ""
+// create a new link with diffrent tooltip position
+[a href: '/tips'] => 'Tipps with Bottom tooltip'
+{
+	-> tooltip("Click to see tips", 'bottom')
+}

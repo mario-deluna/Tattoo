@@ -1,0 +1,24 @@
+// outputing data elements might be a bit 
+// confusing at first.
+
+// the print command plays a big role but is not
+// always written down.
+
+// so for example this:
+h1 => 'Hello World'
+
+// does exactly the same as:
+print h1 => 'Hello World'
+
+// if you don't wish to direclty print 
+// you can catch the expression inside a var
+@helloWorld = h1 => 'Hello World'
+
+// now that autoprinting stuff only works 
+// when a new tag / element is defined
+// following code won't do anything:
+@helloWorld
+
+// only by adding print the contents of that var 
+// will be outputed
+print @helloWorld

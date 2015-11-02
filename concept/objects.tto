@@ -1,0 +1,43 @@
+
+// define a new modal dialog object
+object modal-dialog(@title, @body)
+{
+	// the title of the dialog
+	property @title
+
+	// the modal body
+	property @body
+
+	// the render magic
+	function __render 
+	{
+		return [div.modal-dialog]
+		{
+			[div.modal-header]
+			{
+				h2 => @self.title
+			}
+			[div.modal-body]
+			{
+				print @self.body
+			}
+		}
+	}
+}
+
+// create new modal dialog object with
+// the title given Hello World
+@dialog = new modal-dialog('Hello World')
+
+// this shows the scope syntax which simply creates
+// an empty elementless scope 
+@dialog.body = scope 
+{
+	p => 'Some Information about'
+
+	[button .close-dialog] => 'Close'
+}
+
+print @dialog
+
+

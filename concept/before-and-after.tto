@@ -1,0 +1,7 @@
+
+// alows to execute code before the element gets 
+// extended 
+before input .form-control
+{
+	@this.attr.class = {'form-control'}
+}

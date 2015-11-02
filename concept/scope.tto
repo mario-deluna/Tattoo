@@ -1,0 +1,46 @@
+
+// creates a simple element less scope
+// 
+//     <span>Hello </span>
+//     <strong>World</strong>
+//  
+scope 
+{
+	span => 'Hello '
+	strong => 'World'
+}
+
+// in this case the wrapping the 2 elements inside 
+// a scope is pretty useless. It comes handy when you 
+// don't wish to directly output the scope 
+@helloWorld = scope 
+{
+	span => 'Hello '
+	strong => 'World'
+}
+
+// hello world is now a scope object containing 
+// children so children can be appended
+@helloWorld.children|push([i] => '!')
+
+// now we could print the scope
+//
+//     <span>Hello </span>
+//     <strong>World</strong>
+//     <i>!</i>
+print @helloWorld
+
+// or we can iterate the children
+each @child in @helloWorld.children 
+{
+	// we can reopen the childs scope
+	// and do opertations inside of it
+	print @child 
+	{
+		if (@this.name == 'span')
+		{
+			@this.addClass('light')
+		}
+	}
+}
+
