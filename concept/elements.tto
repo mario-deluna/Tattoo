@@ -7,7 +7,7 @@ span => 'Foo'
 // to append a text element
 [span]
 {
-	print 'Foo'
+	add 'Foo'
 }
 
 // now that 'Foo' thingy is not just text getting printed
@@ -36,9 +36,9 @@ span => 'Foo'
 // print that thing
 //
 //    <strong title="Bar">Foo</strong>
-print @element
+add @element
 
 // you can also append elements
 //
 //    <strong title="Bar">Foo<span><i>Batz</i></span></strong>
-print @element => [span][i] => 'Batz'
+add @element => [span][i] => 'Batz'

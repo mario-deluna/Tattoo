@@ -19,7 +19,7 @@ object modal-dialog(@title, @body)
 			}
 			[div.modal-body]
 			{
-				print @self.body
+				add @self.body
 			}
 		}
 	}
@@ -38,6 +38,6 @@ object modal-dialog(@title, @body)
 	[button .close-dialog] => 'Close'
 }
 
-print @dialog
+add @dialog
 
 

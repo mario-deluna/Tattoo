@@ -85,6 +85,8 @@ class Lexer
         "/^(extend)/" => "extend",
         "/^(view)/" => "view",
 
+        "/^(print)/" => "print",
+
         // scope
         "/^({)/" => "scopeOpen",
         "/^(})/" => "scopeClose",

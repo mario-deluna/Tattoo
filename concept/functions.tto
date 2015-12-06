@@ -8,7 +8,7 @@ function hello(@name = 'World')
 // import the translator
 function trans(@key)
 {
-	reutrn phproxy('\\Lang::line', @key)
+	return phproxy('\\Lang::line', @key)
 }
 
 // prints:

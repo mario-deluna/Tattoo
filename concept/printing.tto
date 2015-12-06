@@ -8,7 +8,7 @@
 h1 => 'Hello World'
 
 // does exactly the same as:
-print h1 => 'Hello World'
+add h1 => 'Hello World'
 
 // if you don't wish to direclty print 
 // you can catch the expression inside a var
@@ -21,4 +21,4 @@ print h1 => 'Hello World'
 
 // only by adding print the contents of that var 
 // will be outputed
-print @helloWorld
+add @helloWorld
