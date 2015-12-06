@@ -1,0 +1,42 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: Tattoo 
+scopeName: source.tattoo
+fileTypes: [tto]
+uuid: ac84e04a-2fd9-4242-8509-33550f888ffa
+
+patterns:
+- match: "@[a-zA-Z0-9_-][\\w-]*"
+  name: variable.other.tattoo
+
+- name: string.quoted.double.other.tattoo
+  end: "\""
+  begin: "\""
+
+- name: string.quoted.single.other.tattoo
+  end: "'"
+  begin: "'"
+
+- name: comment.line.double-slash.tattoo
+  begin: '\/\/'
+  end: "$\\n?"
+    
+- name: constant.language.tattoo
+  match: "(yes|no|null)"
+
+- name: support.function.createtag.tattoo
+  begin: '(\[)'
+  end: '(\])'
+
+- name: "keyword.operator.tattoo"
+  match: '(%|=>|&|==|=|!=|<=|>=|!|&&|and|or|in)'
+
+- name: "keyword.control.tattoo"
+  match: '\b(if|else(if)?|each|loop|in|add|return|function|property)\b'
+
+- name: "storage.type.tattoo"
+  match: '\b(extend|prepare|view|scope|new|object)\b'
+
+- name: "support.function.tag.tattoo"
+  match: '\b(a|address|b|big|blockquote|body|br|center|cite|code|dd|dfn|div|dl|dt|em|font|h1|h2|h3|h4|h5|h6|head|hr|html|i|img|kbd|meta|li|nobr|ol|p|pre|qt|s|samp|small|span|strong|style|sub|sup|table|tbody|td|tfoot|th|thead|title|tr|tt|u|ul|var)\b'
+...
