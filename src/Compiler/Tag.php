@@ -19,7 +19,7 @@ class Tag extends Scope
      */
     protected function wrapScopeContents($content)
     {
-        $buffer = $this->getScopeAssignPrefix($this->node) . "new Tattoo\Engine\Tag('" . $this->node->getName() . "', ";
+        $buffer = "new Tattoo\Engine\Tag('" . $this->node->getName() . "', ";
 
         // add the attributes
         $buffer .= $this->export($this->node->getAttributes()) . ", ";

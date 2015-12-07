@@ -8,6 +8,7 @@
  */
 
 use Tattoo\Node\Scope as ScopeNode;
+use Tattoo\Node\Append as AppendNode;
 use Tattoo\Parser;
 
 class Scope extends Parser
@@ -61,15 +62,22 @@ class Scope extends Parser
         }
 
         // only short tags start with an identifier
+        // we automatically add the append node 
         elseif ($token->type === 'identifier') 
         {
-            $this->scope->addChild($this->parseChild('ShortTag'));
+            $appendingNode = new AppendNode;
+            $appendingNode->setNode($this->parseChild('ShortTag'));
+            // add the child to the scope
+            $this->scope->addChild($appendingNode);
         }
 
         // obviously when tag opens we parse a tag
         elseif ($token->type === 'tagOpen')
         {
-            $this->scope->addChild($this->parseChild('Tag'));
+            $appendingNode = new AppendNode;
+            $appendingNode->setNode($this->parseChild('Tag'));
+            // add the child to the scope
+            $this->scope->addChild($appendingNode);
         }
         
         // loops

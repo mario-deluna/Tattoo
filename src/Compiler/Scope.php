@@ -41,7 +41,24 @@ class Scope extends Compiler
 
         $buffer .= $this->variableVarHolder() . ' = ' . $this->export(array()) . ";\n}\n";
 
-        return $buffer . $content;
+        $buffer .= "echo new Tattoo\Engine\Scope(";
+
+        // add the content;
+        if (is_null($content) || empty($content))
+        {
+            $buffer .= 'null';
+        }
+        else
+        {
+            // add the callback
+            $buffer .= "function(" . $this->variableTagHolder() . ") use(" . $this->variableVarHolder() . ")\n";
+            $buffer .= "{\n" . $content . "\n}"; 
+        }
+
+        // close the function
+        $buffer .= ");\n";
+
+        return $buffer;
     }
 
 }

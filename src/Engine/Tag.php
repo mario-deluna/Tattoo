@@ -9,7 +9,7 @@
  * @copyright         2015 Mario Döring
  */
 
-class Tag
+class Tag extends Scope
 {
     /**
      * The tags name
@@ -26,26 +26,26 @@ class Tag
     public $attributes = array();
 
     /**
-     * The tags content
-     *
-     * @var string
+     * The scope callback to generate the children
+     * 
+     * @param callable
      */
-    public $content = '';
+    public $scope = null;
 
     /**
      * Construct a new tag
      *
      * @param string                 $name
-     * @param array                 $attributes
-     * @param callable                $content
+     * @param array                  $attributes
+     * @param callable               $scope
      *
      * @return void
      */
-    public function __construct($name, $attributes, $content = null)
+    public function __construct($name, $attributes, $scope = null)
     {
         $this->name = $name;
         $this->attributes = $attributes;
-        $this->content = $content;
+        $this->scope = $scope;
     }
 
     /**
@@ -65,11 +65,13 @@ class Tag
      */
     public function render()
     {
-        if (is_callable($this->content)) 
+        if (empty($this->children))
         {
-            $contentRequest = $this->content;
-            $this->content = '';
-            call_user_func_array($contentRequest, array(&$this));
+            $content = null;
+        }
+        else
+        {
+            $content = parent::render();
         }
 
         $attributes = $this->attributes;
@@ -97,11 +99,11 @@ class Tag
             $attributeString .= ' ' . $key . '="' . $value . '"';
         }
 
-        if (is_null($this->content)) 
+        if (is_null($content)) 
         {
             return '<' . $this->name . $attributeString . " />";
         }
 
-        return "<" . $this->name . $attributeString . ">" . $this->content . "</" . $this->name . ">";
+        return "<" . $this->name . $attributeString . ">" . $content . "</" . $this->name . ">";
     }
 }

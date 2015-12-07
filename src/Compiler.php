@@ -63,21 +63,6 @@ abstract class Compiler
     }
 
     /**
-     * Append to scope contents or output?
-     *
-     * @return string
-     */
-    protected function getScopeAssignPrefix($node)
-    {
-        if (is_null($node->parent) || ($node->parent instanceof ScopeNode && (!$node->parent instanceof TagNode))) 
-        {
-            return "\necho ";
-        }
-
-        return "\n" . $this->variableTagHolder() . "->content .= ";
-    }
-
-    /**
      * Variablfy a name
      *
      * @param string                 $name

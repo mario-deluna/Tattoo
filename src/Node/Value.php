@@ -48,7 +48,7 @@ class Value extends Node
     public function __construct($value = null, $type = null)
     {
     	$this->value = $value;
-
+        
     	if (!is_null($type))
     	{
     		$this->type = $this->setType($type);
