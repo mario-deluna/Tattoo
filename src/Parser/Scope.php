@@ -54,6 +54,12 @@ class Scope extends Parser
             $this->skipToken();
         }
 
+        // check for appending commands
+        elseif ($token->type === 'append')
+        {
+            $this->scope->addChild($this->parseChild('Append'));
+        }
+
         // only short tags start with an identifier
         elseif ($token->type === 'identifier') 
         {

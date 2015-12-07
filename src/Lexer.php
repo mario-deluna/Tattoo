@@ -74,18 +74,18 @@ class Lexer
         "/^(\=\>)/" => "assignText",
         "/^(=)/" => "equal",
 
-        "/^(if)/" => "if",
-        "/^(elseif)/" => "elseif",
-        "/^(else)/" => "else",
+        "/^(if )/" => "if",
+        "/^(elseif )/" => "elseif",
+        "/^(else )/" => "else",
 
         "/^(each )/" => "foreach",
         "/^(in )/" => "in",
         "/^(loop )/" => "loop",
 
-        "/^(extend)/" => "extend",
-        "/^(view)/" => "view",
+        "/^(extend )/" => "extend",
+        "/^(view )/" => "view",
 
-        "/^(print)/" => "print",
+        "/^(add )/" => "append",
 
         // scope
         "/^({)/" => "scopeOpen",

@@ -22,3 +22,8 @@ add h1 => 'Hello World'
 // only by adding print the contents of that var 
 // will be outputed
 add @helloWorld
+
+// experimental text blocks
+{=
+	Nobody knows the troule i've seen in {{@city}} but there will be always someone whon knows at {{@time}}
+=}
