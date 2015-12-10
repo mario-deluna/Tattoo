@@ -10,6 +10,7 @@
 use Tattoo\Node\Tag as TagNode;
 use Tattoo\Node\Text as TextNode;
 use Tattoo\Node\Arr as ArrNode;
+use Tattoo\Node\Append as AppendNode;
 use Tattoo\Parser;
 use Tattoo\Token;
 
@@ -87,7 +88,10 @@ class ShortTag extends Parser
         {
             unset($tokens[0]);
 
-            $this->tag->addChild(new TextNode($this->parseChild('Expression', $tokens, false)));
+            $appendingNode = new AppendNode;
+            $appendingNode->setNode(new TextNode($this->parseChild('Expression', $tokens, false)));
+
+            $this->tag->addChild($appendingNode);
         }
 
         // return the result

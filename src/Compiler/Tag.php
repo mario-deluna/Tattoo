@@ -37,7 +37,7 @@ class Tag extends Scope
         }
 
         // close the function
-        $buffer .= ");\n";
+        $buffer .= ")\n";
 
         return $buffer;
     }

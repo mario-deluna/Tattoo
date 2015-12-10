@@ -18,6 +18,6 @@ class Append extends Compiler
      */
     public function compile()
     {
-		return $this->variableTagHolder() . '->children[] = ' . $this->compileChild($this->node->getNode());
+		return "\n" . trim($this->variableTagHolder() . '->children[] = ' . $this->compileChild($this->node->getNode())) . ';' . "\n";
     }
 }

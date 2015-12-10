@@ -73,6 +73,13 @@ class Append extends Parser
             $this->append->setNode($this->parseChild('Variable'));
         }
 
+        // values can be append to by converting them to
+        // a string
+        elseif ($this->currentToken()->isValue())
+        {
+            $this->append->setNode($this->parseChild('Expression'));
+        }
+
         // otherwise failure
         else
         {

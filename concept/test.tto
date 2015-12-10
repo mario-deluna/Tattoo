@@ -1,2 +1,1 @@
-
-add h1
+@tag = h1 => 'Title'

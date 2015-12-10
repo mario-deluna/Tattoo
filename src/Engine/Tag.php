@@ -49,22 +49,14 @@ class Tag extends Scope
     }
 
     /**
-     * To string magic forward render call
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->render();
-    }
-
-    /**
      * Render the tag as html
      *
      * @return string
      */
     public function render()
     {
+        $this->execute();
+        
         if (empty($this->children))
         {
             $content = null;
