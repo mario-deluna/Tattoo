@@ -140,6 +140,7 @@ class ShortTag extends Parser
         // add a closing attribute token
         $attributeTokens = array_merge($attributeTokens, array(new Token(array('scopeClose', null, $firstToken->line))));
 
+
         return $attributesArray = $this->parseChild('Arr', $attributeTokens, false);
 
         // retrive the attributes an normalize them

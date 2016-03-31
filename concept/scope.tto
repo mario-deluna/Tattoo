@@ -28,14 +28,14 @@ scope
 //     <span>Hello </span>
 //     <strong>World</strong>
 //     <i>!</i>
-print @helloWorld
+add @helloWorld
 
 // or we can iterate the children
 each @child in @helloWorld.children 
 {
 	// we can reopen the childs scope
 	// and do opertations inside of it
-	print @child 
+	add @child 
 	{
 		if (@this.name == 'span')
 		{
