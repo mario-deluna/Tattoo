@@ -16,6 +16,7 @@ use Tattoo\Node;
 use Tattoo\Node\Value as ValueNode;
 
 use Tattoo\Node\Arr\ArrKey;
+use Tattoo\Node\Arr\AssocKey;
 use Tattoo\Node\Arr\AutoKey;
 
 class Arr extends Node
@@ -81,6 +82,46 @@ class Arr extends Node
                 return true;
             }
         }
+
+        return false;
+    }
+
+    /**
+     * Get an array value with a specifc key
+     *
+     * @param mixed             $key
+     * @return bool
+     */
+    public function get($checkedKey)
+    {
+        foreach($this->items as list($key, $value))
+        {
+            if ($key->getValue()->getValue() === $checkedKey)
+            {
+                return $value;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Set a value by key
+     *
+     * @param mixed             $key
+     * @return bool
+     */
+    public function set($checkedKey, $valueNode)
+    {
+        foreach($this->items as $pointer => list($key, $value))
+        {
+            if ($key->getValue()->getValue() === $checkedKey)
+            {
+                $this->items[$pointer] = array($key, $valueNode); return true;
+            }
+        }
+
+        $this->addItem(new AssocKey(new ValueNode($checkedKey, 'string')), $valueNode);
 
         return false;
     }

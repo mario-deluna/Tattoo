@@ -1,0 +1,83 @@
+// *-- Short Tag --*
+p => 'Hello World'
+===
+<p>Hello World</p>
+
+
+// *-- Full Tag --*
+[p] 
+{
+	add 'Hello World'
+} 
+===
+<p>Hello World</p>
+
+
+// *-- Full Tag with assigner --*
+[h1] => 'Title '
+{
+	small => 'subtitle'
+} 
+===
+<h1>Title <small>subtitle</small></h1>
+
+
+// *-- empty short tag --*
+hr
+===
+<hr />
+
+
+// *-- empty full tag --*
+[hr]
+===
+<hr />
+
+
+// *-- full tag with empty scope --*
+[hr]
+{
+}
+===
+<hr />
+
+
+// *-- full tag with empty scope alternative syntax --*
+[hr] {}
+===
+<hr />
+
+
+// *-- tag recursion --*
+[html][body][section][h1]
+{
+	add 'Hi'
+}
+===
+<html><body><section><h1>Hi</h1></section></body></html>
+
+
+// *-- tag recursion with direct assign --*
+[html][body][section][h1] => 'Hi '
+{
+	span => 'dude'
+}
+===
+<html><body><section><h1>Hi <span>dude</span></h1></section></body></html>
+
+
+// *-- tag recursion using direct assign --*
+section => div => ul => li => a => 'deeeep link' 
+===
+<section><div><ul><li><a>deeeep link</a></li></ul></div></section>
+
+
+// *-- Direct assign + Tag recursion --*
+[section][div][ul]
+{
+	li => a => 'james'
+	li => a => 'jane'
+	li => a => 'ray'
+}
+===
+<section><div><ul><li><a>james</a></li><li><a>jane</a></li><li><a>ray</a></li></ul></div></section>

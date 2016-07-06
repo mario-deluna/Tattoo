@@ -78,7 +78,8 @@ class Parser_ShortTag_Test extends Parser_Test
     {
         $children = $this->parse("span => 'Test'")->getChildren();
         
-        $text = reset($children);
+        $firstAdd = reset($children);
+        $text = $firstAdd->getNode();
 
         $this->assertEquals('Test', $text->getContent()->getValue());
     }
@@ -90,7 +91,7 @@ class Parser_ShortTag_Test extends Parser_Test
     {
         $children = $this->parse("span => 'Foo' % ' - ' % 'Bar'")->getChildren();
         
-        $concat = reset($children);
+        $concat = reset($children)->getNode();
 
         $this->assertCount(3, $concat->getContent()->getNodes());
     }
@@ -102,7 +103,7 @@ class Parser_ShortTag_Test extends Parser_Test
     {
         $children = $this->parse("span => @text")->getChildren();
         
-        $text = reset($children);
+        $text = reset($children)->getNode();
 
         $this->assertEquals('text', $text->getContent()->getName());
     }
@@ -114,7 +115,7 @@ class Parser_ShortTag_Test extends Parser_Test
     {
         $children = $this->parse("span.foo => @text")->getChildren();
         
-        $text = reset($children);
+        $text = reset($children)->getNode();
 
         $this->assertEquals('text', $text->getContent()->getName());
     }

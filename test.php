@@ -8,8 +8,15 @@ require "vendor/autoload.php";
 
 $tattoo = new Tattoo\Tattoo(array('cache' => __DIR__ . '/cache/'));
 
-header('Content-Type: text/plain');
-//print_r($tattoo->parse(file_get_contents(__DIR__ . '/concept/test.tto'))); die;
+//header('Content-Type: text/plain');
+
+if (isset($argv))
+{
+	if ($argv && array_shift($argv) === 'tree')
+	{
+		print_r($tattoo->parse(file_get_contents(__DIR__ . '/concept/test.tto'))); die;
+	}
+}
 
 echo $tattoo->render(__DIR__ . '/concept/test.tto', $_GET);
 

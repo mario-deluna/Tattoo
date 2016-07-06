@@ -19,6 +19,16 @@ class Scope extends Compiler
      */
     public function compile()
     {
+        return $this->wrapScopeContents($this->compileChildren());
+    }
+
+    /**
+     * Compile the scopes children
+     * 
+     * @return string
+     */
+    protected function compileChildren()
+    {
         $buffer = '';
 
         foreach ($this->node->children as $child) 
@@ -26,7 +36,7 @@ class Scope extends Compiler
             $buffer .= $this->compileChild($child);
         }
 
-        return $this->wrapScopeContents($buffer);
+        return $buffer;
     }
 
     /**
@@ -37,11 +47,16 @@ class Scope extends Compiler
      */
     protected function wrapScopeContents($content)
     {
-        $buffer = "if (!isset(" . $this->variableVarHolder() . ")) {\n\t";
-
-        $buffer .= $this->variableVarHolder() . ' = ' . $this->export(array()) . ";\n}\n";
-
-        $buffer .= "echo new Tattoo\Engine\Scope(";
+        if (is_null($this->node->parent))
+        {
+            $buffer = "if (!isset(" . $this->variableVarHolder() . ")) {\n\t";
+            $buffer .= $this->variableVarHolder() . ' = ' . $this->export(array()) . ";\n}\n";
+            $buffer .= "echo new Tattoo\Engine\Scope(";
+        }
+        else
+        {
+            $buffer = "new Tattoo\Engine\Scope(";
+        }
 
         // add the content;
         if (is_null($content) || empty($content))

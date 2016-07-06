@@ -30,7 +30,7 @@ class Each extends Scope
         $buffer .= $this->compileChild($this->node->getValueVariable()) . ") {\n";
         
         // compile child scope
-        $buffer .= parent::compile();
+        $buffer .= $this->compileChildren();
 
         // close the loop scope
         $buffer .= "\n}";

@@ -7,9 +7,11 @@
  * @copyright         2015 Mario Döring
  */
 
+use Tattoo\Node\Value as ValueNode;
 use Tattoo\Node\Tag as TagNode;
 use Tattoo\Node\Text as TextNode;
 use Tattoo\Node\Arr as ArrNode;
+use Tattoo\Node\Arr\AutoKey;
 use Tattoo\Node\Append as AppendNode;
 use Tattoo\Parser;
 use Tattoo\Token;
@@ -140,11 +142,32 @@ class ShortTag extends Parser
         // add a closing attribute token
         $attributeTokens = array_merge($attributeTokens, array(new Token(array('scopeClose', null, $firstToken->line))));
 
-
-        return $attributesArray = $this->parseChild('Arr', $attributeTokens, false);
-
         // retrive the attributes an normalize them
         $attributes = $this->parseIdAndClassTokens($classAndIdAttrTokens);
+        $attributesArray = $this->parseChild('Arr', $attributeTokens, false);
+
+        if (isset($attributes['id']))
+        {
+            $attributesArray->set('id', new ValueNode($attributes['id'], 'string'));
+        }
+
+        if (isset($attributes['class']))
+        {
+            if (!$attributesArray->has('class'))
+            {
+                $attributesArray->set('class', new ArrNode);
+            }
+
+            foreach($attributes['class'] as $class)
+            {
+                $attributesArray->get('class')->addItem(new AutoKey, new ValueNode($class, 'string'));
+            }
+        }
+
+        return $attributesArray;
+
+        var_dump($attributesArray, $attributes); die;
+        
         return array_merge_recursive($attributes, $this->fixAttributesArray($attributesArray->convertToNative()));
     }
 

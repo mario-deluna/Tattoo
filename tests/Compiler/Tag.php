@@ -26,7 +26,7 @@ class Compiler_Tag_Test extends Compiler_Test
         $tag->setName('hr');
         $tag = $this->compile($tag);
 
-        $this->assertContains("echo new Tattoo\\Engine\\Tag('hr', array(), null)", $tag);
+        $this->assertContains("new Tattoo\\Engine\\Tag('hr', array(), null)", $tag);
     }
 
     /**

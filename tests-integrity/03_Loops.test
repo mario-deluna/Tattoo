@@ -1,0 +1,21 @@
+// *-- foreach with var --*
+@items = {'A', 'B', 'C'}
+
+each @item in @items
+{
+	add @item
+}
+===
+ABC
+
+
+// *-- each: Key valued in line array --*
+[ul]
+{
+	each @name, @age in {mario: 30, ray: 25, lu: 22, tarek: 22}
+	{
+		[li][a] => @name % ' is ' % @age % ' years old.'
+	}
+}
+===
+<ul><li><a>mario is 30 years old.</a></li><li><a>ray is 25 years old.</a></li><li><a>lu is 22 years old.</a></li><li><a>tarek is 22 years old.</a></li></ul>

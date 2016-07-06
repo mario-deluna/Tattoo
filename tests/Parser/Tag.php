@@ -43,19 +43,19 @@ class Parser_Tag_Test extends Parser_Test
 
         // go deeper to ul
         $children = $node->getChildren();
-        $node = reset($children);
+        $node = reset($children)->getNode();
 
         $this->assertEquals('ul', $node->getName());
 
         // go deeper to li
         $children = $node->getChildren();
-        $node = reset($children);
+        $node = reset($children)->getNode();
 
         $this->assertEquals('li', $node->getName());
 
         // go deeper to a
         $children = $node->getChildren();
-        $node = reset($children);
+        $node = reset($children)->getNode();
 
         $this->assertEquals('a', $node->getName());
     }

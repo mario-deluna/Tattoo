@@ -1,17 +1,20 @@
-
-@title = 'Main Page <br> will be escaped'
-
-h1 => @title
-
-scope 
+[html]
 {
-	small => 'scoped...'
-}
+	[head] 
+	{
+		title => 'Ma page'
+	}
 
-//[ul]
-//{
-//	each @name, @age in {mario: 23, ray: 25, lu: 22, tarek: 22}
-//	{
-//		[li][a] => @name % ' ist ' % @age % ' jahre alt.'
-//	}
-//}
+	[body]
+	{
+		h1.headline => 'Yeah'
+
+		p.editorial => 'James t kirk'
+
+		[form]
+		{
+			input.form-control, type: 'text'
+			input.form-control, type: 'password'
+		}
+	}
+}

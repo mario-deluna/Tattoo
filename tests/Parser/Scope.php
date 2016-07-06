@@ -52,6 +52,5 @@ class Parser_Scope_Test extends Parser_Test
 	public function testContextAssignment()
 	{	
 		$scope = $this->parse("span => 'test'");
-		var_dump($scope->parent); die;
 	}
 }

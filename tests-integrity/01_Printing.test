@@ -34,3 +34,9 @@ add h1 => 'Header'
 add @helloWorld
 ===
 <h1>Hello World</h1>
+
+
+// *-- Tag with tag --*
+h1 => span => small => 'small span header'
+===
+<h1><span><small>small span header</small></span></h1>
