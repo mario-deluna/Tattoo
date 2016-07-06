@@ -11,7 +11,6 @@ use Tattoo\Node\Value as ValueNode;
 use Tattoo\Node\Concat as ConcatNode;
 use Tattoo\Node\Accessor as AccessorNode;
 use Tattoo\Node\Variable as VariableNode;
-use Tattoo\Node\String as StringNode;
 use Tattoo\Parser;
 
 class Expression extends Parser
@@ -65,6 +64,11 @@ class Expression extends Parser
         {
             $initiator = $this->parseChild('ShortTag');
         }
+        // obviously when tag opens we parse a tag
+        elseif ($token->type === 'tagOpen')
+        {
+            $initiator = $this->parseChild('Tag');
+        }
         // and of course everything else is an syntax error
         else
         {
@@ -76,9 +80,10 @@ class Expression extends Parser
         {   
             // check if we can do a concat means
             // the initiator must be a variable or a string
-            if (!($initiator instanceof VariableNode || $initiator instanceof StringNode))
+            if (!($initiator instanceof VariableNode || $initiator instanceof ValueNode))
             {
-                throw new Exception('Only variables and string can be concated.');
+                var_dump($initiator);
+                throw new Exception('Only variables and values can be concated. "' . $initiator->getType() . '" given.');
             }
 
             // skip the concat

@@ -65,6 +65,17 @@ class Arr extends Parser
      */
     protected function next()
     {
+        // kill all linebreaks
+        $this->skipTokensOfType('linebreak');
+
+        // If the parser is done after skipping 
+        // the linebreaks we probably have an empty array
+        // so simply return
+        if ($this->parserIsDone())
+        {
+            return;
+        }
+
         $token = $this->currentToken();
         $currentKey = new AutoKey;
         $currentValue = null;

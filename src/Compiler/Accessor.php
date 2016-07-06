@@ -18,15 +18,6 @@ class Accessor extends Compiler
      */
     public function compile()
     {
-        var_dump($this->node); die;
-
-    	$buffer = '';
-
-    	foreach($this->node->getNodes() as $node)
-    	{
-    		$buffer .= $this->export($node) . ' . ';
-    	}
-
-    	return substr($buffer, 0, -3);
+    	return $this->export($this->node->getNode()) . '["' . $this->node->getKey()->getName() . '"]';
     }
 }

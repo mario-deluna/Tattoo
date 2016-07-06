@@ -36,6 +36,17 @@ class Parser_Arr_Test extends Parser_Test
         $this->assertInstanceOf('Tattoo\\Node\\Arr', $this->parse('{"a", "b"}'));
     }
 
+     /**
+     * tests Parser
+     */
+    public function testEmptyArray()
+    {
+        $this->assertArrayValues(array(), '{}');
+
+        // also test with linebreak inbetween
+        $this->assertArrayValues(array(), "{\n}");
+    }
+
     /**
      * tests Parser
      */
@@ -59,7 +70,7 @@ class Parser_Arr_Test extends Parser_Test
     {
         $this->assertArrayValues(array('a', 'b'), "{ 'a',\n'b' }");
 
-        $this->assertArrayValues(array('a', 'b'), "{ \n'a': 'b',\n'b':\n a }");
+        $this->assertArrayValues(array('a' => 'b', 'b' => 'a'), "{ \na: 'b',\nb:\n 'a' }");
     }
 
     /**

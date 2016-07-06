@@ -21,9 +21,9 @@ class Parser_Scope_Test extends Parser_Test
 	 */
 	public function testOne()
 	{	
-		$scope = $this->parse( 'span => "foo"' );
-		$this->assertInstanceOf('Tattoo\\Node\\Scope', $scope );
-		$this->assertEquals( 1, count(  $scope->children ) );
+		$scope = $this->parse('span => "foo"');
+		$this->assertInstanceOf('Tattoo\\Node\\Scope', $scope);
+		$this->assertEquals(1, count( $scope->children));
 	}
 
 	/**
@@ -31,9 +31,9 @@ class Parser_Scope_Test extends Parser_Test
 	 */
 	public function testEmpty()
 	{	
-		$scope = $this->parse( '' );
-		$this->assertInstanceOf('Tattoo\\Node\\Scope', $scope );
-		$this->assertEquals( 0, count(  $scope->children ) );
+		$scope = $this->parse('');
+		$this->assertInstanceOf('Tattoo\\Node\\Scope', $scope);
+		$this->assertEquals(0, count( $scope->children));
 	}
 
 	/**
@@ -41,8 +41,17 @@ class Parser_Scope_Test extends Parser_Test
 	 */
 	public function testMany()
 	{	
-		$scope = $this->parse( "a => 'b'\na => 'b'\na => 'b'\n" );
-		$this->assertInstanceOf('Tattoo\\Node\\Scope', $scope );
-		$this->assertEquals( 3, count(  $scope->children ) );
+		$scope = $this->parse("a => 'b'\na => 'b'\na => 'b'\n");
+		$this->assertInstanceOf('Tattoo\\Node\\Scope', $scope);
+		$this->assertEquals(3, count( $scope->children));
+	}
+
+	/**
+	 * tests Parser
+	 */
+	public function testContextAssignment()
+	{	
+		$scope = $this->parse("span => 'test'");
+		var_dump($scope->parent); die;
 	}
 }

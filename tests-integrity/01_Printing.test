@@ -1,0 +1,36 @@
+// *-- Text --*
+add 'Hello World'
+===
+Hello World
+
+
+// *-- Tag with auto add --*
+h1 => 'Header'
+===
+<h1>Header</h1>
+
+
+// *-- Tag without auto add --*
+add h1 => 'Header'
+===
+<h1>Header</h1>
+
+
+// *-- Full tag with add in body --*
+[h1]
+{
+	add 'Header'
+}
+===
+<h1>Header</h1>
+
+// *-- Store tag in var --*
+@helloWorld = h1 => 'Hello World'
+===
+
+
+// *-- Store tag in var and print it --*
+@helloWorld = h1 => 'Hello World'
+add @helloWorld
+===
+<h1>Hello World</h1>

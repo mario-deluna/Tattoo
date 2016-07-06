@@ -11,7 +11,7 @@ h1 => 'Hello World'
 add h1 => 'Hello World'
 
 // if you don't wish to direclty print 
-// you can catch the expression inside a var
+// you can store the expression inside a var
 @helloWorld = h1 => 'Hello World'
 
 // now that autoprinting stuff only works 

@@ -110,4 +110,14 @@ class Parser_Expression_Test extends Parser_Test
         $this->assertInstanceOf('Tattoo\\Node\\Arr', $node);
         $this->assertEquals(array(1,2,3), $node->convertToNative());
     }
+
+    /**
+     * tests Parser
+     */
+    public function testAssocArray()
+    {
+        $node = $this->parse("{name: 'Mario', age: 23}");
+        $this->assertInstanceOf('Tattoo\\Node\\Arr', $node);
+        $this->assertEquals(array('name' => 'Mario', 'age' => 23), $node->convertToNative());
+    }
 }

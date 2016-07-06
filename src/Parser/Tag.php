@@ -9,6 +9,7 @@
 
 use Tattoo\Node\Tag as TagNode;
 use Tattoo\Node\Text as TextNode;
+use Tattoo\Node\Append as AppendNode;
 use Tattoo\Parser;
 
 class Tag extends Parser
@@ -65,7 +66,12 @@ class Tag extends Parser
         if ($this->currentToken() && $this->currentToken()->type === 'tagOpen')
         {
             $this->tag = $this->parseChild('ShortTag', $tokens, false);
-            $this->tag->addChild($this->parseChild('Tag'));
+
+            $appendingNode = new AppendNode;
+            $appendingNode->setNode($this->parseChild('Tag'));
+            
+            // add the child to the scope
+            $this->tag->addChild($appendingNode);
 
             return $this->node();
         }

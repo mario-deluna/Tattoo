@@ -1,1 +1,17 @@
-@tag = h1 => 'Title'
+
+@title = 'Main Page <br> will be escaped'
+
+h1 => @title
+
+scope 
+{
+	small => 'scoped...'
+}
+
+//[ul]
+//{
+//	each @name, @age in {mario: 23, ray: 25, lu: 22, tarek: 22}
+//	{
+//		[li][a] => @name % ' ist ' % @age % ' jahre alt.'
+//	}
+//}
