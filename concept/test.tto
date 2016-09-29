@@ -1,20 +1,4 @@
-[html]
+[div.col ~ md-2 ~ sm-3]
 {
-	[head] 
-	{
-		title => 'Ma page'
-	}
 
-	[body]
-	{
-		h1.headline => 'Yeah'
-
-		p.editorial => 'James t kirk'
-
-		[form]
-		{
-			input.form-control, type: 'text'
-			input.form-control, type: 'password'
-		}
-	}
 }

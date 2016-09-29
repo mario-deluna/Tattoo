@@ -1,0 +1,51 @@
+// ---
+// theme/layout.tto
+// ---
+namespace theme:layout
+
+view :document
+{
+	[html]
+	{
+		[head][title] => @title
+		[body] => @body
+	}
+}
+
+view :header
+{
+	h1 => @title
+}
+
+view :footer
+{
+	[footer][small] => 'Powerd with Tattoo'
+}
+
+// ---
+// page/welcome.tto
+// ---
+import theme:layout
+
+:document 
+{
+	@title = 'Hello Tattoo'
+
+	// set the layout title
+	@this.title = @title
+
+	@this.body = scope
+	{
+		:header
+		{
+			@this.title = @title
+		}
+
+		[div.main-container]
+		{
+			
+		}
+
+		:footer {}
+	}
+}
