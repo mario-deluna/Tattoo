@@ -35,7 +35,8 @@ class Value extends Node
 		'string',
 		'number',
 		'boolTrue',
-		'boolFalse'
+		'boolFalse',
+        'null'
 	);
 
 	/**
