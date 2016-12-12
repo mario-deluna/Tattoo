@@ -1,0 +1,17 @@
+// Booleans
+@isTheStarMassive = yes
+@visibleFromEarthByEye = no
+
+// integers
+@a = 42
+@b = -42
+
+// float
+@a = 1.234 
+@b = -9.876 // fix rounding
+
+// strings
+@a = "this is string"
+@b = 'this is another one'
+@c = 'escap\'ing'
+@d = "escap'ing"
