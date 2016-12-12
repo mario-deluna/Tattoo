@@ -15,3 +15,12 @@
 @b = 'this is another one'
 @c = 'escap\'ing'
 @d = "escap'ing"
+@e = "new \n line" // fix new lines
+
+// arrays
+@a = {1, 2, 3}
+@b = {'with', 2, 'mixed', yes}
+@c = {name: 'Zaphod', age: 1230, yes, no}
+
+// null
+@a = null
