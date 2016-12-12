@@ -1,10 +1,15 @@
 // elements can be defined in to ways 
 // the short create syntax
+//
+// #status: imlemented
 span => 'Foo'
+
 
 // or with an opening scope
 // you could also add here the '=>' thing 
 // to append a text element
+// 
+// #status: imlemented
 [span]
 {
 	add 'Foo'
@@ -13,32 +18,44 @@ span => 'Foo'
 // now that 'Foo' thingy is not just text getting printed
 // it's an element that gets appended to the elements scope
 // so following code will do the exact same thing as above
+//
+// #status: concept
 [span]
 {
 	@this.children|push(text('Foo'))
 }
 
 // you can always open the scope of an element
+//
+// #status: concept
 @element = [span] 
 {
 	@this.attr.title = 'Bar'
 }
 
 // and do more operations
+//
+// #status: concept
 @element 
 {
 	@this.name = 'strong'
 }
 
 // or append more elements
+//
+// #status: concept
 @element => 'Foo'
 
 // print that thing
 //
 //    <strong title="Bar">Foo</strong>
+//
+// #status: implemented
 add @element
 
 // you can also append elements
 //
 //    <strong title="Bar">Foo<span><i>Batz</i></span></strong>
+//
+// #status: concept
 add @element => [span][i] => 'Batz'
