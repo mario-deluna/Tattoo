@@ -1,7 +1,7 @@
 Tattoo Language
 ===============
 
-Tattoo is a simple hyper text programming / template language that renders into HTML.
+Tattoo, A simple hyper text programming language and transcompiler to PHP templates that renders into HTML.
 
 [![Build Status](https://travis-ci.org/mario-deluna/Tattoo.svg)](https://travis-ci.org/mario-deluna/Tattoo)
 [![Packagist](https://img.shields.io/packagist/dt/mario-deluna/tattoo.svg)]()
