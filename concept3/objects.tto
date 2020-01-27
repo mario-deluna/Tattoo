@@ -1,0 +1,32 @@
+/**
+ * Basic Object
+ */
+import debug
+
+// define a person object
+define person
+{
+    firstname
+    lastname
+}
+
+// create an instance
+agent: person[firstname: "James", lastname: "Bond"]
+
+debug.print(agent.firstname)
+debug.print(agent.lastname)
+
+
+// add a people object to the data tree
+< [people]
+{
+    < agent
+    < person[firstname: "Johnny"]
+}
+
+debug.print("All firstnames:")
+
+for(person : @people.first > @person)
+{
+    debug.print(person.firstname)
+}

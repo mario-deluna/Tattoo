@@ -1,0 +1,5 @@
+@element = [span] => 'Hello'
+
+@element => 'Foo'
+
+add @element

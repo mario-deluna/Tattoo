@@ -8,14 +8,14 @@
 
 // float
 @a = 1.234 
-@b = -9.876 // fix rounding
+@b = -9.876 // @fix rounding
 
 // strings
 @a = "this is string"
 @b = 'this is another one'
 @c = 'escap\'ing'
 @d = "escap'ing"
-@e = "new \n line" // fix new lines
+@e = "new \n line" // @fix new lines
 
 // arrays
 @a = {1, 2, 3}

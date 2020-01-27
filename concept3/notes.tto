@@ -1,0 +1,67 @@
+let config: 
+{
+    language: 'de'
+    title: 'Tattoo Homepage'
+}
+
+func headline(title, size = 'h1')
+{
+    return [size .headline] => title
+}
+
+element button
+{
+    var size: 'md'
+    var color: 'primary'
+
+    return [button .btn ~ this.color ~ this.size] => this.title {
+        < [i.fe ~ check]
+    }
+}
+
+component headline(title, size)
+{
+    var title
+    var size = 'h2'
+
+    render {
+        < headline(title: this.title, size: this.size)
+
+        if this.size == 'h1' {
+            < [br]
+        }
+    }
+}
+
+scope header
+{
+    < [title] = config.title
+    < [description] = 'Some Description'
+
+    // append text node to the title element
+    this.findFirst('title') <= ' | About'
+}
+
+scope body
+{
+    let headline = make headline(title: config.title)
+    
+    < headline
+    < "Welcome to our Homepage!"
+
+    var btn = [button title: 'Next', color: 'green']
+    btn.href = '/next'
+
+    < btn
+
+    < [footer #main-footer][div style: 'text-align: right'}][strong] => '2019'
+}
+
+main 
+{
+    [html lang: config.language] 
+    {
+        < [head] = header
+        < [body] = body
+    }
+}
